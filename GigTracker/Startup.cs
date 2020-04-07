@@ -36,7 +36,7 @@ namespace GigTracker {
 			app.UseMvc(routes => {
 				routes.MapRoute(
 					name: "default",
-					template: "{controller=User}/{action=List}/{id?}");
+					template: "{controller=Gig}/{action=List}/{id?}");
 			});
 
 

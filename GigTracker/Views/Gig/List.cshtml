@@ -1,0 +1,8 @@
+﻿@model IEnumerable<Gig>
+
+@foreach (var u in Model) {
+    <div>
+        <h3>Venue: @u.VenueName</h3>
+        <h4>Date: @u.Date</h4>
+    </div>
+}
