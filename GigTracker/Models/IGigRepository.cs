@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace GigTracker.Models {
-	interface IGigRepository {
+	public interface IGigRepository {
 		IQueryable<Gig> Gigs { get; }
 	}
 }
