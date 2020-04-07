@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29926.136
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GigTracker", "GigTracker\GigTracker.csproj", "{CEC91CC1-74B7-4000-A3EB-42461FC7D553}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CEC91CC1-74B7-4000-A3EB-42461FC7D553}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CEC91CC1-74B7-4000-A3EB-42461FC7D553}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CEC91CC1-74B7-4000-A3EB-42461FC7D553}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CEC91CC1-74B7-4000-A3EB-42461FC7D553}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {BC1FD603-A68E-46B7-BAE5-544732DD3BEF}
+	EndGlobalSection
+EndGlobal
