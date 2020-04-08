@@ -1,8 +1,9 @@
-﻿@model IEnumerable<User> 
+﻿@using Microsoft.AspNetCore.Authentication
+@model IEnumerable<User>
 
-@foreach(var u in Model) {
+@foreach (var u in Model) {
     <div>
         <h3>User Name: @u.UserName</h3>
-        <h4>Emai: @u.Email</h4>
+        <h4>Email: @u.Email</h4>
     </div>
 }

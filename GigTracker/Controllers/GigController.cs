@@ -14,6 +14,7 @@ namespace GigTracker.Controllers {
 			repository = repo;
 		}
 
+		[HttpGet]
 		public ViewResult List() => View(repository.Gigs);
 
 	}

@@ -1,0 +1,56 @@
+﻿@page
+@using Microsoft.AspNetCore.Authentication
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+@*@functions {
+        public async Task<IActionResult> OnPostAsync() {
+            await HttpContext.SignOutAsync();
+            return RedirectToPage("Login");
+        }
+    }*@
+
+<html>
+<body>
+    <h1>Gig Tracker</h1>
+    <a href="/User/List" class="btn btn-default">Users</a>
+    <a href="/Gig/List" class="btn btn-default">Gigs</a>
+
+    @*<h1>Welcome to your login-protected area!</h1>
+        <form method="post">
+            <input type="submit" value="Logout" />
+            @Html.AntiForgeryToken()
+        </form>*@
+</body>
+</html>
+
+<script>
+    $(document).ready(function () {
+
+        @*$("#users").click(function () {
+            //$("form").attr("action", "/User/List");
+            var i = 0;
+            i++;
+        });
+
+        $("#gigs").click(function () {
+            $.ajax({
+                type: "GET",
+                url: "@Url.Action("List", "Gig")",
+                //data: {number1: val1, number2: val2},
+                //dataType: "json",
+                //success: function (data) {
+                //    //console.log(msg);
+                //    window.location.href = data.redirecturl;
+                //},
+                //error: function (req, status, error) {
+                //    alert(error);
+                //}
+            });
+        });*@
+
+    });
+</script>

@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 namespace GigTracker.Models {
 	public class FakeUserRepository : IUserRepository {
 		public IQueryable<User> Users => new List<User> {
-			new User { UserName = "kirkhawley", Password = "password", FirstName = "Kirk", LastName = "Hawley", Email = "leekirkhawley@gmail.com"}
+			new User { UserName = "kirkhawley", Password = "password", FirstName = "Kirk", LastName = "Hawley", Email = "leekirkhawley@gmail.com"},
+			new User { UserName = "leonredbone", Password = "password", FirstName = "Leon", LastName = "Redbone", Email = "leekirkhawley@gmail.com"}
 		}.AsQueryable<User>();
 	}
 }

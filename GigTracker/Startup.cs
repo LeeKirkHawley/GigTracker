@@ -7,6 +7,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Mvc;
+//using Microsoft.AspNet.Identity;
 using GigTracker.Models;
 
 
@@ -17,7 +20,31 @@ namespace GigTracker {
 		public void ConfigureServices(IServiceCollection services) {
 			services.AddTransient<IUserRepository, FakeUserRepository>();
 			services.AddTransient<IGigRepository, FakeGigRepository>();
-			services.AddMvc(options => options.EnableEndpointRouting = false);
+
+			services.AddAuthentication(	CookieAuthenticationDefaults.AuthenticationScheme)
+					.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+						options => {
+							options.LoginPath = "/Account/Login";
+							options.LogoutPath = "/Account/Logout";
+					});
+
+			//			services.AddMvc(options => options.EnableEndpointRouting = false).AddRazorPagesOptions(options => {
+			services.AddMvc().AddRazorPagesOptions(options => {
+				options.Conventions.AuthorizeFolder("/");
+				options.Conventions.AllowAnonymousToPage("/Account/Login");
+				//options.Conventions.AllowAnonymousToPage("/Home/Index");
+				options.Conventions.AuthorizeFolder("/Home/Index");
+				options.Conventions.AuthorizeFolder("/User/List");
+			});
+
+			// authentication 
+			// Enable cookie authentication
+			//services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+			//		.AddCookie();
+
+			services.AddHttpContextAccessor();
+			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+			//services.AddDistributedMemoryCache();
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -33,13 +60,23 @@ namespace GigTracker {
 
 			app.UseStatusCodePages();
 			app.UseStaticFiles();
-			app.UseMvc(routes => {
-				routes.MapRoute(
+			app.UseAuthentication();
+			app.UseRouting();
+			app.UseAuthorization(); // must go between UseRouting() and UseEndoints()
+			app.UseEndpoints(endpoints =>
+			{
+				endpoints.MapControllerRoute(
 					name: "default",
-					template: "{controller=Gig}/{action=List}/{id?}");
+					pattern: "{controller=Home}/{action=Index}/{id?}");
+
+				endpoints.MapRazorPages();
 			});
-
-
+			//app.UseMvcWithDefaultRoute();
+			//app.UseMvc(routes => {
+			//	routes.MapRoute(
+			//		name: "default",
+			//		template: "{controller=Home}/{action=Index}/{id?}");
+			//});
 		}
 	}
 }
