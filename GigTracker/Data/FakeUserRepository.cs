@@ -7,7 +7,7 @@ using GigTracker.Models;
 using GigTracker.Data;
 
 
-namespace GigTracker.Models {
+namespace GigTracker.Data {
 	public class FakeUserRepository : IUserRepository {
 
 		IAccountService _accountService;

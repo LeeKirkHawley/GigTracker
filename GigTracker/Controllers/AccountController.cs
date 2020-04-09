@@ -32,8 +32,6 @@ namespace GigTracker.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLoginModel userModel, string returnUrl = null) {
-            //return View();
-            //return RedirectToLocal(returnUrl);
 
             var users = _userRepository.Get().Result;
             User user = users.Where(u => u.Email == userModel.Email).FirstOrDefault();
@@ -47,7 +45,6 @@ namespace GigTracker.Controllers
                 ModelState.AddModelError("", "Login failed.");
                 return View();
             }
-
 
             var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             identity.AddClaim(new Claim(ClaimTypes.GivenName, user.FirstName));

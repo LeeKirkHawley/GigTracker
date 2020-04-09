@@ -44,19 +44,17 @@ namespace GigTracker {
 			services.AddMvc().AddRazorPagesOptions(options => {
 				options.Conventions.AllowAnonymousToPage("/Account/Login");
 				options.Conventions.AllowAnonymousToPage("/Home/Index");
+				options.Conventions.AllowAnonymousToPage("/Home");
+				options.Conventions.AllowAnonymousToPage("/");
 				options.Conventions.AuthorizeFolder("/Gigs/List");
 				options.Conventions.AuthorizeFolder("/User/List");
 			});
 
-			// authentication 
-			// Enable cookie authentication
-			//services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-			//		.AddCookie();
-
-			services.AddHttpContextAccessor();
+			//services.AddHttpContextAccessor();
 
 			IServiceCollection s = services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
 

@@ -13,7 +13,7 @@ namespace GigTracker.Controllers {
 		[Route("")]
 		[Route("Home")]
 		[Route("Home/Index")]
-		[Authorize]
+		//[Authorize]  // anybody should be able to access
 		public IActionResult Index() {
 			return View("Index");
 		}
