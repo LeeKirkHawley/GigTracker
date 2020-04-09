@@ -15,9 +15,11 @@ namespace GigTracker.Controllers
     public class AccountController : Controller
     {
         IUserRepository _userRepository;
+        IAccountService _accountService;
 
-        public AccountController(IUserRepository userRepository) {
+        public AccountController(IUserRepository userRepository, IAccountService accountService) {
             _userRepository = userRepository;
+            _accountService = accountService;
         }
 
         [HttpGet]
@@ -39,6 +41,12 @@ namespace GigTracker.Controllers
                 return View();
             }
 
+            if(_accountService.VerifyPwd(user.Password, userModel.Password) != true) {
+                ModelState.AddModelError("", "Login failed.");
+                return View();
+            }
+
+
             var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             //identity.AddClaim(new Claim(ClaimTypes.Name, user.Ssn));
             identity.AddClaim(new Claim(ClaimTypes.GivenName, user.FirstName));
@@ -47,7 +55,6 @@ namespace GigTracker.Controllers
             //foreach (var role in user.Roles) {
             //    identity.AddClaim(new Claim(ClaimTypes.Role, role.Role));
             //}
-
             identity.AddClaim(new Claim(ClaimTypes.Authentication, "true"));
 
             var principal = new ClaimsPrincipal(identity);
@@ -63,6 +70,5 @@ namespace GigTracker.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
 
         }
-
     }
 }

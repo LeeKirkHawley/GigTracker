@@ -20,6 +20,8 @@ namespace GigTracker {
 		public void ConfigureServices(IServiceCollection services) {
 			services.AddTransient<IUserRepository, FakeUserRepository>();
 			services.AddTransient<IGigRepository, FakeGigRepository>();
+			services.AddTransient<IAccountService, AccountService>();
+			//services.AddSingleton<AccountService>();
 
 			services.AddAuthentication(	CookieAuthenticationDefaults.AuthenticationScheme)
 					.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
@@ -30,10 +32,9 @@ namespace GigTracker {
 
 			//			services.AddMvc(options => options.EnableEndpointRouting = false).AddRazorPagesOptions(options => {
 			services.AddMvc().AddRazorPagesOptions(options => {
-				options.Conventions.AuthorizeFolder("/");
 				options.Conventions.AllowAnonymousToPage("/Account/Login");
-				//options.Conventions.AllowAnonymousToPage("/Home/Index");
-				options.Conventions.AuthorizeFolder("/Home/Index");
+				options.Conventions.AllowAnonymousToPage("/Home/Index");
+				options.Conventions.AuthorizeFolder("/Gigs/List");
 				options.Conventions.AuthorizeFolder("/User/List");
 			});
 
