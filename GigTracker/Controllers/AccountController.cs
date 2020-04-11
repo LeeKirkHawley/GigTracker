@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using GigTracker.Models;
 using GigTracker.Data;
+using GigTracker.Services;
+using GigTracker.Entities;
 
 namespace GigTracker.Controllers
 {
@@ -34,7 +36,7 @@ namespace GigTracker.Controllers
         public async Task<IActionResult> Login(UserLoginModel userModel, string returnUrl = null) {
 
             var users = _userRepository.Get().Result;
-            User user = users.Where(u => u.Email == userModel.Email).FirstOrDefault();
+            GigTrackerUser user = users.Where(u => u.Email == userModel.Email).FirstOrDefault();
 
             if (user == null) {
                 ModelState.AddModelError("", "User not found");

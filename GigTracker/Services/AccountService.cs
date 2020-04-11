@@ -6,13 +6,15 @@ using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
 
 
-namespace GigTracker.Models {
+namespace GigTracker.Services {
 	public class AccountService : IAccountService {
 
         private const int SaltSize = 16;
         private const int HashSize = 20;
 
-        public AccountService() { }
+        public AccountService() { 
+        
+        }
 
         public string HashPwd(string pwd) {
             return Hash(pwd, 10000);

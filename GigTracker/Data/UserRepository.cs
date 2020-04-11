@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using GigTracker.Data;
 using GigTracker.Models;
+using GigTracker.Entities;
 
 namespace GigTracker.Data {
 	public class UserRepository : IUserRepository{
@@ -13,15 +14,15 @@ namespace GigTracker.Data {
         public UserRepository(ApplicationDbContext context) {
             _context = context;
         }
-        IQueryable<User> Users { get; }
+//        IQueryable<User> Users { get; }
 
-        public async Task<List<User>> Get() {
-            var t = await Task.Run(() => _context.Set<User>().ToList() );
+        public async Task<List<GigTrackerUser>> Get() {
+            var t = await Task.Run(() => _context.Set<GigTrackerUser>().ToList() );
             return t;
         }
 
-        public async Task<User> Get(int id) {
-            return await _context.Set<User>().FindAsync(id);
+        public async Task<GigTrackerUser> Get(int id) {
+            return await _context.Set<GigTrackerUser>().FindAsync(id);
         }
     }
 }

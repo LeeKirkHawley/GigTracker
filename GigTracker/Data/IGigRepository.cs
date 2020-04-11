@@ -6,6 +6,8 @@ using GigTracker.Models;
 
 namespace GigTracker.Data {
 	public interface IGigRepository {
-		IQueryable<Gig> Gigs { get; }
+		IEnumerable<Gig> Get();
+
+		Gig Get(int id);
 	}
 }

@@ -5,25 +5,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-
+using GigTracker.Models;
 
 // https://www.yogihosting.com/aspnet-core-identity-roles/
 
 namespace GigTracker.Controllers {
     public class RoleController : Controller {
-        private RoleManager<IdentityRole> roleManager;
-        public RoleController(RoleManager<IdentityRole> roleMgr) {
-            roleManager = roleMgr;
+        
+        private RoleManager<IdentityRole> _roleManager;
+        private UserManager<IdentityUser> _userManager;
+
+
+        public RoleController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager) {
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
 
-        public ViewResult Index() => View(roleManager.Roles);
+        public ViewResult Index() => View(_roleManager.Roles.ToList());
 
         public IActionResult Create() => View();
 
+        [HttpGet]
+        public IActionResult CreateRole() {
+            return View();
+        }
+
         [HttpPost]
-        public async Task<IActionResult> Create([Required]string name) {
+        public async Task<IActionResult> CreateRole([Required]string name) {
             if (ModelState.IsValid) {
-                IdentityResult result = await roleManager.CreateAsync(new IdentityRole(name));
+                IdentityResult result = await _roleManager.CreateAsync(new IdentityRole(name));
                 if (result.Succeeded)
                     return RedirectToAction("Index");
                 else
@@ -34,9 +44,9 @@ namespace GigTracker.Controllers {
 
         [HttpPost]
         public async Task<IActionResult> Delete(string id) {
-            IdentityRole role = await roleManager.FindByIdAsync(id);
+            IdentityRole role = await _roleManager.FindByIdAsync(id);
             if (role != null) {
-                IdentityResult result = await roleManager.DeleteAsync(role);
+                IdentityResult result = await _roleManager.DeleteAsync(role);
                 if (result.Succeeded)
                     return RedirectToAction("Index");
                 else
@@ -44,12 +54,58 @@ namespace GigTracker.Controllers {
             }
             else
                 ModelState.AddModelError("", "No role found");
-            return View("Index", roleManager.Roles);
+            return View("Index", _roleManager.Roles);
         }
 
         private void Errors(IdentityResult result) {
             foreach (IdentityError error in result.Errors)
                 ModelState.AddModelError("", error.Description);
         }
+
+        public IActionResult UserList() => View(_userManager.Users.ToList());
+
+        public async Task<IActionResult> Edit(string userId) {
+            // получаем пользователя
+            IdentityUser user = await _userManager.FindByIdAsync(userId);
+            if (user != null) {
+                // получем список ролей пользователя
+                var userRoles = await _userManager.GetRolesAsync(user);
+                var allRoles = _roleManager.Roles.ToList();
+                ChangeRoleViewModel model = new ChangeRoleViewModel {
+                    UserId = user.Id,
+                    UserEmail = user.Email,
+                    UserRoles = userRoles,
+                    AllRoles = allRoles
+                };
+                return View(model);
+            }
+
+            return NotFound();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(string userId, List<string> roles) {
+            // получаем пользователя
+            IdentityUser user = await _userManager.FindByIdAsync(userId);
+            if (user != null) {
+                // получем список ролей пользователя
+                var userRoles = await _userManager.GetRolesAsync(user);
+                // получаем все роли
+                var allRoles = _roleManager.Roles.ToList();
+                // получаем список ролей, которые были добавлены
+                var addedRoles = roles.Except(userRoles);
+                // получаем роли, которые были удалены
+                var removedRoles = userRoles.Except(roles);
+
+                await _userManager.AddToRolesAsync(user, addedRoles);
+
+                await _userManager.RemoveFromRolesAsync(user, removedRoles);
+
+                return RedirectToAction("UserList");
+            }
+
+            return NotFound();
+        }
+
     }
 }

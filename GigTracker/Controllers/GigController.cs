@@ -9,15 +9,17 @@ using GigTracker.Data;
 
 namespace GigTracker.Controllers {
 	public class GigController : Controller {
-		private IGigRepository repository;
+		private IGigRepository _gigRepository;
 
-		public GigController(IGigRepository repo) {
-			repository = repo;
+		public GigController(IGigRepository gigRepository) {
+			_gigRepository = gigRepository;
 		}
 
 		[HttpGet]
-		[Authorize]
-		public ViewResult List() => View(repository.Gigs);
-
+		//[Authorize]
+		public ViewResult List() {
+			IEnumerable<Gig> gigs = _gigRepository.Get();
+			return View(gigs);
+		}
 	}
 }
