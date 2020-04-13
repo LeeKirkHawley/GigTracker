@@ -25,6 +25,9 @@ namespace GigTracker.Models {
                 // Authenticate using the identity
                 var principal = new ClaimsPrincipal(identity);
                 await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, new AuthenticationProperties { IsPersistent = loginData.RememberMe });
+
+                var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
                 return RedirectToPage("Index");
             }
             else {

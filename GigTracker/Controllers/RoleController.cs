@@ -21,7 +21,7 @@ namespace GigTracker.Controllers {
             _userManager = userManager;
         }
 
-        public ViewResult Index() => View(_roleManager.Roles.ToList());
+        public ViewResult Index() => View(_roleManager.Roles);
 
         public IActionResult Create() => View();
 

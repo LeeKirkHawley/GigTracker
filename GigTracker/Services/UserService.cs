@@ -8,6 +8,7 @@ using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using GigTracker.Entities;
 using GigTracker.Helpers;
+using GigTracker.Data;
 
 namespace GigTracker.Services {
     public interface IUserService {
@@ -26,10 +27,12 @@ namespace GigTracker.Services {
 
         private readonly AppSettings _appSettings;
         private readonly AccountService _accountService;
+        private readonly UserRepository _userRepository;
 
-        public UserService(IOptions<AppSettings> appSettings, AccountService accountService) {
+        public UserService(IOptions<AppSettings> appSettings, AccountService accountService, UserRepository userRepository) {
             _appSettings = appSettings.Value;
             _accountService = accountService;
+            _userRepository = userRepository;
         }
 
         public GigTrackerUser Authenticate(string username, string password) {
@@ -58,13 +61,13 @@ namespace GigTracker.Services {
         }
 
         public IEnumerable<GigTrackerUser> GetAll() {
-            IQueryable<GigTrackerUser> Users = new List<GigTrackerUser> {
-                new GigTrackerUser { UserName = "kirkhawley", Password = _accountService.HashPwd("password"), FirstName = "Kirk", LastName = "Hawley", Email = "leekirkhawley@gmail.com"},
-                new GigTrackerUser { UserName = "leonredbone", Password = _accountService.HashPwd("password"), FirstName = "Leon", LastName = "Redbone", Email = "leekirkhawley@gmail.com"}
-            }.AsQueryable<GigTrackerUser>();
-            return Users;
+            //IQueryable<GigTrackerUser> Users = new List<GigTrackerUser> {
+            //    new GigTrackerUser { UserName = "kirkhawley", Password = _accountService.HashPwd("password"), FirstName = "Kirk", LastName = "Hawley", Email = "leekirkhawley@gmail.com"},
+            //    new GigTrackerUser { UserName = "leonredbone", Password = _accountService.HashPwd("password"), FirstName = "Leon", LastName = "Redbone", Email = "leekirkhawley@gmail.com"}
+            //}.AsQueryable<GigTrackerUser>();
+            //return Users;
 
-//            return this.GetAll().WithoutPasswords();
+            return _userRepository.Get();
         }
 
         public GigTrackerUser GetById(int id) {

@@ -10,7 +10,7 @@ namespace GigTracker.Data {
 	public interface IUserRepository {
 
 		//IQueryable<User> Users { get; }
-		Task<List<GigTrackerUser>> Get();
+		IEnumerable<GigTrackerUser> Get();
 
 		Task<GigTrackerUser> Get(int id);
 	}

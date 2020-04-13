@@ -23,9 +23,9 @@ namespace GigTracker.Data {
 
 		IQueryable<GigTrackerUser> Users => _userService.GetAll().AsQueryable();
 
-		public async Task<List<GigTrackerUser>> Get() { 
-			var t = await Task.Run(() => Users.ToList());
-			return t;
+		public IEnumerable<GigTrackerUser> Get() { 
+			//var t = Task.Run(() => Users);
+			return Users;
 		}
 
 		public async Task<GigTrackerUser> Get(int id) {

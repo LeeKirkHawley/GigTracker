@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using GigTracker.Models;
 using GigTracker.Data;
 using GigTracker.Entities;
@@ -16,15 +17,21 @@ namespace GigTracker.Controllers {
 
 		private IUserRepository _userRepository;
 		private UserService _userService;
+		UserManager<IdentityUser> _userManager;
 
-		public UserController(IUserRepository repo, UserService userService) {
+		public UserController(IUserRepository repo, UserService userService, UserManager<IdentityUser> userManager) {
 			_userRepository = repo;
 			_userService = userService;
+			_userManager = userManager;
 		}
 
 		[HttpGet]
-		[Authorize(Roles = "Administrator")]
-		public ViewResult List() => View(_userRepository.Get());
+		//[Authorize(Roles = "Administrator")]
+		[Authorize]
+		public ViewResult List() {
+			var user = _userManager.GetUserAsync(HttpContext.User);
+			return View(_userRepository.Get()); 
+		}
 
 		[AllowAnonymous]
 		[HttpPost("authenticate")]

@@ -19,10 +19,12 @@ namespace GigTracker.Controllers
     {
         IUserRepository _userRepository;
         IAccountService _accountService;
+        UserManager<IdentityUser> _userManager;
 
-        public AccountController(IUserRepository userRepository, IAccountService accountService) {
+        public AccountController(IUserRepository userRepository, IAccountService accountService, UserManager<IdentityUser> userManager) {
             _userRepository = userRepository;
             _accountService = accountService;
+            _userManager = userManager;
         }
 
         [HttpGet]
@@ -35,7 +37,7 @@ namespace GigTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLoginModel userModel, string returnUrl = null) {
 
-            var users = _userRepository.Get().Result;
+            var users = _userRepository.Get();
             GigTrackerUser user = users.Where(u => u.Email == userModel.Email).FirstOrDefault();
 
             if (user == null) {
@@ -51,6 +53,7 @@ namespace GigTracker.Controllers
             var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
             identity.AddClaim(new Claim(ClaimTypes.GivenName, user.FirstName));
             identity.AddClaim(new Claim(ClaimTypes.Surname, user.LastName));
+            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.UserName));
             identity.AddClaim(new Claim(ClaimTypes.Authentication, "true"));  // signify that we are logged in
 
             // we will have to save roles, this is where we can apply them.
@@ -58,9 +61,12 @@ namespace GigTracker.Controllers
             //    identity.AddClaim(new Claim(ClaimTypes.Role, role.Role));
             //}
 
-
+            var user2 = await _userManager.GetUserAsync(HttpContext.User);
             var principal = new ClaimsPrincipal(identity);
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
+
+            var id = _userManager.GetUserId(User);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             return RedirectToAction("Index", "Home");
         }
