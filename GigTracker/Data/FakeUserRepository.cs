@@ -21,15 +21,15 @@ namespace GigTracker.Data {
 			_userService = userService;
 		}
 
-		IQueryable<GigTrackerUser> Users => _userService.GetAll().AsQueryable();
+		IQueryable<User> Users => _userService.GetAll().AsQueryable();
 
-		public IEnumerable<GigTrackerUser> Get() { 
+		public IEnumerable<User> Get() { 
 			//var t = Task.Run(() => Users);
 			return Users;
 		}
 
-		public async Task<GigTrackerUser> Get(int id) {
-			var t = await Task.Run(() => (GigTrackerUser)null);
+		public async Task<User> Get(int id) {
+			var t = await Task.Run(() => (User)null);
 			return t;
 		}
 

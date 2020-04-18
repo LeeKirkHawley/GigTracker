@@ -5,6 +5,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using GigTracker.Entities;
 using GigTracker.Helpers;
@@ -12,9 +13,9 @@ using GigTracker.Data;
 
 namespace GigTracker.Services {
     public interface IUserService {
-        GigTrackerUser Authenticate(string username, string password);
-        IEnumerable<GigTrackerUser> GetAll();
-        GigTrackerUser GetById(int id);
+        User Authenticate(string username, string password);
+        IEnumerable<User> GetAll();
+        User GetById(int id);
     }
 
     public class UserService : IUserService {
@@ -28,14 +29,16 @@ namespace GigTracker.Services {
         private readonly AppSettings _appSettings;
         private readonly AccountService _accountService;
         private readonly UserRepository _userRepository;
+        UserManager<IdentityUser> _userManager;
 
-        public UserService(IOptions<AppSettings> appSettings, AccountService accountService, UserRepository userRepository) {
+        public UserService(IOptions<AppSettings> appSettings, AccountService accountService, UserRepository userRepository, UserManager<IdentityUser> userManager) {
             _appSettings = appSettings.Value;
             _accountService = accountService;
             _userRepository = userRepository;
+            _userManager = userManager;
         }
 
-        public GigTrackerUser Authenticate(string username, string password) {
+        public User Authenticate(string username, string password) {
             var user = this.GetAll().Where(u => u.UserName == username && u.Password == password).FirstOrDefault();
 
             // return null if user not found
@@ -60,7 +63,7 @@ namespace GigTracker.Services {
             return user.WithoutPassword();
         }
 
-        public IEnumerable<GigTrackerUser> GetAll() {
+        public IEnumerable<User> GetAll() {
             //IQueryable<GigTrackerUser> Users = new List<GigTrackerUser> {
             //    new GigTrackerUser { UserName = "kirkhawley", Password = _accountService.HashPwd("password"), FirstName = "Kirk", LastName = "Hawley", Email = "leekirkhawley@gmail.com"},
             //    new GigTrackerUser { UserName = "leonredbone", Password = _accountService.HashPwd("password"), FirstName = "Leon", LastName = "Redbone", Email = "leekirkhawley@gmail.com"}
@@ -70,7 +73,7 @@ namespace GigTracker.Services {
             return _userRepository.Get();
         }
 
-        public GigTrackerUser GetById(int id) {
+        public User GetById(int id) {
             var user = this.GetAll().FirstOrDefault(x => x.Id == id);
             return user.WithoutPassword();
         }

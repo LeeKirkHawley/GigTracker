@@ -16,13 +16,13 @@ namespace GigTracker.Data {
         }
 //        IQueryable<User> Users { get; }
 
-        public IEnumerable<GigTrackerUser> Get() {
+        public IEnumerable<User> Get() {
             //var t = await Task.Run(() => _context.User);
             return _context.User;
         }
 
-        public async Task<GigTrackerUser> Get(int id) {
-            return await _context.Set<GigTrackerUser>().FindAsync(id);
+        public async Task<User> Get(int id) {
+            return await _context.Set<User>().FindAsync(id);
         }
     }
 }

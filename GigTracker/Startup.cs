@@ -26,21 +26,27 @@ namespace GigTracker {
 	public class Startup {
 		// This method gets called by the runtime. Use this method to add services to the container.
 		// For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
-		public Startup(IConfiguration configuration) => Configuration = configuration;
 
 		public IConfiguration Configuration { get; }
-		
+
+		public Startup(IConfiguration configuration) {
+			Configuration = configuration;
+		}
 
 		public void ConfigureServices(IServiceCollection services) {
 
 			services.AddControllersWithViews();
 
+			// creating AccountService as a singleton so I can manage CurrentUser
+			// this means that AccountService shouldn't or can't consume any oher object that is not a singleton
+			// https://codingblast.com/asp-net-core-dependency-injection-cannot-consume-scoped-service/
+			services.AddTransient<AccountService>();			
+
+			services.AddTransient<UserService>();
 			services.AddTransient<IUserRepository, UserRepository>();
 			services.AddTransient<IGigRepository, GigRepository>();
 			services.AddScoped<ApplicationDbContext>();
-			services.AddTransient<UserService>();
 			services.AddTransient<UserRepository>();
-			services.AddTransient<IAccountService, AccountService>();
 			services.AddTransient<AccountService>();
 			//services.AddSingleton<IClaimsTransformation, LocationClaimsProvider>();
 			
@@ -48,25 +54,31 @@ namespace GigTracker {
 
 			var appSettings = appSettingsSection.Get<AppSettings>();
 			var key = Encoding.ASCII.GetBytes(appSettings.Secret);
-			services.AddAuthentication(x => {
-				x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-				x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-			})
-			.AddJwtBearer(x => {
-				 x.RequireHttpsMetadata = false;
-				 x.SaveToken = true;
-				 x.TokenValidationParameters = new TokenValidationParameters {
-					 ValidateIssuerSigningKey = true,
-					 IssuerSigningKey = new SymmetricSecurityKey(key),
-					 ValidateIssuer = false,
-					 ValidateAudience = false
-				 };
-			 })
-			.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-			 	options => {
-			 		options.LoginPath = "/Account/Login";
-			 		options.LogoutPath = "/Account/Logout";
-			 });
+			//services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+			//	.AddCookie();
+			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+			.AddCookie(o => o.LoginPath = new PathString("/Account/Login"));
+
+
+			//services.AddAuthentication(x => {
+			//	x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+			//	x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+			//})
+			//.AddJwtBearer(x => {
+			//	 x.RequireHttpsMetadata = false;
+			//	 x.SaveToken = true;
+			//	 x.TokenValidationParameters = new TokenValidationParameters {
+			//		 ValidateIssuerSigningKey = true,
+			//		 IssuerSigningKey = new SymmetricSecurityKey(key),
+			//		 ValidateIssuer = false,
+			//		 ValidateAudience = false
+			//	 };
+			// })
+			//.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
+			// 	options => {
+			// 		options.LoginPath = "/Account/Login";
+			// 		options.LogoutPath = "/Account/Logout";
+			// });
 
 			services.AddMvc().AddRazorPagesOptions(options => {
 				options.Conventions.AllowAnonymousToPage("/Account/Login");

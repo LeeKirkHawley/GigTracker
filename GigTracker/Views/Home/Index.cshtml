@@ -1,7 +1,9 @@
-﻿@page
+﻿@model HomeIndexViewModel
 @using Microsoft.AspNetCore.Authentication
+@using GigTracker.Entities;
 @{
     Layout = "_Layout";
+    var tempDataProduct = TempData["UserId"] as int?;
 }
 
 <!DOCTYPE html>
@@ -19,6 +21,7 @@
     <a href="/User/List" class="btn btn-default">Users</a>
     <a href="/Gig/List" class="btn btn-default">Gigs</a>
     <a href="/Role" class="btn btn-default">Roles</a>
+    <a href="/Account/Login" class="btn btn-default">Login</a>
 
     @*<h1>Welcome to your login-protected area!</h1>
         <form method="post">

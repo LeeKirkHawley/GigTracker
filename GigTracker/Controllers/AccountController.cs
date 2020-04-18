@@ -18,13 +18,18 @@ namespace GigTracker.Controllers
     public class AccountController : Controller
     {
         IUserRepository _userRepository;
-        IAccountService _accountService;
-        UserManager<IdentityUser> _userManager;
+        AccountService _accountService;
+        UserService _userService;
+        private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AccountController(IUserRepository userRepository, IAccountService accountService, UserManager<IdentityUser> userManager) {
+        public AccountController(IUserRepository userRepository, 
+                                AccountService accountService, 
+                                UserService userService,
+                                SignInManager<IdentityUser> signInManager) {
             _userRepository = userRepository;
             _accountService = accountService;
-            _userManager = userManager;
+            _userService = userService;
+            _signInManager = signInManager;
         }
 
         [HttpGet]
@@ -38,37 +43,22 @@ namespace GigTracker.Controllers
         public async Task<IActionResult> Login(UserLoginModel userModel, string returnUrl = null) {
 
             var users = _userRepository.Get();
-            GigTrackerUser user = users.Where(u => u.Email == userModel.Email).FirstOrDefault();
+            User user = users.Where(u => u.Email == userModel.Email).FirstOrDefault();
 
             if (user == null) {
                 ModelState.AddModelError("", "User not found");
                 return View();
             }
 
-            if(_accountService.VerifyPwd(user.Password, userModel.Password) != true) {
+            if (_accountService.VerifyPwd(user.Password, userModel.Password) != true) {
                 ModelState.AddModelError("", "Login failed.");
                 return View();
             }
 
-            var identity = new ClaimsIdentity(CookieAuthenticationDefaults.AuthenticationScheme);
-            identity.AddClaim(new Claim(ClaimTypes.GivenName, user.FirstName));
-            identity.AddClaim(new Claim(ClaimTypes.Surname, user.LastName));
-            identity.AddClaim(new Claim(ClaimTypes.NameIdentifier, user.UserName));
-            identity.AddClaim(new Claim(ClaimTypes.Authentication, "true"));  // signify that we are logged in
 
-            // we will have to save roles, this is where we can apply them.
-            //foreach (var role in user.Roles) {
-            //    identity.AddClaim(new Claim(ClaimTypes.Role, role.Role));
-            //}
-
-            var user2 = await _userManager.GetUserAsync(HttpContext.User);
-            var principal = new ClaimsPrincipal(identity);
-            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
-
-            var id = _userManager.GetUserId(User);
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-
+            TempData["UserId"] = user.Id;
             return RedirectToAction("Index", "Home");
+            //return View("/Home/Index");
         }
 
         private IActionResult RedirectToLocal(string returnUrl) {

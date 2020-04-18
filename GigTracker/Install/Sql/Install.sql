@@ -2,6 +2,7 @@
 
 IF  NOT EXISTS (SELECT * FROM sys.databases WHERE name = N'GigTracker')
     BEGIN
+		RAISERROR('Creating database GigTracker', 0, 1) WITH NOWAIT;
         CREATE DATABASE GigTracker
     END;
 
@@ -33,15 +34,4 @@ BEGIN
 		ArtistName varchar(256) not null
     )
 END;
-
-IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='AspNetRoles' and xtype='U')
-BEGIN
-    CREATE TABLE AspNetRoles (
-		Id varchar(64) NOT NULL IDENTITY PRIMARY KEY,
-        Name varchar(64) not null,
-		NormalizedName varchar(64) null,
-		ConcurrencyStamp varchar(64) null
-    )
-END;
-
 GO

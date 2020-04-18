@@ -6,7 +6,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
 namespace GigTracker.Entities {
-	public class GigTrackerUser {
+	public class User {
 		[Key]
 		public int Id { get; set; }
 		public string UserName { get; set; }

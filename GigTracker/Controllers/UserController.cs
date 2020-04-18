@@ -15,40 +15,47 @@ using GigTracker.Helpers;
 namespace GigTracker.Controllers {
 	public class UserController : Controller{
 
-		private IUserRepository _userRepository;
-		private UserService _userService;
-		UserManager<IdentityUser> _userManager;
+		private readonly IUserRepository _userRepository;
+		private readonly UserService _userService;
+		private readonly UserManager<IdentityUser> _userManager;
+		private readonly AccountService _accountService;
 
-		public UserController(IUserRepository repo, UserService userService, UserManager<IdentityUser> userManager) {
+		public UserController(IUserRepository repo, 
+								UserService userService, 
+								UserManager<IdentityUser> userManager,
+								AccountService accountService) {
 			_userRepository = repo;
 			_userService = userService;
 			_userManager = userManager;
+			_accountService = accountService;
 		}
 
 		[HttpGet]
-		//[Authorize(Roles = "Administrator")]
-		[Authorize]
 		public ViewResult List() {
-			var user = _userManager.GetUserAsync(HttpContext.User);
-			return View(_userRepository.Get()); 
+			//if (_accountService._currentUser.Role == "Administrator") {
+			//	var user = _userManager.GetUserAsync(HttpContext.User);
+			//	return View(_userRepository.Get());
+			//}
+			//else
+				return View("Index", "Home");
 		}
 
-		[AllowAnonymous]
-		[HttpPost("authenticate")]
-		public IActionResult Authenticate([FromBody]AuthenticateModel model) {
-			var user = _userService.Authenticate(model.Username, model.Password);
+		//[AllowAnonymous]
+		//[HttpPost("authenticate")]
+		//public IActionResult Authenticate([FromBody]AuthenticateModel model) {
+		//	var user = _userService.Authenticate(model.Username, model.Password);
 
-			if (user == null)
-				return BadRequest(new { message = "Username or password is incorrect" });
+		//	if (user == null)
+		//		return BadRequest(new { message = "Username or password is incorrect" });
 
-			return Ok(user);
-		}
+		//	return Ok(user);
+		//}
 
 		[HttpGet("{id}")]
 		public IActionResult GetById(int id) {
 
 			//var user = _users.FirstOrDefault(x => x.Id == id);
-			GigTrackerUser user = _userService.GetById(id);
+			User user = _userService.GetById(id);
 			user =  user.WithoutPassword();
 
 

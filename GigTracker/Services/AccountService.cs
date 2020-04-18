@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Security.Cryptography;
 using Microsoft.AspNetCore.Cryptography.KeyDerivation;
+using GigTracker.Entities;
 
 
 namespace GigTracker.Services {
@@ -13,7 +14,7 @@ namespace GigTracker.Services {
         private const int HashSize = 20;
 
         public AccountService() { 
-        
+         // NOTE: since AccountService is created as a singleton, we can't consume any non-singleton services here
         }
 
         public string HashPwd(string pwd) {
@@ -31,7 +32,7 @@ namespace GigTracker.Services {
         /// <param name="password">The password.</param>
         /// <param name="iterations">Number of iterations.</param>
         /// <returns>The hash.</returns>
-        public static string Hash(string password, int iterations) {
+        public string Hash(string password, int iterations) {
             // Create salt
             byte[] salt;
             new RNGCryptoServiceProvider().GetBytes(salt = new byte[SaltSize]);
@@ -57,7 +58,7 @@ namespace GigTracker.Services {
         /// </summary>
         /// <param name="password">The password.</param>
         /// <returns>The hash.</returns>
-        public static string Hash(string password) {
+        public string Hash(string password) {
             return Hash(password, 10000);
         }
 
@@ -66,7 +67,7 @@ namespace GigTracker.Services {
         /// </summary>
         /// <param name="hashString">The hash.</param>
         /// <returns>Is supported?</returns>
-        public static bool IsHashSupported(string hashString) {
+        public bool IsHashSupported(string hashString) {
             return hashString.Contains("$MYHASH$V1$");
         }
 
@@ -76,7 +77,7 @@ namespace GigTracker.Services {
         /// <param name="password">The password.</param>
         /// <param name="hashedPassword">The hash.</param>
         /// <returns>Could be verified?</returns>
-        public static bool Verify(string password, string hashedPassword) {
+        public bool Verify(string password, string hashedPassword) {
             // Check hash
             if (!IsHashSupported(hashedPassword)) {
                 throw new NotSupportedException("The hashtype is not supported");

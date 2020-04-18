@@ -27,7 +27,7 @@ namespace GigTracker.Models {
             }
 
             context.User.AddRange(
-                new GigTrackerUser {
+                new User {
                     UserName = "kirkhawley",
                     Password = accountService.HashPwd("password"),
                     FirstName = "Kirk",
@@ -35,7 +35,7 @@ namespace GigTracker.Models {
                     Email = "leekirkhawley@gmail.com",
                     Role = Role.Admin
                 },
-                new GigTrackerUser {
+                new User {
                     UserName = "leon",
                     Password = accountService.HashPwd("password"),
                     FirstName = "Leon",

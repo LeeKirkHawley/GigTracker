@@ -15,7 +15,7 @@ namespace GigTracker.Data {
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
-		public DbSet<GigTrackerUser> User
+		public DbSet<User> User
 			{ get; set; }
 
 		public DbSet<Gig> Gig { get; set; }
