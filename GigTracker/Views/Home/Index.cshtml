@@ -8,26 +8,15 @@
 
 <!DOCTYPE html>
 
-@*@functions {
-        public async Task<IActionResult> OnPostAsync() {
-            await HttpContext.SignOutAsync();
-            return RedirectToPage("Login");
-        }
-    }*@
-
 <html>
 <body>
     <h1>Gig Tracker</h1>
-    <a href="/User/List" class="btn btn-default">Users</a>
-    <a href="/Gig/List" class="btn btn-default">Gigs</a>
-    <a href="/Role" class="btn btn-default">Roles</a>
+    @if (Model.user?.Role == "Admin") {
+        <a href="/User/List" class="btn btn-default">Users</a>
+    }
     <a href="/Account/Login" class="btn btn-default">Login</a>
+    <a href="/Gig/List" class="btn btn-default">Gigs</a>
 
-    @*<h1>Welcome to your login-protected area!</h1>
-        <form method="post">
-            <input type="submit" value="Logout" />
-            @Html.AntiForgeryToken()
-        </form>*@
 </body>
 </html>
 
