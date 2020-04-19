@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
@@ -56,7 +57,10 @@ namespace GigTracker.Controllers
             }
 
 
-            TempData["UserId"] = user.Id;
+//            TempData["UserId"] = user.Id;
+
+            this.HttpContext.Session.SetString("UserId", user.Id.ToString());
+
             return RedirectToAction("Index", "Home");
             //return View("/Home/Index");
         }

@@ -4,8 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 
 namespace GigTracker.Entities {
-	public class Role {
-		public const string Admin = "Admin";
-		public const string User = "User";
+	public static class Role {
+		public static string Admin = "Admin";
+		public static string User = "User";
 	}
 }

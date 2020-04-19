@@ -5,7 +5,8 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
+//using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Http;
 using GigTracker.Models;
 using GigTracker.Repositories;
 using GigTracker.Entities;
@@ -19,27 +20,29 @@ namespace GigTracker.Controllers {
 
 		private readonly IUserRepository _userRepository;
 		private readonly UserService _userService;
-		private readonly UserManager<IdentityUser> _userManager;
 		private readonly AccountService _accountService;
 
 		public UserController(IUserRepository repo, 
 								UserService userService, 
-								UserManager<IdentityUser> userManager,
 								AccountService accountService) {
 			_userRepository = repo;
 			_userService = userService;
-			_userManager = userManager;
 			_accountService = accountService;
 		}
 
 		[HttpGet]
-		public ViewResult List() {
-			//if (_accountService._currentUser.Role == "Administrator") {
-			//	var user = _userManager.GetUserAsync(HttpContext.User);
-			//	return View(_userRepository.Get());
-			//}
-			//else
-				return View("Index", "Home");
+		public ActionResult List() {
+
+			User user = null;
+			var userId = HttpContext.Session.GetString("UserId");
+			//var userId = TempData["UserId"];
+			if(userId != null)
+				user = _userService.GetById(Convert.ToInt32(userId));
+
+			if(user?.Role == Role.Admin)
+				return View(_userRepository.Get());
+			else
+				return RedirectToAction("Index", "Home");
 		}
 
 		//[AllowAnonymous]

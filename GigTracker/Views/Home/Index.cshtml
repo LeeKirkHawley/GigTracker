@@ -1,21 +1,29 @@
 ﻿@model HomeIndexViewModel
 @using Microsoft.AspNetCore.Authentication
 @using GigTracker.Entities;
+@using Microsoft.AspNetCore.Http
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     Layout = "_Layout";
-    var tempDataProduct = TempData["UserId"] as int?;
 }
 
 <!DOCTYPE html>
 
 <html>
 <body>
+    <input asp-for="userId" />
+    <input asp-for="userRole" />
+
     <h1>Gig Tracker</h1>
-    @if (Model.user?.Role == "Admin") {
+    @if (Model.userRole == "Admin") {
         <a href="/User/List" class="btn btn-default">Users</a>
     }
     <a href="/Account/Login" class="btn btn-default">Login</a>
     <a href="/Gig/List" class="btn btn-default">Gigs</a>
+
+    <p>
+        User Id:@HttpContextAccessor.HttpContext.Session.GetString("UserId")
+    </p>
 
 </body>
 </html>

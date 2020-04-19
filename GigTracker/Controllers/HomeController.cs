@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using GigTracker.Services;
 using GigTracker.Entities;
 using GigTracker.Models;
@@ -25,15 +26,23 @@ namespace GigTracker.Controllers {
 		}
 
 		public IActionResult Index() {
-			var userId = TempData["UserId"];
+			//var userId = TempData["UserId"];
+
+			var userId = HttpContext.Session.GetString("UserId");
 
 			User currentUser = null;
 			if(userId != null)
 				currentUser = _userService.GetById(Convert.ToInt32(userId));
 
-			HomeIndexViewModel model = new HomeIndexViewModel {
-				user = currentUser
+			HomeIndexViewModel model = new HomeIndexViewModel();
+			if(currentUser != null)
+			{
+				model.userId = currentUser.Id;
+				model.userRole = currentUser.Role;
 			};
+
+			if(userId != null)
+				this.HttpContext.Session.SetString("UserId", userId.ToString());
 
 			return View("Index", model);
 		}

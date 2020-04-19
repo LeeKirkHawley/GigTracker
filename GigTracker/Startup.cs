@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Session;
 using GigTracker.Models;
 using GigTracker.Repositories;
 using GigTracker.Services;
@@ -35,7 +36,22 @@ namespace GigTracker {
 
 		public void ConfigureServices(IServiceCollection services) {
 
+			services.AddMemoryCache();
+
+			services.AddSession(options =>
+			{
+				options.IdleTimeout = TimeSpan.FromSeconds(10);
+				options.Cookie.HttpOnly = true;
+				options.Cookie.IsEssential = true;
+			});
+
 			services.AddControllersWithViews();
+
+			services.AddSession(so =>
+			{
+				so.IdleTimeout = TimeSpan.FromSeconds(60);
+			});
+			services.AddMvc();
 
 			// creating AccountService as a singleton so I can manage CurrentUser
 			// this means that AccountService shouldn't or can't consume any oher object that is not a singleton
@@ -48,46 +64,26 @@ namespace GigTracker {
 			services.AddScoped<ApplicationDbContext>();
 			services.AddTransient<UserRepository>();
 			services.AddTransient<AccountService>();
-			//services.AddSingleton<IClaimsTransformation, LocationClaimsProvider>();
-			
+			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
 			var appSettingsSection = Configuration.GetSection("AppSettings");
 
 			var appSettings = appSettingsSection.Get<AppSettings>();
 			var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 			//services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 			//	.AddCookie();
+
 			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
 			.AddCookie(o => o.LoginPath = new PathString("/Account/Login"));
 
-
-			//services.AddAuthentication(x => {
-			//	x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-			//	x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-			//})
-			//.AddJwtBearer(x => {
-			//	 x.RequireHttpsMetadata = false;
-			//	 x.SaveToken = true;
-			//	 x.TokenValidationParameters = new TokenValidationParameters {
-			//		 ValidateIssuerSigningKey = true,
-			//		 IssuerSigningKey = new SymmetricSecurityKey(key),
-			//		 ValidateIssuer = false,
-			//		 ValidateAudience = false
-			//	 };
-			// })
-			//.AddCookie(CookieAuthenticationDefaults.AuthenticationScheme,
-			// 	options => {
-			// 		options.LoginPath = "/Account/Login";
-			// 		options.LogoutPath = "/Account/Logout";
-			// });
-
-			services.AddMvc().AddRazorPagesOptions(options => {
-				options.Conventions.AllowAnonymousToPage("/Account/Login");
-				options.Conventions.AllowAnonymousToPage("/Home/Index");
-				options.Conventions.AllowAnonymousToPage("/Home");
-				options.Conventions.AllowAnonymousToPage("/");
-				options.Conventions.AuthorizeFolder("/Gigs/List");
-				options.Conventions.AuthorizeFolder("/User/List");
-			});
+			//services.AddMvc().AddRazorPagesOptions(options => {
+			//	options.Conventions.AllowAnonymousToPage("/Account/Login");
+			//	options.Conventions.AllowAnonymousToPage("/Home/Index");
+			//	options.Conventions.AllowAnonymousToPage("/Home");
+			//	options.Conventions.AllowAnonymousToPage("/");
+			//	options.Conventions.AuthorizeFolder("/Gigs/List");
+			//	options.Conventions.AuthorizeFolder("/User/List");
+			//});
 
 			//services.AddHttpContextAccessor();
 
@@ -120,16 +116,16 @@ namespace GigTracker {
 
 			app.UseStatusCodePages();
 			app.UseStaticFiles();
+			app.UseSession();
 			app.UseAuthentication();
 			app.UseRouting();
 			app.UseAuthorization(); // must go between UseRouting() and UseEndoints()
-			app.UseEndpoints(endpoints =>
-			{
+			app.UseEndpoints(endpoints => {
 				endpoints.MapControllerRoute(
 					name: "default",
 					pattern: "{controller=Home}/{action=Index}/{id?}");
 
-				endpoints.MapRazorPages();
+				//endpoints.MapRazorPages();
 			});
 			//app.UseMvcWithDefaultRoute();
 			//app.UseMvc(routes => {
