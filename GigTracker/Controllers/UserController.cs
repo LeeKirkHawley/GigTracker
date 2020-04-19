@@ -56,7 +56,7 @@ namespace GigTracker.Controllers {
 		[HttpGet("{id}")]
 		public IActionResult GetById(int id) {
 
-			Debug.Assert(false);  // see if this hits
+			//Debug.Assert(false);  // see if this hits
 			//var user = _users.FirstOrDefault(x => x.Id == id);
 			User user = _userService.GetById(id);
 			user =  user.WithoutPassword();
