@@ -2,14 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using GigTracker.Models;
-using GigTracker.Data;
+using GigTracker.Repositories;
 using GigTracker.Entities;
 using GigTracker.Services;
 using GigTracker.Helpers;
+
 
 
 namespace GigTracker.Controllers {
@@ -54,6 +56,7 @@ namespace GigTracker.Controllers {
 		[HttpGet("{id}")]
 		public IActionResult GetById(int id) {
 
+			Debug.Assert(false);  // see if this hits
 			//var user = _users.FirstOrDefault(x => x.Id == id);
 			User user = _userService.GetById(id);
 			user =  user.WithoutPassword();

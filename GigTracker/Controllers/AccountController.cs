@@ -8,7 +8,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using GigTracker.Models;
-using GigTracker.Data;
+using GigTracker.Repositories;
 using GigTracker.Services;
 using GigTracker.Entities;
 

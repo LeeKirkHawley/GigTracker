@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity;
 using GigTracker.Models;
 using GigTracker.Entities;
 
-namespace GigTracker.Data {
+namespace GigTracker.Repositories {
 	public class ApplicationDbContext : IdentityDbContext<IdentityUser>{
 
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }

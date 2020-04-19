@@ -4,11 +4,11 @@ using System.Linq;
 using System.Threading.Tasks;
 using GigTracker.Controllers;
 using GigTracker.Models;
-using GigTracker.Data;
+using GigTracker.Repositories;
 using GigTracker.Services;
 using GigTracker.Entities;
 
-namespace GigTracker.Data {
+namespace GigTracker.Repositories {
 	public class FakeUserRepository : IUserRepository {
 
 		IAccountService _accountService;

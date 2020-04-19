@@ -6,7 +6,7 @@ using GigTracker.Controllers;
 using GigTracker.Models;
 using GigTracker.Entities;
 
-namespace GigTracker.Data {
+namespace GigTracker.Repositories {
 	public interface IUserRepository {
 
 		//IQueryable<User> Users { get; }

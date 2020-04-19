@@ -27,11 +27,13 @@ IF NOT EXISTS (SELECT * FROM sysobjects WHERE name='Gig' and xtype='U')
 BEGIN
     CREATE TABLE Gig (
 		Id int NOT NULL IDENTITY PRIMARY KEY,
+		UserId int NOT NULL,
         VenueName varchar(128) not null,
 		VenueAddress varchar(64) null,
 		VenuePhone varchar(64) null,
 		Date datetime null,
-		ArtistName varchar(256) not null
+		ArtistName varchar(256) not null,
+		constraint fk_gig_user foreign key (UserId) references [User](Id)
     )
 END;
 GO

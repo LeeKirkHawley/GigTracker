@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using GigTracker.Data;
 using GigTracker.Models;
 using GigTracker.Entities;
 
-namespace GigTracker.Data {
+namespace GigTracker.Repositories {
 	public class UserRepository : IUserRepository{
 
         ApplicationDbContext _context;

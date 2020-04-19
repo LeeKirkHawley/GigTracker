@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using GigTracker.Entities;
 using GigTracker.Helpers;
-using GigTracker.Data;
+using GigTracker.Repositories;
 
 namespace GigTracker.Services {
     public interface IUserService {

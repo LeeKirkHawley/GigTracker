@@ -6,6 +6,8 @@
 
   <ItemGroup>
     <Compile Remove="Helpers\RoleUsersTH.cs" />
+    <Compile Remove="Models\UserModel.cs" />
+    <Compile Remove="Models\UserModelX.cs" />
     <Compile Remove="Views\Home\Login.cshtml.cs" />
   </ItemGroup>
 

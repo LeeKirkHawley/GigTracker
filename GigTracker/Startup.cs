@@ -17,7 +17,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication;
 using GigTracker.Models;
-using GigTracker.Data;
+using GigTracker.Repositories;
 using GigTracker.Services;
 using GigTracker.Helpers;
 using GigTracker.Entities;
