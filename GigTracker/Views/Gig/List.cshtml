@@ -1,12 +1,18 @@
 ﻿@using GigTracker.Entities
-@model IEnumerable<Gig>
+@model GigListViewModel
+@{
+    ViewData["Title"] = "Gig ListAdd";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
 
-    <h4>Gig List</h4>
+<h4>Gig List</h4>
 
+@if (Model.User?.Role == Role.Admin) {
     <a asp-controller="Gig" asp-action="Create">New Gig</a>
+}
 
-@foreach (var u in Model) {
+@foreach (var u in Model.Gigs) {
     <div>
         Venue: @u.VenueName
         Date: @u.Date
