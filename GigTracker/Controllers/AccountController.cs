@@ -43,7 +43,7 @@ namespace GigTracker.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLoginModel userModel, string returnUrl = null) {
 
-            var users = _userRepository.Get();
+            IEnumerable<User> users = _userRepository.Get().Result;
             User user = users.Where(u => u.Email == userModel.Email).FirstOrDefault();
 
             if (user == null) {

@@ -1,0 +1,36 @@
+﻿@model GigDetailsViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Gig Details</h1>
+
+
+    <div class="col-sm-10">
+        <label asp-for="Gig.VenueName"></label>
+        <input asp-for="Gig.VenueName" />
+    </div>
+    <div class="col-sm-10">
+        <label asp-for="Gig.VenueAddress"></label>
+        <input asp-for="Gig.VenueAddress" />
+    </div>
+
+    <div class="col-sm-10">
+        <label asp-for="Gig.VenuePhone"></label>
+        <input asp-for="Gig.VenuePhone" />
+    </div>
+
+    <div class="col-sm-10">
+        <label asp-for="Gig.Date"></label>
+        <input asp-for="Gig.Date" />
+    </div>
+
+    <div class="col-sm-10">
+        <label asp-for="Gig.ArtistName"></label>
+        <input asp-for="Gig.ArtistName" />
+    </div>
+
+    <button asp-route="Home/Index">OK</button>
+
+

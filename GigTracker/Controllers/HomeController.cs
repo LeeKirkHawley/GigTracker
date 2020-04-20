@@ -26,7 +26,6 @@ namespace GigTracker.Controllers {
 		}
 
 		public IActionResult Index() {
-			//var userId = TempData["UserId"];
 
 			var userId = HttpContext.Session.GetString("UserId");
 

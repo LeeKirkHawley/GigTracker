@@ -9,9 +9,14 @@ using GigTracker.Entities;
 namespace GigTracker.Repositories {
 	public interface IUserRepository {
 
-		//IQueryable<User> Users { get; }
-		IEnumerable<User> Get();
+        Task<IEnumerable<User>> Get();
 
-		Task<User> Get(int id);
-	}
+        Task<User> Get(int id);
+
+        Task<User> Add(User gig);
+
+        Task<User> Delete(int id);
+
+        Task<User> Update(User gig);
+    }
 }

@@ -70,7 +70,7 @@ namespace GigTracker.Services {
             //}.AsQueryable<GigTrackerUser>();
             //return Users;
 
-            return _userRepository.Get();
+            return _userRepository.Get().Result;
         }
 
         public User GetById(int id) {

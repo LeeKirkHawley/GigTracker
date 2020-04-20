@@ -1,0 +1,27 @@
+﻿@model UserCreateViewModel
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Create</h1>
+
+<dt class="col-sm-2">
+    @Html.DisplayNameFor(model => model.User.UserName)
+</dt>
+<dd class="col-sm-10">
+    @Html.DisplayFor(model => model.User.Password)
+</dd>
+
+<dd class="col-sm-10">
+    @Html.DisplayFor(model => model.User.FirstName)
+</dd>
+
+<dd class="col-sm-10">
+    @Html.DisplayFor(model => model.User.LastName)
+</dd>
+
+<dd class="col-sm-10">
+    @Html.DisplayFor(model => model.User.Email)
+</dd>
+

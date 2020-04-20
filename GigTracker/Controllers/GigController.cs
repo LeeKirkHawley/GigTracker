@@ -21,5 +21,23 @@ namespace GigTracker.Controllers {
 			IEnumerable<Gig> gigs = _gigRepository.Get().Result;
 			return View(gigs);
 		}
+
+		[HttpGet]
+		public ViewResult Create() {
+			GigCreateViewModel model = new GigCreateViewModel();
+			return View(model);
+		}
+
+		[HttpPost]
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Create(GigCreateViewModel model) {
+
+			GigDetailsViewModel detailsModel = new GigDetailsViewModel {
+				Gig = model.Gig
+			};
+
+			return View("Details", detailsModel);
+		}
 	}
 }

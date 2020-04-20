@@ -53,11 +53,7 @@ namespace GigTracker {
 			});
 			services.AddMvc();
 
-			// creating AccountService as a singleton so I can manage CurrentUser
-			// this means that AccountService shouldn't or can't consume any oher object that is not a singleton
-			// https://codingblast.com/asp-net-core-dependency-injection-cannot-consume-scoped-service/
 			services.AddTransient<AccountService>();			
-
 			services.AddTransient<UserService>();
 			services.AddTransient<IUserRepository, UserRepository>();
 			services.AddTransient<IGigRepository, GigRepository>();
@@ -70,22 +66,9 @@ namespace GigTracker {
 
 			var appSettings = appSettingsSection.Get<AppSettings>();
 			var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+
 			//services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-			//	.AddCookie();
-
-			services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-			.AddCookie(o => o.LoginPath = new PathString("/Account/Login"));
-
-			//services.AddMvc().AddRazorPagesOptions(options => {
-			//	options.Conventions.AllowAnonymousToPage("/Account/Login");
-			//	options.Conventions.AllowAnonymousToPage("/Home/Index");
-			//	options.Conventions.AllowAnonymousToPage("/Home");
-			//	options.Conventions.AllowAnonymousToPage("/");
-			//	options.Conventions.AuthorizeFolder("/Gigs/List");
-			//	options.Conventions.AuthorizeFolder("/User/List");
-			//});
-
-			//services.AddHttpContextAccessor();
+			//	.AddCookie(o => o.LoginPath = new PathString("/Account/Login"));
 
 			IServiceCollection s = services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
@@ -93,14 +76,6 @@ namespace GigTracker {
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
 			services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
-
-
-			//services.AddDefaultIdentity<IdentityUser>()
-			// 	.AddRoles<IdentityRole>();
-			//apparently can't use this with custom login and such
-			//.AddEntityFrameworkStores<ApplicationDbContext>();
-
-
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -127,21 +102,11 @@ namespace GigTracker {
 
 				//endpoints.MapRazorPages();
 			});
-			//app.UseMvcWithDefaultRoute();
-			//app.UseMvc(routes => {
-			//	routes.MapRoute(
-			//		name: "default",
-			//		template: "{controller=Home}/{action=Index}/{id?}");
-			//});
 
 			try {
 				using (var serviceScope = app.ApplicationServices.CreateScope()) {
 					var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
 					IAccountService accountService = serviceScope.ServiceProvider.GetService<IAccountService>();
-
-					//ApplicationDbContext context = app.ApplicationServices.GetRequiredService<ApplicationDbContext>();
-					//AccountService accountService = services.GetRequiredService<AccountService>();
-
 					SeedData.EnsurePopulated(app, context, accountService);
 				}
 
@@ -150,9 +115,6 @@ namespace GigTracker {
 				//var logger = services.GetRequiredService<ILogger<Program>>();
 				//logger.LogError(ex, "An error occurred seeding the DB.");
 			}
-
-			//CreateRoles(services);
-
 		}
 
 		private async Task CreateRoles(IServiceProvider serviceProvider) {

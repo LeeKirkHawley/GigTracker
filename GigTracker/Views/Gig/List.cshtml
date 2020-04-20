@@ -2,11 +2,13 @@
 @model IEnumerable<Gig>
 
 
-Gig List
+    <h4>Gig List</h4>
+
+    <a asp-controller="Gig" asp-action="Create">New Gig</a>
 
 @foreach (var u in Model) {
     <div>
-        <h3>Venue: @u.VenueName</h3>
-        <h4>Date: @u.Date</h4>
+        Venue: @u.VenueName
+        Date: @u.Date
     </div>
 }
