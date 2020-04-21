@@ -12,9 +12,11 @@
     <a asp-controller="Gig" asp-action="Create">New Gig</a>
 }
 
-@foreach (var u in Model.Gigs) {
-    <div>
-        Venue: @u.VenueName
-        Date: @u.Date
-    </div>
+@foreach (var gig in Model.Gigs) {
+<div>
+
+    <a asp-controller="Gig" asp-action="Details" asp-route-id="@gig.Id">Details</a>
+    @gig.VenueName
+    @gig.Date
+</div>
 }
