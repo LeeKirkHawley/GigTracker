@@ -18,6 +18,9 @@
     @if (Model.userRole == "Admin") {
         <a href="/User/List" class="btn btn-default">Users</a>
     }
+    @if (Model.userRole == "Admin" || Model.userRole == "User") {
+        <a asp-controller="User" asp-action="Details" asp-route-userid=@Model.userId class="btn btn-default">Profile</a>
+    }
     <a href="/Account/Login" class="btn btn-default">Login</a>
     <a href="/Gig/List" class="btn btn-default">Gigs</a>
 

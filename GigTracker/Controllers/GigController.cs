@@ -43,21 +43,18 @@ namespace GigTracker.Controllers {
 		}
 
 		[HttpPost]
-		[HttpPost]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(GigCreateViewModel model) {
 
 			string UserId = this.HttpContext.Session.GetString("UserId");
 
-			Gig newGig = model.Gig;
-			newGig.UserId = Convert.ToInt32(UserId);
+			model.Gig.UserId = Convert.ToInt32(UserId);
+
+			var newGig = await _gigRepository.Add(model.Gig);
 
 			GigDetailsViewModel detailsModel = new GigDetailsViewModel {
 				Gig = newGig
 			};
-
-
-			await _gigRepository.Add(model.Gig);
 
 			return View("Details", detailsModel);
 		}

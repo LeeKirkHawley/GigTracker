@@ -1,27 +1,38 @@
 ﻿@model UserCreateViewModel
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "User Create";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
+<h1>User Create</h1>
 
-<dt class="col-sm-2">
-    @Html.DisplayNameFor(model => model.User.UserName)
-</dt>
-<dd class="col-sm-10">
-    @Html.DisplayFor(model => model.User.Password)
-</dd>
+<form asp-controller="User" asp-action="Create" method="post">
 
-<dd class="col-sm-10">
-    @Html.DisplayFor(model => model.User.FirstName)
-</dd>
+    <div class="col-sm-10">
+        <label asp-for="User.UserName"></label>
+        <input asp-for="User.UserName" />
+    </div>
+    <div class="col-sm-10">
+        <label asp-for="User.Password"></label>
+        <input asp-for="User.Password" />
+    </div>
 
-<dd class="col-sm-10">
-    @Html.DisplayFor(model => model.User.LastName)
-</dd>
+    <div class="col-sm-10">
+        <label asp-for="User.FirstName"></label>
+        <input asp-for="User.FirstName" />
+    </div>
 
-<dd class="col-sm-10">
-    @Html.DisplayFor(model => model.User.Email)
-</dd>
+    <div class="col-sm-10">
+        <label asp-for="User.LastName"></label>
+        <input asp-for="User.LastName" />
+    </div>
 
+    <div class="col-sm-10">
+        <label asp-for="User.Email"></label>
+        <input asp-for="User.Email" />
+        @Html.DisplayFor(model => model.User.Email)
+    </div>
+
+    <button asp-route="Create">Click Me</button>
+
+</form>

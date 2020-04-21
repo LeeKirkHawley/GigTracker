@@ -39,10 +39,30 @@ namespace GigTracker.Controllers {
 				user = _userService.GetById(Convert.ToInt32(userId));
 
 			if(user?.Role == Role.Admin)
-				return View(_userRepository.Get());
+				return View("List", _userRepository.Get().Result);
 			else
 				return RedirectToAction("Index", "Home");
 		}
+
+		[HttpGet]
+		public ViewResult Create() {
+			UserCreateViewModel model = new UserCreateViewModel();
+			return View(model);
+		}
+
+		[HttpPost]
+		[ValidateAntiForgeryToken]
+		public async Task<IActionResult> Create(UserCreateViewModel model) {
+
+			User newUser = await _userRepository.Add(model.User);
+
+			UserDetailsViewModel newModel = new UserDetailsViewModel {
+				User = newUser
+			};
+
+			return View("Details", newModel);
+		}
+
 
 		[HttpGet("{id}")]
 		public IActionResult GetById(int id) {
@@ -54,6 +74,18 @@ namespace GigTracker.Controllers {
 				return NotFound();
 
 			return Ok(user);
+		}
+
+		//[HttpGet("{id}")]
+		public async Task<IActionResult> Details(int? userId) {
+
+			User currentUser = await _userRepository.Get(userId.Value);
+
+			UserDetailsViewModel model = new UserDetailsViewModel {
+				User = currentUser
+			};
+
+			return View(model);
 		}
 	}
 }

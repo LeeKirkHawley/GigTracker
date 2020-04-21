@@ -56,13 +56,9 @@ namespace GigTracker.Controllers
                 return View();
             }
 
-
-//            TempData["UserId"] = user.Id;
-
             this.HttpContext.Session.SetString("UserId", user.Id.ToString());
 
             return RedirectToAction("Index", "Home");
-            //return View("/Home/Index");
         }
 
         private IActionResult RedirectToLocal(string returnUrl) {
