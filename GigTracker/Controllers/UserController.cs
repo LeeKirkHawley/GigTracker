@@ -77,9 +77,9 @@ namespace GigTracker.Controllers {
 		}
 
 		//[HttpGet("{id}")]
-		public async Task<IActionResult> Details(int? userId) {
+		public async Task<IActionResult> Details(int Id) {
 
-			User currentUser = await _userRepository.Get(userId.Value);
+			User currentUser = await _userRepository.Get(Id);
 
 			UserDetailsViewModel model = new UserDetailsViewModel {
 				User = currentUser

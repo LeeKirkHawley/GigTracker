@@ -2,9 +2,10 @@
 @using GigTracker.Entities
 @model IEnumerable<User>
 
-@foreach (var u in Model) {
+@foreach (var user in Model) {
     <div>
-        <h3>User Name: @u.UserName</h3>
-        <h4>Email: @u.Email</h4>
+        <a asp-controller="User" asp-action="Details" asp-route-id="@user.Id">Details</a>
+        User Name: @user.UserName
+        Email: @user.Email
     </div>
 }
