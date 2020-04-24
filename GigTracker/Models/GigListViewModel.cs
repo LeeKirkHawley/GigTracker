@@ -9,5 +9,6 @@ namespace GigTracker.Models {
 		public IEnumerable<Gig> Gigs { get; set; }
 
 		public User User { get; set; }
+
 	}
 }

@@ -87,5 +87,17 @@ namespace GigTracker.Controllers {
 
 			return View(model);
 		}
+
+		public async Task<IActionResult> Profile(int Id) {
+
+			User currentUser = await _userRepository.Get(Id);
+
+			UserDetailsViewModel model = new UserDetailsViewModel {
+				User = currentUser
+			};
+
+			return View(model);
+		}
+
 	}
 }

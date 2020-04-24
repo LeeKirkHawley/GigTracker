@@ -8,21 +8,18 @@ using Microsoft.AspNetCore.Http;
 using GigTracker.Services;
 using GigTracker.Entities;
 using GigTracker.Models;
+using GigTracker.Repositories;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace GigTracker.Controllers {
 	public class HomeController : Controller {
-		// GET: /<controller>/
-		//[Route("")]
-		//[Route("/Home")]
-		//[Route("/Home/Index")]
-		//[Authorize]  // anybody should be able to access
-
 		UserService _userService;
+		IGigRepository _gigRepository;
 
-		public HomeController(UserService userSevice) {
+		public HomeController(UserService userSevice, IGigRepository gigRepository) {
 			_userService = userSevice;
+			_gigRepository = gigRepository;
 		}
 
 		public IActionResult Index() {
@@ -33,8 +30,11 @@ namespace GigTracker.Controllers {
 			if(userId != null)
 				currentUser = _userService.GetById(Convert.ToInt32(userId));
 
+			IEnumerable<Gig> gigs = _gigRepository.Get().Result;
+
 			HomeIndexViewModel model = new HomeIndexViewModel();
-			if(currentUser != null)
+			model.Gigs = gigs;
+			if (currentUser != null)
 			{
 				model.userId = currentUser.Id;
 				model.userRole = currentUser.Role;

@@ -14,19 +14,41 @@
     <input asp-for="userId" />
     <input asp-for="userRole" />
 
-    <h1>Gig Tracker</h1>
-    @if (Model.userRole == "Admin") {
-        <a href="/User/List" class="btn btn-default">Users</a>
-    }
-    @if (Model.userRole == "Admin" || Model.userRole == "User") {
-        <a asp-controller="User" asp-action="Details" asp-route-userid=@Model.userId class="btn btn-default">Profile</a>
-    }
-    <a href="/Account/Login" class="btn btn-default">Login</a>
-    <a href="/Gig/List" class="btn btn-default">Gigs</a>
+    <nav class="navbar">
+        @*<a class="navbar-brand">Navbar Search Box Auto Expand </a>*@
+        <form class="form-inline">
+            <a asp-controller="Account" asp-action="Login" class="btn btn-default menu-button">Login</a>
+            <a asp-controller="Gig" asp-action="List" class="btn btn-default menu-button">Gigs</a>
+            @if (Model.userRole == "Admin" || Model.userRole == "User") {
+                <a asp-controller="User" asp-action="Profile" asp-route-id=@Model.userId class="btn btn-default menu-button">Profile</a>
+            }
+            @if (Model.userRole == "Admin") {
+                <a asp-controller="User" asp-action="List" class="btn btn-default menu-button">Users</a>
+            }
 
+
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        </form>
+    </nav>
     <p>
-        User Id:@HttpContextAccessor.HttpContext.Session.GetString("UserId")
-    </p>
+
+
+
+        @*<p>
+                User Id:@HttpContextAccessor.HttpContext.Session.GetString("UserId")
+            </p>*@
+        @*</div>*@
+
+
+        @foreach (Gig gig in Model.Gigs) {
+            <div>
+
+                <a asp-controller="Gig" asp-action="Details" asp-route-id="@gig.Id">Details</a>
+                @gig.ArtistName
+                @gig.Date
+                @gig.VenueName
+            </div>
+        }
 
 </body>
 </html>

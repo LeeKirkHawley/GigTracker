@@ -14,5 +14,8 @@ namespace GigTracker.Models {
 
 		[HiddenInput]
 		public string userRole { get; set; }
+
+		public IEnumerable<Gig> Gigs { get; set; }
+
 	}
 }

@@ -1,0 +1,31 @@
+﻿@model UserDetailsViewModel
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>User Profile</h1>
+
+<div class="col-sm-10">
+    <label asp-for="User.UserName"></label>
+    <text>@Model.User.UserName</text>
+</div>
+
+<div class="col-sm-10">
+    <label asp-for="User.FirstName"></label>
+    <text>@Model.User.FirstName</text>
+</div>
+
+<div class="col-sm-10">
+    <label asp-for="User.LastName"></label>
+    <text>@Model.User.LastName</text>
+</div>
+
+<div class="col-sm-10">
+    <label asp-for="User.Email"></label>
+    <text>@Model.User.Email</text>
+</div>
+
+<input type="button" value="OK" onclick="location.href='@Url.Action("Index", "Home")'" />
+
+

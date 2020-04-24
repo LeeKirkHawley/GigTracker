@@ -6,17 +6,20 @@
 }
 
 
-<h4>Gig List</h4>
 
 @if (Model.User?.Role == Role.Admin) {
-    <a asp-controller="Gig" asp-action="Create">New Gig</a>
+    <a asp-controller="Gig" asp-action="Create" class="btn btn-default menu-button">New gig</a>
+
+    @*<a asp-controller="Gig" asp-action="Create">New Gig</a>*@
 }
 
-@foreach (var gig in Model.Gigs) {
-<div>
+<h4>Gig List</h4>
 
-    <a asp-controller="Gig" asp-action="Details" asp-route-id="@gig.Id">Details</a>
-    @gig.VenueName
-    @gig.Date
-</div>
+@foreach (var gig in Model.Gigs) {
+    <div>
+
+        <a asp-controller="Gig" asp-action="Details" asp-route-id="@gig.Id">Details</a>
+        @gig.VenueName
+        @gig.Date
+    </div>
 }
