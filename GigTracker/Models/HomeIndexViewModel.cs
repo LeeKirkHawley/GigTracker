@@ -6,16 +6,19 @@ using GigTracker.Entities;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Mvc;
+using GigTracker.LinqExtensions;
 
 namespace GigTracker.Models {
-	public class HomeIndexViewModel {
+	public class HomeIndexViewModel : PagedResultBase {
 		[HiddenInput]
 		public int? userId { get; set; }
 
 		[HiddenInput]
 		public string userRole { get; set; }
 
-		public IEnumerable<Gig> Gigs { get; set; }
+		public PagedResult<Gig> Gigs { get; set; }
+
+		public PagingInfo PagingInfo { get; set; }
 
 	}
 }

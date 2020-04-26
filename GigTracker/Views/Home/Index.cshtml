@@ -1,10 +1,25 @@
-﻿@model HomeIndexViewModel
-@using Microsoft.AspNetCore.Authentication
+﻿@using Microsoft.AspNetCore.Authentication
 @using GigTracker.Entities;
 @using Microsoft.AspNetCore.Http
+@using GigTracker.LinqExtensions
+@using GigTracker.Views.Home
+@model HomeIndexViewModel
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     Layout = "_Layout";
+
+    var urlTemplate = Url.Action() + "?page={0}";
+    var request = ViewContext.HttpContext.Request;
+    foreach (var key in request.Query.Keys) {
+        if (key == "page") {
+            continue;
+        }
+
+        urlTemplate += "&" + key + "=" + request.Query[key];
+    }
+
+    var startIndex = Math.Max(Model.CurrentPage - 2, 1);
+    var finishIndex = Math.Min(Model.CurrentPage + 2, Model.PageCount);
 }
 
 <!DOCTYPE html>
@@ -14,41 +29,91 @@
     <input asp-for="userId" />
     <input asp-for="userRole" />
 
-    <nav class="navbar">
-        @*<a class="navbar-brand">Navbar Search Box Auto Expand </a>*@
-        <form class="form-inline">
-            <a asp-controller="Account" asp-action="Login" class="btn btn-default menu-button">Login</a>
-            <a asp-controller="Gig" asp-action="List" class="btn btn-default menu-button">Gigs</a>
-            @if (Model.userRole == "Admin" || Model.userRole == "User") {
-                <a asp-controller="User" asp-action="Profile" asp-route-id=@Model.userId class="btn btn-default menu-button">Profile</a>
-            }
-            @if (Model.userRole == "Admin") {
-                <a asp-controller="User" asp-action="List" class="btn btn-default menu-button">Users</a>
-            }
-
-
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-        </form>
+    <nav class="navbar navbar-expand-md navbar-custom">
+        <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-default menu-button">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a asp-controller="Gig" asp-action="List" class="btn btn-default menu-button">Gigs</a>
+                </li>
+                @if (Model.userRole == "Admin" || Model.userRole == "User") {
+                    <li class="nav-item">
+                        <a asp-controller="User" asp-action="Profile" asp-route-id=@Model.userId class="btn btn-default menu-button">Profile</a>
+                    </li>
+                }
+                @if (Model.userRole == "Admin") {
+                    <li class="nav-item">
+                        <a asp-controller="User" asp-action="List" class="btn btn-default menu-button">Users</a>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item">
+                    <input name="searchinput" id="searchinput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                </li>
+            </ul>
+        </div>
     </nav>
-    <p>
 
+    <div class="row">
+        <div class="col-md-8 col-sm-8 items-info">
+            Items @Model.FirstRowOnPage to @Model.LastRowOnPage of @Model.RowCount total
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-sm-8">
+            @if (Model.PageCount > 1) {
+                <ul class="pagination pull-right">
+                    <li><a href="@urlTemplate.Replace("{0}", "1")">&laquo;</a></li>
+                    @for (var index = startIndex; index <= finishIndex; index++) {
+                        @if (index == Model.CurrentPage) {
 
+                            <li><span>@index</span></li>
+                        }
+                        else {
 
-        @*<p>
-                User Id:@HttpContextAccessor.HttpContext.Session.GetString("UserId")
-            </p>*@
-        @*</div>*@
+                            <li><a href="@urlTemplate.Replace("{0}", index.ToString())">@index</a></li>
+                        }
+                    }
+                    <li><a href="@urlTemplate.Replace("{0}", Model.PageCount.ToString())">&raquo;</a></li>
+                </ul>}
+        </div>
+    </div>
 
+    <div class="row">
+        <div class="col-md-5">
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Artist Name</th>
+                        <th>Venue Name</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{ var i = 1; }
+                    @foreach (var contact in Model.Gigs.Results) {
+                        var rowNo = (Model.CurrentPage - 1) * Model.PageSize + i;
+                        i++;
+                        <tr>
+                            <td>@rowNo</td>
+                            <td>@contact.ArtistName</td>
+                            <td>@contact.VenueName</td>
+                            <td>@contact.Date</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
 
-        @foreach (Gig gig in Model.Gigs) {
-            <div>
+            @*@(await Component.InvokeAsync<PagerViewComponent>(Model))*@
+        </div>
+    </div>
 
-                <a asp-controller="Gig" asp-action="Details" asp-route-id="@gig.Id">Details</a>
-                @gig.ArtistName
-                @gig.Date
-                @gig.VenueName
-            </div>
-        }
 
 </body>
 </html>
@@ -56,27 +121,22 @@
 <script>
     $(document).ready(function () {
 
-        @*$("#users").click(function () {
-            //$("form").attr("action", "/User/List");
-            var i = 0;
-            i++;
-        });
+    });
 
-        $("#gigs").click(function () {
-            $.ajax({
-                type: "GET",
-                url: "@Url.Action("List", "Gig")",
-                //data: {number1: val1, number2: val2},
-                //dataType: "json",
-                //success: function (data) {
-                //    //console.log(msg);
-                //    window.location.href = data.redirecturl;
-                //},
-                //error: function (req, status, error) {
-                //    alert(error);
-                //}
+    $('#searchinput').on('keypress', function (e) {
+        if (e.which === 13) {
+
+            //Disable textbox to prevent multiple submit
+            $(this).attr("disabled", "disabled");
+
+            //Do Stuff, submit, etc..
+            var txt = $(this).val();
+            $.get("Gig/AllGigs", { suggest: txt }, function (result) {
+                $("#GigListDiv").html(result);
             });
-        });*@
 
+            //Enable the textbox again if needed.
+            $(this).removeAttr("disabled");
+        }
     });
 </script>

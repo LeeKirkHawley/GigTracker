@@ -1,6 +1,8 @@
 ﻿body {
     background-color: black;
     color: white;
+    /*background-color: white;
+    color: white;*/
 }
 
 h1 {
@@ -8,11 +10,11 @@ h1 {
 }
 
 .header {
-    padding: 30px;
+    padding: 10px;
     text-align: center;
     background: darkblue;
     color: white;
-    font-size: 40px;
+    font-size: 50px;
 }
 
 .menu-button {
@@ -20,22 +22,10 @@ h1 {
     background-color: darkblue;
 }
 
-.navbar {
-    position: relative;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0.5rem 1rem;
-    background: #222;
-    color: #f2f2f2;
-}
-
 input[type=search] {
     /*background: #555 url(http://hp-proliant.co.uk/qual_images/mob-search-icon.png) no-repeat 9px center;*/
     border: solid 1px #ccc;
-    /*padding: 9px 10px 9px 32px;*/
-    width: 55px;
+    width: 100px;  /* width of search control when it doesn't have focus*/
 }
 
 input[type=search]:focus {
@@ -43,4 +33,25 @@ input[type=search]:focus {
     background-color: #ccc;
     border-color: #333;
     border: solid 1px #fff;
+}
+
+/*.navbar-brand {
+    position: absolute;
+    width: 100%;
+    left: 0;
+    text-align: center;
+    margin: 0 auto;
+}*/
+
+.navbar-toggle {
+    z-index: 3;
+}
+
+.navbar-custom {
+    background-color: darkblue;
+    padding: 0 0;
+}
+
+.card {
+    background-color: black;
 }

@@ -1,0 +1,16 @@
+﻿@using GigTracker.Entities
+@model Gig
+
+<div class="card card-outline-primary m-1 p-1">
+    <div class="bg-faded p-1">
+        <div class="card-text p-1">
+            @Model.ArtistName
+        </div>
+        <div>
+            @Model.VenueName
+            <span class="badge badge-pill badge-primary" style="float:right">
+                <small>@Model.Date</small>
+            </span>
+        </div>
+    </div>
+</div>

@@ -9,6 +9,7 @@ using GigTracker.Services;
 using GigTracker.Entities;
 using GigTracker.Models;
 using GigTracker.Repositories;
+using GigTracker.LinqExtensions;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -22,7 +23,8 @@ namespace GigTracker.Controllers {
 			_gigRepository = gigRepository;
 		}
 
-		public IActionResult Index() {
+		[HttpGet("{page?}")]
+		public IActionResult Index(int page = 1) {
 
 			var userId = HttpContext.Session.GetString("UserId");
 
@@ -30,17 +32,19 @@ namespace GigTracker.Controllers {
 			if(userId != null)
 				currentUser = _userService.GetById(Convert.ToInt32(userId));
 
+			HomeIndexViewModel model = new HomeIndexViewModel();
+
 			IEnumerable<Gig> gigs = _gigRepository.Get().Result;
 
-			HomeIndexViewModel model = new HomeIndexViewModel();
-			model.Gigs = gigs;
-			if (currentUser != null)
-			{
+			PagedResult<Gig> result = gigs.GetPaged<Gig>(page, 2);  // page number, page size
+			model.Gigs = result;
+
+			if (currentUser != null) {
 				model.userId = currentUser.Id;
 				model.userRole = currentUser.Role;
 			};
 
-			if(userId != null)
+			if (userId != null)
 				this.HttpContext.Session.SetString("UserId", userId.ToString());
 
 			return View("Index", model);

@@ -90,7 +90,8 @@ namespace GigTracker {
 			}
 
 			app.UseStatusCodePages();
-			app.UseStaticFiles();
+			//app.UseStaticFiles();
+			app.UseFileServer();
 			app.UseSession();
 			app.UseAuthentication();
 			app.UseRouting();
