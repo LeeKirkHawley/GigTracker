@@ -31,8 +31,7 @@ namespace GigTracker.LinqExtensions {
 
 
     public static class LinqExtensions {
-        public static PagedResult<T> GetPaged<T>(this IEnumerable<T> query,
-                                                    int page, int pageSize) where T : class {
+        public static PagedResult<T> GetPaged<T>(this IEnumerable<T> query, int page, int pageSize) where T : class {
             var result = new PagedResult<T>();
             result.CurrentPage = page;
             result.PageSize = pageSize;

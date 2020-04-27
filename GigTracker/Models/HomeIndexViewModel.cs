@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Mvc;
 using GigTracker.LinqExtensions;
 
 namespace GigTracker.Models {
-	public class HomeIndexViewModel : PagedResultBase {
+	public class HomeIndexViewModel {
 		[HiddenInput]
 		public int? userId { get; set; }
 

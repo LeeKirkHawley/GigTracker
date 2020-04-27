@@ -93,9 +93,9 @@ namespace GigTracker {
 			//app.UseStaticFiles();
 			app.UseFileServer();
 			app.UseSession();
-			app.UseAuthentication();
+			//app.UseAuthentication();
 			app.UseRouting();
-			app.UseAuthorization(); // must go between UseRouting() and UseEndoints()
+			//app.UseAuthorization(); // must go between UseRouting() and UseEndoints()
 			app.UseEndpoints(endpoints => {
 				endpoints.MapControllerRoute(
 					name: "default",

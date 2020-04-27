@@ -9,6 +9,7 @@
     <Compile Remove="Models\UserModel.cs" />
     <Compile Remove="Models\UserModelX.cs" />
     <Compile Remove="Views\Home\Login.cshtml.cs" />
+    <Compile Remove="Views\Home\PagerViewComponent.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -34,7 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Views\Shared\Components\PagerViewComponent\" />
+    <Folder Include="Views\Shared\Components\" />
   </ItemGroup>
 
 </Project>
