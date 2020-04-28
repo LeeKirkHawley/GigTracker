@@ -35,7 +35,7 @@
                 </li>
                 @if (Model.userRole == "Admin" || Model.userRole == "User") {
                     <li class="nav-item">
-                        <a asp-controller="Gig" asp-action="UserGigs" class="btn btn-default menu-button">Gigs</a>
+                        <a asp-controller="Gig" asp-action="List" class="btn btn-default menu-button">Gigs</a>
                     </li>
                     <li class="nav-item">
                         <a asp-controller="User" asp-action="Profile" asp-route-id=@Model.userId class="btn btn-default menu-button">Profile</a>

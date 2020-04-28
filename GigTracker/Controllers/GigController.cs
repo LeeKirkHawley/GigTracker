@@ -10,6 +10,7 @@ using GigTracker.Repositories;
 using GigTracker.Entities;
 using GigTracker.Services;
 using Newtonsoft.Json;
+using GigTracker.LinqExtensions;
 
 namespace GigTracker.Controllers {
 	public class GigController : Controller {
@@ -21,38 +22,65 @@ namespace GigTracker.Controllers {
 			_userService = userService;
 		}
 
-		[HttpGet("Gig/List")]
-		public ViewResult List() {
+		[HttpGet("Gig/List/{page?}")]
+		public ViewResult List(int page) {
 
-			string UserId = this.HttpContext.Session.GetString("UserId");
-			User currentUser = _userService.GetById(Convert.ToInt32(UserId));
+			var userId = HttpContext.Session.GetString("UserId");
 
-			IEnumerable <Gig> gigs = _gigRepository.Get().Result;
+			User currentUser = null;
+			if (userId != null)
+				currentUser = _userService.GetById(Convert.ToInt32(userId));
 
-			GigListViewModel model = new GigListViewModel {
-				Gigs = gigs, 
-				User = currentUser
-			};
-
-			return View(model);
-		}
-
-
-		[HttpGet("Gig/UserGigs")]
-		public IEnumerable<Gig> UserGigs() {
-
-			string UserId = this.HttpContext.Session.GetString("UserId");
-			User currentUser = _userService.GetById(Convert.ToInt32(UserId));
+			GigListViewModel model = new GigListViewModel();
 
 			IEnumerable<Gig> gigs = _gigRepository.Get().Result;
+			//if (!String.IsNullOrEmpty(artistQuery))
+			//	gigs = gigs.Where(g => g.ArtistName == artistQuery);
 
-			GigListViewModel model = new GigListViewModel {
-				Gigs = gigs,
-				User = currentUser
-			};
+			PagedResult<Gig> result = gigs.GetPaged<Gig>(page, 5);  // page number, page size
+			model.Gigs = result;
 
-			return gigs;
+			//if (currentUser != null) {
+			//	model.userId = currentUser.Id;
+			//	model.userRole = currentUser.Role;
+			//	model.ArtistSearch = artistQuery;
+			//};
+
+			//if (userId != null)
+			//	this.HttpContext.Session.SetString("UserId", userId.ToString());
+
+			return View(model);
+
+
+			//string UserId = this.HttpContext.Session.GetString("UserId");
+			//User currentUser = _userService.GetById(Convert.ToInt32(UserId));
+
+			//IEnumerable <Gig> gigs = _gigRepository.Get().Result;
+
+			//GigListViewModel model = new GigListViewModel {
+			//	Gigs = gigs, 
+			//	User = currentUser
+			//};
+
+			//return View(model);
 		}
+
+
+		//[HttpGet("Gig/UserGigs")]
+		//public IEnumerable<Gig> UserGigs() {
+
+		//	string UserId = this.HttpContext.Session.GetString("UserId");
+		//	User currentUser = _userService.GetById(Convert.ToInt32(UserId));
+
+		//	IEnumerable<Gig> gigs = _gigRepository.Get().Result;
+
+		//	GigListViewModel model = new GigListViewModel {
+		//		Gigs = gigs,
+		//		User = currentUser
+		//	};
+
+		//	return gigs;
+		//}
 
 		[HttpGet]
 		public ViewResult Create() {

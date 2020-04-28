@@ -3,23 +3,68 @@
 @{
     ViewData["Title"] = "Gig ListAdd";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var urlTemplate = Url.Action() + "?page={0}";  // used to create the link to get prev/next page
+    var request = ViewContext.HttpContext.Request;
+    foreach (var key in request.Query.Keys) {
+        if (key == "page") {
+            continue;
+        }
+
+        urlTemplate += "&" + key + "=" + request.Query[key];
+    }
+
+    var startIndex = Math.Max(Model.Gigs.CurrentPage - 5, 1);
+    var finishIndex = Math.Min(Model.Gigs.CurrentPage + 5, Model.Gigs.PageCount);
+
 }
 
 
 
-@if (Model.User?.Role == Role.Admin) {
-    <a asp-controller="Gig" asp-action="Create" class="btn btn-default menu-button">New gig</a>
+<a asp-controller="Gig" asp-action="Create" class="btn btn-default menu-button">New gig</a>
 
-    @*<a asp-controller="Gig" asp-action="Create">New Gig</a>*@
-}
 
 <h4>Gig List</h4>
-
-@foreach (var gig in Model.Gigs) {
-    <div>
-
-        <a asp-controller="Gig" asp-action="Details" asp-route-id="@gig.Id">Details</a>
-        @gig.VenueName
-        @gig.Date
+<div class="row">
+    <div class="col-md-8 col-sm-8 items-info">
+        Items @Model.Gigs.FirstRowOnPage to @Model.Gigs.LastRowOnPage of @Model.Gigs.RowCount total
     </div>
-}
+</div>
+<div class="row">
+    <div class="col-md-8 col-sm-8">
+        <nav aria-label="Page navigation">
+            @if (Model.Gigs.PageCount > 1) {   // if there's more than one page
+                <ul class="pagination pull-right">
+                    <li class="page-item">
+                        <a class="page-link" href="@urlTemplate.Replace("{0}", "1")">&laquo;</a>
+                    </li>
+                    @for (var index = startIndex; index <= finishIndex; index++) {
+                        @if (index == Model.Gigs.CurrentPage) {
+
+                            <li class="page-item"><span class="page-link">@index</span></li>
+                        }
+                        else {
+
+                            <li class="page-item">
+                                <a class="page-link" href="@urlTemplate.Replace("{0}", index.ToString())">@index</a>
+                            </li>
+                        }
+                    }
+                    <li class="page-item">
+                        <a class="page-link" href="@urlTemplate.Replace("{0}", Model.Gigs.PageCount.ToString())">&raquo;</a>
+                    </li>
+                </ul>}
+        </nav>
+    </div>
+</div>
+
+<partial name="_GigList" for="Gigs" />
+
+@*@foreach (var gig in Model.Gigs) {
+        <div>
+
+            <a asp-controller="Gig" asp-action="Details" asp-route-id="@gig.Id">Details</a>
+            @gig.VenueName
+            @gig.Date
+        </div>
+    }*@
