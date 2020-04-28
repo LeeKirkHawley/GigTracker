@@ -36,8 +36,10 @@ namespace GigTracker.Controllers {
 			IEnumerable<Gig> gigs = _gigRepository.Get().Result;
 			//if (!String.IsNullOrEmpty(artistQuery))
 			//	gigs = gigs.Where(g => g.ArtistName == artistQuery);
+			var GigRowsToDisplay = HttpContext.Session.GetString("GigRowsToDisplay");
 
-			PagedResult<Gig> result = gigs.GetPaged<Gig>(page, 5);  // page number, page size
+
+			PagedResult<Gig> result = gigs.GetPaged<Gig>(page, Convert.ToInt32(GigRowsToDisplay));  // page number, page size
 			model.Gigs = result;
 
 			//if (currentUser != null) {
