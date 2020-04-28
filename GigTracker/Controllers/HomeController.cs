@@ -23,7 +23,7 @@ namespace GigTracker.Controllers {
 			_gigRepository = gigRepository;
 		}
 
-		[HttpGet("")]
+		//[HttpGet("")]
 		[HttpGet("{suggest, page?}")]
 		public IActionResult Index(string artistQuery, int page = 1) {
 

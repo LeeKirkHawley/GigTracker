@@ -1,0 +1,32 @@
+﻿@using GigTracker.Entities;
+@using GigTracker.Models;
+@using GigTracker.LinqExtensions;
+@model PagedResult<Gig>
+
+<div class="row">
+    <div class="col-md-5">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    @*<th>#</th>*@
+                    <th>Artist Name</th>
+                    <th>Venue Name</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ var i = 1; }
+                @foreach (var contact in Model.Results) {
+                    var rowNo = (Model.CurrentPage - 1) * Model.PageSize + i;
+                    i++;
+                    <tr>
+                        @*<td>@rowNo</td>*@
+                        <td>@contact.ArtistName</td>
+                        <td>@contact.VenueName</td>
+                        <td>@contact.Date</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

@@ -33,13 +33,13 @@ namespace GigTracker.Controllers
             _signInManager = signInManager;
         }
 
-        [HttpGet]
+        [HttpGet("Account/Login")]
         public IActionResult Login(string returnUrl = null) {
             ViewData["ReturnUrl"] = returnUrl;
             return View();
         }
 
-        [HttpPost]
+        [HttpPost("Account/Login")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(UserLoginModel userModel, string returnUrl = null) {
 

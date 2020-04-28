@@ -21,7 +21,7 @@ namespace GigTracker.Controllers {
 			_userService = userService;
 		}
 
-		[HttpGet]
+		[HttpGet("Gig/List")]
 		public ViewResult List() {
 
 			string UserId = this.HttpContext.Session.GetString("UserId");
@@ -71,7 +71,7 @@ namespace GigTracker.Controllers {
 			return json;
 		}
 
-		[HttpGet]
+		[HttpGet("Gig/UserGigs")]
 		public IEnumerable<Gig> UserGigs() {
 
 			string UserId = this.HttpContext.Session.GetString("UserId");

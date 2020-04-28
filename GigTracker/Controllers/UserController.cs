@@ -88,6 +88,7 @@ namespace GigTracker.Controllers {
 			return View(model);
 		}
 
+		[HttpGet("User/Proile")]
 		public async Task<IActionResult> Profile(int Id) {
 
 			User currentUser = await _userRepository.Get(Id);

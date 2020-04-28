@@ -33,10 +33,10 @@
                 <li class="nav-item active">
                     <a asp-controller="Account" asp-action="Login" class="btn btn-default menu-button">Login</a>
                 </li>
-                <li class="nav-item">
-                    <a asp-controller="Gig" asp-action="List" class="btn btn-default menu-button">Gigs</a>
-                </li>
                 @if (Model.userRole == "Admin" || Model.userRole == "User") {
+                    <li class="nav-item">
+                        <a asp-controller="Gig" asp-action="UserGigs" class="btn btn-default menu-button">Gigs</a>
+                    </li>
                     <li class="nav-item">
                         <a asp-controller="User" asp-action="Profile" asp-route-id=@Model.userId class="btn btn-default menu-button">Profile</a>
                     </li>
@@ -68,19 +68,20 @@
                 @if (Model.Gigs.PageCount > 1) {   // if there's more than one page
                     <ul class="pagination pull-right">
                         <li class="page-item">
-                            <a class="page-link" href="@urlTemplate.Replace("{0}", "1")">&laquo;</a></li>
-                            @for (var index = startIndex; index <= finishIndex; index++) {
-                                @if (index == Model.Gigs.CurrentPage) {
+                            <a class="page-link" href="@urlTemplate.Replace("{0}", "1")">&laquo;</a>
+                        </li>
+                        @for (var index = startIndex; index <= finishIndex; index++) {
+                            @if (index == Model.Gigs.CurrentPage) {
 
-                                    <li class="page-item"><span class="page-link">@index</span></li>
-                                }
-                                else {
-
-                                    <li class="page-item">
-                                        <a class="page-link" href="@urlTemplate.Replace("{0}", index.ToString())">@index</a>
-                                    </li>
-                                }
+                                <li class="page-item"><span class="page-link">@index</span></li>
                             }
+                            else {
+
+                                <li class="page-item">
+                                    <a class="page-link" href="@urlTemplate.Replace("{0}", index.ToString())">@index</a>
+                                </li>
+                            }
+                        }
                         <li class="page-item">
                             <a class="page-link" href="@urlTemplate.Replace("{0}", Model.Gigs.PageCount.ToString())">&raquo;</a>
                         </li>
@@ -88,33 +89,7 @@
             </nav>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-5">
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        @*<th>#</th>*@
-                        <th>Artist Name</th>
-                        <th>Venue Name</th>
-                        <th>Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @{ var i = 1; }
-                    @foreach (var contact in Model.Gigs.Results) {
-                        var rowNo = (Model.Gigs.CurrentPage - 1) * Model.Gigs.PageSize + i;
-                        i++;
-                        <tr>
-                            @*<td>@rowNo</td>*@
-                            <td>@contact.ArtistName</td>
-                            <td>@contact.VenueName</td>
-                            <td>@contact.Date</td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <partial name="_GigList" for="Gigs" />
 </body>
 </html>
 
