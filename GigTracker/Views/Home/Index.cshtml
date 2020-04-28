@@ -5,19 +5,6 @@
 @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 @{
     Layout = "_Layout";
-
-    var urlTemplate = Url.Action() + "?page={0}";  // used to create the link to get prev/next page
-    var request = ViewContext.HttpContext.Request;
-    foreach (var key in request.Query.Keys) {
-        if (key == "page") {
-            continue;
-        }
-
-        urlTemplate += "&" + key + "=" + request.Query[key];
-    }
-
-    var startIndex = Math.Max(Model.Gigs.CurrentPage - 5, 1);
-    var finishIndex = Math.Min(Model.Gigs.CurrentPage + 5, Model.Gigs.PageCount);
 }
 
 <!DOCTYPE html>
@@ -57,38 +44,6 @@
         </div>
     </nav>
 
-    <div class="row">
-        <div class="col-md-8 col-sm-8 items-info">
-            Items @Model.Gigs.FirstRowOnPage to @Model.Gigs.LastRowOnPage of @Model.Gigs.RowCount total
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-8 col-sm-8">
-            <nav aria-label="Page navigation">
-                @if (Model.Gigs.PageCount > 1) {   // if there's more than one page
-                    <ul class="pagination pull-right">
-                        <li class="page-item">
-                            <a class="page-link" href="@urlTemplate.Replace("{0}", "1")">&laquo;</a>
-                        </li>
-                        @for (var index = startIndex; index <= finishIndex; index++) {
-                            @if (index == Model.Gigs.CurrentPage) {
-
-                                <li class="page-item"><span class="page-link">@index</span></li>
-                            }
-                            else {
-
-                                <li class="page-item">
-                                    <a class="page-link" href="@urlTemplate.Replace("{0}", index.ToString())">@index</a>
-                                </li>
-                            }
-                        }
-                        <li class="page-item">
-                            <a class="page-link" href="@urlTemplate.Replace("{0}", Model.Gigs.PageCount.ToString())">&raquo;</a>
-                        </li>
-                    </ul>}
-            </nav>
-        </div>
-    </div>
     <partial name="_GigList" for="Gigs" />
 </body>
 </html>

@@ -23,7 +23,7 @@ namespace GigTracker.Controllers {
 		}
 
 		[HttpGet("Gig/List/{page?}")]
-		public ViewResult List(int page) {
+		public ViewResult List(int page = 1) {
 
 			var userId = HttpContext.Session.GetString("UserId");
 
