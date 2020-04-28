@@ -25,7 +25,7 @@ namespace GigTracker.Controllers {
 
 		[HttpGet("")]
 		[HttpGet("{suggest, page?}")]
-		public IActionResult Index(string suggest, int page = 1) {
+		public IActionResult Index(string artistQuery, int page = 1) {
 
 			var userId = HttpContext.Session.GetString("UserId");
 
@@ -36,16 +36,16 @@ namespace GigTracker.Controllers {
 			HomeIndexViewModel model = new HomeIndexViewModel();
 
 			IEnumerable<Gig> gigs = _gigRepository.Get().Result;
-			if (!String.IsNullOrEmpty(suggest))
-				gigs = gigs.Where(g => g.ArtistName == suggest);
+			if (!String.IsNullOrEmpty(artistQuery))
+				gigs = gigs.Where(g => g.ArtistName == artistQuery);
 
-			PagedResult<Gig> result = gigs.GetPaged<Gig>(page, 2);  // page number, page size
+			PagedResult<Gig> result = gigs.GetPaged<Gig>(page, 5);  // page number, page size
 			model.Gigs = result;
 
 			if (currentUser != null) {
 				model.userId = currentUser.Id;
 				model.userRole = currentUser.Role;
-				model.ArtistSearch = suggest;
+				model.ArtistSearch = artistQuery;
 			};
 
 			if (userId != null)

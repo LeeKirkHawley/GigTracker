@@ -16,8 +16,8 @@
         urlTemplate += "&" + key + "=" + request.Query[key];
     }
 
-    var startIndex = Math.Max(Model.Gigs.CurrentPage - 2, 1);
-    var finishIndex = Math.Min(Model.Gigs.CurrentPage + 2, Model.Gigs.PageCount);
+    var startIndex = Math.Max(Model.Gigs.CurrentPage - 5, 1);
+    var finishIndex = Math.Min(Model.Gigs.CurrentPage + 5, Model.Gigs.PageCount);
 }
 
 <!DOCTYPE html>
@@ -93,7 +93,7 @@
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>#</th>
+                        @*<th>#</th>*@
                         <th>Artist Name</th>
                         <th>Venue Name</th>
                         <th>Date</th>
@@ -105,7 +105,7 @@
                         var rowNo = (Model.Gigs.CurrentPage - 1) * Model.Gigs.PageSize + i;
                         i++;
                         <tr>
-                            <td>@rowNo</td>
+                            @*<td>@rowNo</td>*@
                             <td>@contact.ArtistName</td>
                             <td>@contact.VenueName</td>
                             <td>@contact.Date</td>
@@ -130,9 +130,9 @@
             $(this).attr("disabled", "disabled");
 
             //Do Stuff, submit, etc..
-            var artistsearch = $(this).val();
+            var artistquery = $(this).val();
 
-            $.get("", { suggest: artistsearch, page: 1 }, function (result) {
+            $.get("", { artistQuery: artistquery, page: 1 }, function (result) {
                 $("body").html(result);
             });
 

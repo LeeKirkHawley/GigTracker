@@ -55,3 +55,11 @@ input[type=search]:focus {
 .card {
     background-color: black;
 }
+
+.header {
+    font-family: 'Special Elite', cursive;
+    font-size: 3.5rem;
+    padding-top: 20px;
+    padding-bottom: 0;
+    color: orange;
+}
