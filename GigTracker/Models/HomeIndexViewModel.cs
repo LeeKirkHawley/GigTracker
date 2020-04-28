@@ -20,5 +20,7 @@ namespace GigTracker.Models {
 
 		public PagingInfo PagingInfo { get; set; }
 
+		public string ArtistSearch { get; set; }
+
 	}
 }

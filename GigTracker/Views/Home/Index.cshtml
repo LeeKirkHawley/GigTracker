@@ -51,7 +51,7 @@
         <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
-                    <input name="searchinput" id="searchinput" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                    <input asp-for="ArtistSearch" name="searchArtist" id="searchArtist" class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                 </li>
             </ul>
         </div>
@@ -88,7 +88,6 @@
             </nav>
         </div>
     </div>
-
     <div class="row">
         <div class="col-md-5">
             <table class="table table-bordered table-hover">
@@ -116,8 +115,6 @@
             </table>
         </div>
     </div>
-
-
 </body>
 </html>
 
@@ -126,16 +123,17 @@
 
     });
 
-    $('#searchinput').on('keypress', function (e) {
+    $('#searchArtist').on('keypress', function (e) {
         if (e.which === 13) {
 
             //Disable textbox to prevent multiple submit
             $(this).attr("disabled", "disabled");
 
             //Do Stuff, submit, etc..
-            var txt = $(this).val();
-            $.get("Gig/AllGigs", { suggest: txt }, function (result) {
-                $("#GigListDiv").html(result);
+            var artistsearch = $(this).val();
+
+            $.get("", { suggest: artistsearch, page: 1 }, function (result) {
+                $("body").html(result);
             });
 
             //Enable the textbox again if needed.

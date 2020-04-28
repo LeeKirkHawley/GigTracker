@@ -64,17 +64,17 @@ namespace GigTracker.Controllers {
 		}
 
 
-		[HttpGet("{id}")]
-		public IActionResult GetById(int id) {
+		//[HttpGet("{id}")]
+		//public IActionResult GetById(int id) {
 
-			User user = _userService.GetById(id);
-			user =  user.WithoutPassword();
+		//	User user = _userService.GetById(id);
+		//	user =  user.WithoutPassword();
 
-			if (user == null)
-				return NotFound();
+		//	if (user == null)
+		//		return NotFound();
 
-			return Ok(user);
-		}
+		//	return Ok(user);
+		//}
 
 		//[HttpGet("{id}")]
 		public async Task<IActionResult> Details(int Id) {
