@@ -50,12 +50,19 @@ namespace GigTracker.Controllers {
 				model.userId = currentUser.Id;
 				model.userRole = currentUser.Role;
 				model.ArtistSearch = artistQuery;
-			};
+			}
+			else
+				model.ErrorMsg = "ERROR: User not logged in.";
+
 
 			if (userId != null)
 				this.HttpContext.Session.SetString("UserId", userId.ToString());
 
 			return View("Index", model);
+		}
+
+		public ActionResult ModalPopUp() {
+			return View();
 		}
 	}
 }

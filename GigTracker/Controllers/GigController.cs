@@ -84,13 +84,13 @@ namespace GigTracker.Controllers {
 		//	return gigs;
 		//}
 
-		[HttpGet]
+		[HttpGet("Gig/Create")]
 		public ViewResult Create() {
 			GigCreateViewModel model = new GigCreateViewModel();
 			return View(model);
 		}
 
-		[HttpPost]
+		[HttpPost("Gig/Create")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(GigCreateViewModel model) {
 
@@ -100,14 +100,10 @@ namespace GigTracker.Controllers {
 
 			var newGig = await _gigRepository.Add(model.Gig);
 
-			GigDetailsViewModel detailsModel = new GigDetailsViewModel {
-				Gig = newGig
-			};
-
-			return View("Details", detailsModel);
+			return View($"Details/{newGig.Id}");
 		}
 
-		[HttpGet]
+		[HttpGet("Gig/Details/{id}")]
 		public async Task<IActionResult> Details(int id) {
 
 			Gig gig = await _gigRepository.Get(id);

@@ -22,5 +22,6 @@ namespace GigTracker.Models {
 
 		public string ArtistSearch { get; set; }
 
+		public string ErrorMsg { get; set; }
 	}
 }

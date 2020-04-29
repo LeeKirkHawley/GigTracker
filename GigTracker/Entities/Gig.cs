@@ -17,7 +17,7 @@ namespace GigTracker.Entities {
 		public int UserId { get; set; }
 
 		[Required]
-		[Display(Name = "Venue Name")]
+		[Display(Name = "Venue")]
 		public string VenueName { get; set; }
 
 		[Required]

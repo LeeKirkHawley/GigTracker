@@ -63,3 +63,11 @@ input[type=search]:focus {
     padding-bottom: 0;
     color: orange;
 }
+
+.table {
+    color: orange;
+}
+
+.modal-content {
+    background-color: black;
+}

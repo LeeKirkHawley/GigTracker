@@ -4,17 +4,30 @@
   "libraries": [
     {
       "library": "jquery@3.4.1",
+      "destination": "wwwroot/lib/jquery/dist/",
       "files": [
         "jquery.min.js",
         "jquery.js",
         "jquery.min.map"
-      ],
-      "destination": "wwwroot/lib/jquery/dist/"
+      ]
     },
     {
       "provider": "unpkg",
       "library": "bootstrap@4.4.1",
       "destination": "wwwroot/lib/bootstrap/"
+    },
+    {
+      "library": "jquery@3.5.0",
+      "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "provider": "jsdelivr",
+      "library": "bootstrap@4.4.1",
+      "destination": "wwwroot/lib/bootstrap/"
+    },
+    {
+      "library": "popper.js@2.4.0",
+      "destination": "wwwroot/lib/popper.js/"
     }
   ]
 }
