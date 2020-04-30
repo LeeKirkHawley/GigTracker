@@ -27,6 +27,8 @@ namespace GigTracker.Controllers {
 		[HttpGet("{suggest, page?}")]
 		public IActionResult Index(string artistQuery, int page = 1) {
 
+			HomeIndexViewModel model = new HomeIndexViewModel();
+
 			var userId = HttpContext.Session.GetString("UserId");
 
 			User currentUser = null;
@@ -37,7 +39,6 @@ namespace GigTracker.Controllers {
 			if (String.IsNullOrEmpty(GigRowsToDisplay) == true)
 				GigRowsToDisplay = "5";  // at the moment this is the only way to set number of rows to show
 
-			HomeIndexViewModel model = new HomeIndexViewModel();
 
 			IEnumerable<Gig> gigs = _gigRepository.Get().Result;
 			if (!String.IsNullOrEmpty(artistQuery))
@@ -51,9 +52,8 @@ namespace GigTracker.Controllers {
 				model.userRole = currentUser.Role;
 				model.ArtistSearch = artistQuery;
 			}
-			else
-				model.ErrorMsg = "ERROR: User not logged in.";
 
+			model.ErrorMsg = "ERROR:";
 
 			if (userId != null)
 				this.HttpContext.Session.SetString("UserId", userId.ToString());
