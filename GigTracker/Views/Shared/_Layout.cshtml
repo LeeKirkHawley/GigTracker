@@ -35,7 +35,7 @@
 
                 <!-- Modal body -->
                 <div id="modalErrorTxt" name="modalErrorTxt" class="modal-body">
-                    @Model.ErrorMsg
+                    @Model?.ErrorMsg ?? ""; @*sometimes Model is null. Not sure why*@
                 </div>
 
                 <!-- Modal footer -->
@@ -57,10 +57,12 @@
 
         // --- Start generic error message code
         // $(document).ready can be implemented multiple times and WORKS!!!
-        if ('@Model.ErrorMsg' != "") {
+
+        if ('@Model?.ErrorMsg' != "") {
             $("#myModal").modal({ "backdrop": "static" });  // opens modal that is actually modal
             //$('#myModal').modal('show');                  // not actually modal
         };
+
         // --- End generic error message code
 
     });

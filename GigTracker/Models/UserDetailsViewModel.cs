@@ -7,5 +7,6 @@ using GigTracker.Entities;
 namespace GigTracker.Models {
 	public class UserDetailsViewModel {
 		public User User { get; set; }
+		public string ErrorMsg { get; set; }
 	}
 }

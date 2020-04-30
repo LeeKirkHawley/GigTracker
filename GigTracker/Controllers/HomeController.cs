@@ -53,7 +53,8 @@ namespace GigTracker.Controllers {
 				model.ArtistSearch = artistQuery;
 			}
 
-			model.ErrorMsg = "ERROR:";
+			// open error dlg
+			//model.ErrorMsg = "ERROR:";
 
 			if (userId != null)
 				this.HttpContext.Session.SetString("UserId", userId.ToString());
