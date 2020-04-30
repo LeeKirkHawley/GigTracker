@@ -22,6 +22,7 @@
     @RenderBody()
 
     @*--- Start generic error message code*@
+    @*NOTE: public string ErrorMsg { get; set; } must be in all models*@ 
     <!-- The Modal -->
     <div class="modal" id="myModal">
         <div class="modal-dialog modal-dialog-centered">
@@ -57,7 +58,7 @@
 
         // --- Start generic error message code
         // $(document).ready can be implemented multiple times and WORKS!!!
-
+        @* NOTE: public string ErrorMsg { get; set; } must be in all models *@ 
         if ('@Model?.ErrorMsg' != "") {
             $("#myModal").modal({ "backdrop": "static" });  // opens modal that is actually modal
             //$('#myModal').modal('show');                  // not actually modal

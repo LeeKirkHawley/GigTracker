@@ -30,7 +30,7 @@ namespace GigTracker.Controllers {
 			_accountService = accountService;
 		}
 
-		[HttpGet]
+		[HttpGet("User/List")]
 		public ActionResult List() {
 
 			User user = null;
@@ -38,8 +38,14 @@ namespace GigTracker.Controllers {
 			if(userId != null)
 				user = _userService.GetById(Convert.ToInt32(userId));
 
-			if(user?.Role == Role.Admin)
-				return View("List", _userRepository.Get().Result);
+			if (user?.Role == Role.Admin) {
+
+				UserListViewModel model = new UserListViewModel {
+					Users = _userRepository.Get().Result
+				};
+
+				return View("List", model);
+			}
 			else
 				return RedirectToAction("Index", "Home");
 		}

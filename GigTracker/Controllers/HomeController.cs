@@ -35,17 +35,17 @@ namespace GigTracker.Controllers {
 			if(userId != null)
 				currentUser = _userService.GetById(Convert.ToInt32(userId));
 
-			var GigRowsToDisplay = HttpContext.Session.GetString("GigRowsToDisplay");
-			if (String.IsNullOrEmpty(GigRowsToDisplay) == true)
-				GigRowsToDisplay = "5";  // at the moment this is the only way to set number of rows to show
-
-
 			IEnumerable<Gig> gigs = _gigRepository.Get().Result;
 			if (!String.IsNullOrEmpty(artistQuery))
 				gigs = gigs.Where(g => g.ArtistName == artistQuery);
 
+			var GigRowsToDisplay = HttpContext.Session.GetString("GigRowsToDisplay");
+			if (String.IsNullOrEmpty(GigRowsToDisplay) == true)
+				GigRowsToDisplay = "5";  // at the moment this is the only way to set number of rows to show
+
 			PagedResult<Gig> result = gigs.GetPaged<Gig>(page, Convert.ToInt32(GigRowsToDisplay));  // page number, page size
 			model.Gigs = result;
+
 
 			if (currentUser != null) {
 				model.userId = currentUser.Id;

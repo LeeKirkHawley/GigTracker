@@ -25,46 +25,29 @@ namespace GigTracker.Controllers {
 		[HttpGet("Gig/List/{page?}")]
 		public ViewResult List(int page = 1) {
 
-			var userId = HttpContext.Session.GetString("UserId");
+			GigListViewModel model = new GigListViewModel();
+
+			int? userId = Convert.ToInt32(HttpContext.Session.GetString("UserId"));
+			if (userId.HasValue == false)
+				model.ErrorMsg = "ERROR: no user ID";
 
 			User currentUser = null;
 			if (userId != null)
 				currentUser = _userService.GetById(Convert.ToInt32(userId));
+			else
+				model.ErrorMsg = $"ERROR: couldn't find user {userId}";
 
-			GigListViewModel model = new GigListViewModel();
+			IEnumerable<Gig> gigs = _gigRepository.Get().Result.Where(g => g.UserId == userId);
 
-			IEnumerable<Gig> gigs = _gigRepository.Get().Result;
-			//if (!String.IsNullOrEmpty(artistQuery))
-			//	gigs = gigs.Where(g => g.ArtistName == artistQuery);
 			var GigRowsToDisplay = HttpContext.Session.GetString("GigRowsToDisplay");
+			if (String.IsNullOrEmpty(GigRowsToDisplay) == true)
+				GigRowsToDisplay = "5";  // at the moment this is the only way to set number of rows to show
 
 
 			PagedResult<Gig> result = gigs.GetPaged<Gig>(page, Convert.ToInt32(GigRowsToDisplay));  // page number, page size
 			model.Gigs = result;
 
-			//if (currentUser != null) {
-			//	model.userId = currentUser.Id;
-			//	model.userRole = currentUser.Role;
-			//	model.ArtistSearch = artistQuery;
-			//};
-
-			//if (userId != null)
-			//	this.HttpContext.Session.SetString("UserId", userId.ToString());
-
 			return View(model);
-
-
-			//string UserId = this.HttpContext.Session.GetString("UserId");
-			//User currentUser = _userService.GetById(Convert.ToInt32(UserId));
-
-			//IEnumerable <Gig> gigs = _gigRepository.Get().Result;
-
-			//GigListViewModel model = new GigListViewModel {
-			//	Gigs = gigs, 
-			//	User = currentUser
-			//};
-
-			//return View(model);
 		}
 
 

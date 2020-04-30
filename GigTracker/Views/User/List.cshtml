@@ -1,8 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Authentication
 @using GigTracker.Entities
-@model IEnumerable<User>
+@model UserListViewModel
 
-@foreach (var user in Model) {
+@foreach (var user in Model.Users) {
     <div>
         <a asp-controller="User" asp-action="Details" asp-route-id="@user.Id">Details</a>
         User Name: @user.UserName
