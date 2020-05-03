@@ -1,8 +1,6 @@
 ﻿body {
     background-color: black;
     color: white;
-    /*background-color: white;
-    color: white;*/
 }
 
 h1 {
@@ -29,7 +27,7 @@ input[type=search] {
 }
 
 input[type=search]:focus {
-    width: 600px;
+    width: 300px;
     background-color: #ccc;
     border-color: #333;
     border: solid 1px #fff;
