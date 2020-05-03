@@ -3,31 +3,18 @@
   "defaultProvider": "cdnjs",
   "libraries": [
     {
+      // jquery 3.5 has a bug that kills navbar menu
       "library": "jquery@3.4.1",
-      "destination": "wwwroot/lib/jquery/dist/",
-      "files": [
-        "jquery.min.js",
-        "jquery.js",
-        "jquery.min.map"
-      ]
-    },
-    {
-      "provider": "unpkg",
-      "library": "bootstrap@4.4.1",
-      "destination": "wwwroot/lib/bootstrap/"
-    },
-    {
-      "library": "jquery@3.5.0",
       "destination": "wwwroot/lib/jquery/"
+    },
+    {
+      "library": "popper.js@1.16.0",
+      "destination": "wwwroot/lib/popper.js/"
     },
     {
       "provider": "jsdelivr",
       "library": "bootstrap@4.4.1",
       "destination": "wwwroot/lib/bootstrap/"
-    },
-    {
-      "library": "popper.js@2.4.0",
-      "destination": "wwwroot/lib/popper.js/"
     }
   ]
 }
