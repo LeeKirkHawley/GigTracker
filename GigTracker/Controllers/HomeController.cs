@@ -37,7 +37,7 @@ namespace GigTracker.Controllers {
 
 			IEnumerable<Gig> gigs = _gigRepository.Get().Result;
 			if (!String.IsNullOrEmpty(artistQuery))
-				gigs = gigs.Where(g => g.ArtistName == artistQuery);
+				gigs = gigs.Where(g => g.ArtistName.Contains(artistQuery));
 
 			var GigRowsToDisplay = HttpContext.Session.GetString("GigRowsToDisplay");
 			if (String.IsNullOrEmpty(GigRowsToDisplay) == true)
