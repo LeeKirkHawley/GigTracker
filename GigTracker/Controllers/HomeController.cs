@@ -25,7 +25,13 @@ namespace GigTracker.Controllers {
 
 		//[HttpGet("")]
 		[HttpGet("{suggest, page?}")]
-		public IActionResult Index(string artistQuery, int page = 1) {
+		public IActionResult Index(string artistQuery, int page = 1, bool newQuery = false) {
+
+			// for some reason I don't understand, page is being set to its most recent value
+			// when called from the javascript search
+			// so hack up a fix
+			if (newQuery == true)
+				page = 1;
 
 			HomeIndexViewModel model = new HomeIndexViewModel();
 

@@ -66,6 +66,39 @@ input[type=search]:focus {
     color: orange;
 }
 
-.modal-content {
+/*.table th {
+    color: orange;
+}*/
+
+.table th {
+    border-color: blue;
+    border-top: blue;
+}
+
+.table thead th {
+    border-color: blue;
+    border-top: blue;
+}
+
+.table tr {
+    border-color: blue;
+}
+
+.table td {
+    border-color: blue;
+}
+
+/*.modal-content {
     background-color: black;
+}*/
+
+.gt-style {
+    color: orange;
+    background-color: black;
+    border-color: black;
+}
+
+.gt-style-hilite {
+    background-color: darkgray;
+
 }

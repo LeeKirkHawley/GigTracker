@@ -36,6 +36,7 @@ namespace GigTracker.Controllers {
 				currentUser = _userService.GetById(Convert.ToInt32(userId));
 			else
 				model.ErrorMsg = $"ERROR: couldn't find user {userId}";
+			model.CurrentUser = currentUser;
 
 			IEnumerable<Gig> gigs = _gigRepository.Get().Result.Where(g => g.UserId == userId);
 
@@ -83,10 +84,10 @@ namespace GigTracker.Controllers {
 
 			var newGig = await _gigRepository.Add(model.Gig);
 
-			return View($"Details/{newGig.Id}");
+			return View($"~/Gig/Details/{newGig.Id}");
 		}
 
-		[HttpGet("Gig/Details/{id}")]
+		[HttpGet("~/Gig/Details/{id}")]
 		public async Task<IActionResult> Details(int id) {
 
 			Gig gig = await _gigRepository.Get(id);

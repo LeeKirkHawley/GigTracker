@@ -45,6 +45,7 @@
                 <li class="nav-item active">
                     <a asp-controller="Account" asp-action="Login" class="btn btn-default menu-button">Login</a>
                 </li>
+            </ul>
         </div>
     </nav>
 
@@ -66,7 +67,10 @@
             //Do Stuff, submit, etc..
             var artistquery = $(this).val();
 
-            $.get("", { artistQuery: artistquery, page: 1 }, function (result) {
+            //$.get("", { artistQuery: artistquery, page: 1 }, function (result) {
+            //    $("body").html(result);
+            //});
+            $.get("", { artistQuery: artistquery, newQuery: true }, function (result) {
                 $("body").html(result);
             });
 

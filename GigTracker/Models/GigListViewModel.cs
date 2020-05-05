@@ -14,6 +14,9 @@ namespace GigTracker.Models {
 		public PagedResult<Gig> Gigs { get; set; }
 
 		public PagingInfo PagingInfo { get; set; }
+
 		public string ErrorMsg { get; set; }
+
+		public User CurrentUser { get; set; }
 	}
 }

@@ -10,6 +10,8 @@
 <a asp-controller="Gig" asp-action="Create" class="btn btn-default menu-button">New gig</a>
 
 
-<h4>Gig List</h4>
+<h4>@(Model.CurrentUser.FirstName + " " + Model.CurrentUser.LastName + "\'s Gigs")</h4>
+
+
 
 <partial name="_GigList" for="Gigs" />
