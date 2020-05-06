@@ -88,15 +88,18 @@ namespace GigTracker.Controllers {
 		}
 
 		[HttpGet("~/Gig/Details/{id}")]
-		public async Task<IActionResult> Details(int id) {
+		public ActionResult Details(int id) {
 
-			Gig gig = await _gigRepository.Get(id);
+			Gig gig = _gigRepository.Get(id).Result;
+			gig.User = _userService.GetById(Convert.ToInt32(gig.UserId));
 
-			GigDetailsViewModel detailsModel = new GigDetailsViewModel {
+
+			GigDetailsViewModel model = new GigDetailsViewModel {
 				Gig = gig
 			};
 
-			return View("Details", detailsModel);
+			var v = View(model);
+			return v;
 		}
 	}
 }

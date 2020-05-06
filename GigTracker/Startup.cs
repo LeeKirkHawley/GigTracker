@@ -76,6 +76,7 @@ namespace GigTracker {
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
 			services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
+
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

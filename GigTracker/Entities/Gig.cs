@@ -10,7 +10,7 @@ namespace GigTracker.Entities {
 		[Key]
 		public int Id { get; set; }
 
-		public User User { get; set; }
+		public virtual User User { get; set; }
 
 		[ForeignKey("User")]
 		[Required]

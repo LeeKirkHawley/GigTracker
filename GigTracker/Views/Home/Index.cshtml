@@ -67,9 +67,6 @@
             //Do Stuff, submit, etc..
             var artistquery = $(this).val();
 
-            //$.get("", { artistQuery: artistquery, page: 1 }, function (result) {
-            //    $("body").html(result);
-            //});
             $.get("", { artistQuery: artistquery, newQuery: true }, function (result) {
                 $("body").html(result);
             });
