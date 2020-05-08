@@ -58,7 +58,8 @@ namespace GigTracker.Controllers
 
             this.HttpContext.Session.SetString("UserId", user.Id.ToString());
 
-            return RedirectToAction("Index", "Home");
+            //return RedirectToAction("Index", "Home");
+            return RedirectToAction("List", "Gig");
         }
 
         private IActionResult RedirectToLocal(string returnUrl) {

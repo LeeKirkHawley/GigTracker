@@ -4,8 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Authorization;
-//using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Http;
 using GigTracker.Models;
 using GigTracker.Repositories;
