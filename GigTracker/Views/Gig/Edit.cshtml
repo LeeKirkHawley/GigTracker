@@ -1,0 +1,44 @@
+﻿@model GigEditViewModel
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit Gig Details</title>
+</head>
+<body>
+    <h1>Gig Details</h1>
+
+    <form asp-controller="Gig" asp-action="Edit" method="post">
+        <div class="form-group">
+            <label asp-for="Gig.ArtistName"></label>
+            <input class="form-control col-sm-6" type="text" asp-for="Gig.ArtistName" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Gig.VenueName"></label>
+            <input class="form-control col-sm-6" type="text" asp-for="Gig.VenueName" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Gig.VenueAddress"></label>
+            <input class="form-control col-sm-6" type="text" asp-for="Gig.VenueAddress" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Gig.VenuePhone"></label>
+            <input class="form-control col-sm-6" type="text" asp-for="Gig.VenuePhone" />
+        </div>
+        <div class="form-group">
+            <label asp-for="Gig.Date"></label>
+            <input class="form-control col-sm-6" type="text" asp-for="Gig.Date" />
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    @*<button asp-controller="Gig" asp-action="Update">Save</button>*@
+
+</body>
+</html>

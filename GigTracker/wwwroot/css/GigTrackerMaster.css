@@ -88,10 +88,6 @@ input[type=search]:focus {
     border-color: blue;
 }
 
-/*.modal-content {
-    background-color: black;
-}*/
-
 .gt-style {
     color: orange;
     background-color: black;
@@ -99,6 +95,7 @@ input[type=search]:focus {
 }
 
 .gt-style-hilite {
+    color: orange;
     background-color: darkgray;
-
+    border-color: black;
 }

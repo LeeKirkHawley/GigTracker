@@ -37,7 +37,7 @@
                 @foreach (var contact in Model.Results) {
                     var rowNo = (Model.CurrentPage - 1) * Model.PageSize + i;
                     i++;
-                    <tr onclick="location.href = '@(Url.Action("Details", "Gig", new { id = contact.Id }))'">
+                    <tr onclick="location.href = '@(Url.Action("Edit", "Gig", new { id = contact.Id }))'">
                         <td>@contact.ArtistName</td>
                         <td>@contact.VenueName</td>
                         <td>@contact.Date</td>
@@ -79,7 +79,7 @@
                         <a class="page-link gt-style" href="@urlTemplate.Replace("{0}", Model.PageCount.ToString())">&raquo;</a>
                     </li>
                 </ul>
-             }
+            }
         </nav>
     </div>
 </div>
