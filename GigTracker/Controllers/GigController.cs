@@ -43,7 +43,6 @@ namespace GigTracker.Controllers {
 			if (String.IsNullOrEmpty(GigRowsToDisplay) == true)
 				GigRowsToDisplay = "5";  // at the moment this is the only way to set number of rows to show
 
-
 			PagedResult<Gig> result = gigs.GetPaged<Gig>(page, Convert.ToInt32(GigRowsToDisplay));  // page number, page size
 			model.Gigs = result;
 
@@ -52,7 +51,6 @@ namespace GigTracker.Controllers {
 
 		[HttpGet("Gig/Create")]
 		public ViewResult Create() {
-
 
 			Gig gig = new Gig {
 				ArtistName = "Fred",
@@ -87,7 +85,6 @@ namespace GigTracker.Controllers {
 
 			Gig gig = _gigRepository.Get(id).Result;
 			gig.User = _userService.GetById(Convert.ToInt32(gig.UserId));
-
 
 			GigDetailsViewModel model = new GigDetailsViewModel {
 				Gig = gig
@@ -130,23 +127,7 @@ namespace GigTracker.Controllers {
 
 			Gig newGig = _gigRepository.Update(model.Gig).Result;
 
-			//Gig gig = _gigRepository.Get(model.Gig.Id).Result;
-
-			//if (gig.UserId != Convert.ToInt32(userId)) {
-			//	return Content("ERROR - user cannot edit this Gig.");
-			//}
-
-			//gig.User = _userService.GetById(Convert.ToInt32(gig.UserId));
-
-			//GigEditViewModel model = new GigEditViewModel {
-			//	Gig = gig
-			//};
-
-			//var v = View(model);
-			//return v;
-
 			return RedirectToAction("List", "Gig");
 		}
-
 	}
 }

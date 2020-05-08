@@ -42,7 +42,6 @@ namespace GigTracker.Repositories {
             return gig;
         }
 
-
         public async Task<Gig> Update(Gig gig) {
             _context.Entry(gig).State = EntityState.Modified;
             await _context.SaveChangesAsync();
