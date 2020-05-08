@@ -115,9 +115,9 @@ namespace GigTracker.Controllers {
 			return v;
 		}
 
-		[HttpPost("Gig/Edit")]
+		[HttpPost("Gig/UpdateGig")]
 		[ValidateAntiForgeryToken]
-		public ActionResult EditGig([FromForm] GigEditViewModel model) {
+		public ActionResult UpdateGig([FromForm] GigEditViewModel model) {
 
 			string userId = this.HttpContext.Session.GetString("UserId");
 

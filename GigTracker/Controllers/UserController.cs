@@ -69,20 +69,7 @@ namespace GigTracker.Controllers {
 			return View("Details", newModel);
 		}
 
-
-		//[HttpGet("{id}")]
-		//public IActionResult GetById(int id) {
-
-		//	User user = _userService.GetById(id);
-		//	user =  user.WithoutPassword();
-
-		//	if (user == null)
-		//		return NotFound();
-
-		//	return Ok(user);
-		//}
-
-		//[HttpGet("{id}")]
+		[HttpGet("User/Details")]
 		public async Task<IActionResult> Details(int Id) {
 
 			User currentUser = await _userRepository.Get(Id);
@@ -94,7 +81,7 @@ namespace GigTracker.Controllers {
 			return View(model);
 		}
 
-		[HttpGet("User/Proile")]
+		[HttpGet("User/Profile")]
 		public async Task<IActionResult> Profile(int Id) {
 
 			User currentUser = await _userRepository.Get(Id);
@@ -106,5 +93,19 @@ namespace GigTracker.Controllers {
 			return View(model);
 		}
 
+		[HttpPost("User/UpdateUser")]
+		[ValidateAntiForgeryToken]
+		public ActionResult UpdateUser([FromForm] UserDetailsViewModel model) {
+
+			string userId = this.HttpContext.Session.GetString("UserId");
+
+			if (userId != model.User.Id.ToString()) {
+				return Content("ERROR - user cannot update this Profile.");
+			}
+
+			User newUser = _userRepository.Update(model.User).Result;
+
+			return RedirectToAction("Index", "Home");
+		}
 	}
 }

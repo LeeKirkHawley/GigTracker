@@ -32,7 +32,7 @@
                         <a asp-controller="Gig" asp-action="List" class="btn btn-default menu-button">My Gigs</a>
                     </li>
                     <li class="nav-item">
-                        <a asp-controller="User" asp-action="Profile" asp-route-id=@Model.userId class="btn btn-default menu-button">Profile</a>
+                        <a asp-controller="User" asp-action="Details" asp-route-id=@Model.userId class="btn btn-default menu-button">Profile</a>
                     </li>
                 }
                 @if (Model.userRole == "Admin") {

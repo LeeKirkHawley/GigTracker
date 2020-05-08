@@ -5,27 +5,33 @@
 }
 
 <h1>User Details</h1>
+<form asp-controller="User" asp-action="UpdateUser" method="post">
+    <input asp-for="User.Id" type="hidden" />
+    <input asp-for="User.Password" type="hidden" />
+    <input asp-for="User.Role" type="hidden" />
 
-<div class="col-sm-10">
-    <label asp-for="User.UserName"></label>
-    <text>@Model.User.UserName</text>
-</div>
+    <div class="form-group">
+        <label asp-for="User.UserName"></label>
+        <input class="form-control col-sm-6" type="text" asp-for="User.UserName" />
+    </div>
 
-<div class="col-sm-10">
-    <label asp-for="User.FirstName"></label>
-    <text>@Model.User.FirstName</text>
-</div>
+    <div class="form-group">
+        <label asp-for="User.FirstName"></label>
+        <input class="form-control col-sm-6" type="text" asp-for="User.FirstName" />
+    </div>
 
-<div class="col-sm-10">
-    <label asp-for="User.LastName"></label>
-    <text>@Model.User.LastName</text>
-</div>
+    <div class="form-group">
+        <label asp-for="User.LastName"></label>
+        <input class="form-control col-sm-6" type="text" asp-for="User.LastName" />
+    </div>
 
-<div class="col-sm-10">
-    <label asp-for="User.Email"></label>
-    <text>@Model.User.Email</text>
-</div>
+    <div class="form-group">
+        <label asp-for="User.Email"></label>
+        <input class="form-control col-sm-6" type="text" asp-for="User.Email" />
+    </div>
 
-<input type="button" value="OK" onclick="location.href='@Url.Action("Index", "Home")'" />
+    <button type="submit">Save</button>
+</form>
 
+@*<input type="button" value="OK" onclick="location.href='@Url.Action("Index", "Home")'" />*@
 
