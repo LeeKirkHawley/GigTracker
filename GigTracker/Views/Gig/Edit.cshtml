@@ -13,7 +13,10 @@
 <body>
     <h1>Gig Details</h1>
 
-    <form asp-controller="Gig" asp-action="Edit" method="post">
+    <form asp-controller="Gig" asp-action="EditGig" method="post">
+        <input asp-for="Gig.Id" type="hidden" />
+        <input asp-for="Gig.UserId" type="hidden" />
+
         <div class="form-group">
             <label asp-for="Gig.ArtistName"></label>
             <input class="form-control col-sm-6" type="text" asp-for="Gig.ArtistName" />

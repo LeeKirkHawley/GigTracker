@@ -50,23 +50,6 @@ namespace GigTracker.Controllers {
 			return View(model);
 		}
 
-
-		//[HttpGet("Gig/UserGigs")]
-		//public IEnumerable<Gig> UserGigs() {
-
-		//	string UserId = this.HttpContext.Session.GetString("UserId");
-		//	User currentUser = _userService.GetById(Convert.ToInt32(UserId));
-
-		//	IEnumerable<Gig> gigs = _gigRepository.Get().Result;
-
-		//	GigListViewModel model = new GigListViewModel {
-		//		Gigs = gigs,
-		//		User = currentUser
-		//	};
-
-		//	return gigs;
-		//}
-
 		[HttpGet("Gig/Create")]
 		public ViewResult Create() {
 
@@ -137,11 +120,11 @@ namespace GigTracker.Controllers {
 
 		[HttpPost("Gig/Edit")]
 		[ValidateAntiForgeryToken]
-		public ActionResult Edit(GigEditViewModel model) {
+		public ActionResult EditGig([FromForm] GigEditViewModel model) {
 
 			string userId = this.HttpContext.Session.GetString("UserId");
 
-			//Gig gig = _gigRepository.Get(id).Result;
+			//Gig gig = _gigRepository.Get(model.Gig.Id).Result;
 
 			//if (gig.UserId != Convert.ToInt32(userId)) {
 			//	return Content("ERROR - user cannot edit this Gig.");
@@ -156,7 +139,7 @@ namespace GigTracker.Controllers {
 			//var v = View(model);
 			//return v;
 
-			return RedirectToAction("Gig/List");
+			return RedirectToAction("List", "Gig");
 		}
 
 	}
