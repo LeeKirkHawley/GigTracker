@@ -124,6 +124,12 @@ namespace GigTracker.Controllers {
 
 			string userId = this.HttpContext.Session.GetString("UserId");
 
+			if(userId != model.Gig.UserId.ToString()) {
+				return Content("ERROR - user cannot edit this Gig.");
+			}
+
+			Gig newGig = _gigRepository.Update(model.Gig).Result;
+
 			//Gig gig = _gigRepository.Get(model.Gig.Id).Result;
 
 			//if (gig.UserId != Convert.ToInt32(userId)) {
