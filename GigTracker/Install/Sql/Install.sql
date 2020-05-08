@@ -31,7 +31,7 @@ BEGIN
         VenueName varchar(128) not null,
 		VenueAddress varchar(64) null,
 		VenuePhone varchar(64) null,
-		Date datetime null,
+		Date datetime2 null,
 		ArtistName varchar(256) not null,
 		constraint fk_gig_user foreign key (UserId) references [User](Id)
     )
