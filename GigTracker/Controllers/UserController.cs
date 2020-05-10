@@ -2,15 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using GigTracker.Models;
 using GigTracker.Repositories;
 using GigTracker.Entities;
 using GigTracker.Services;
-using GigTracker.Helpers;
-
+using Newtonsoft.Json;
+using GigTracker.LinqExtensions;
 
 
 namespace GigTracker.Controllers {
@@ -28,24 +27,59 @@ namespace GigTracker.Controllers {
 			_accountService = accountService;
 		}
 
-		[HttpGet("User/List")]
-		public ActionResult List() {
+		[HttpGet("User/List/{page?}")]
+		public ActionResult List(int page = 1) {
 
-			User user = null;
-			var userId = HttpContext.Session.GetString("UserId");
-			if(userId != null)
-				user = _userService.GetById(Convert.ToInt32(userId));
+			UserListViewModel model = new UserListViewModel();
 
-			if (user?.Role == Role.Admin) {
-
-				UserListViewModel model = new UserListViewModel {
-					Users = _userRepository.Get().Result
-				};
-
-				return View("List", model);
+			int? userId = Convert.ToInt32(HttpContext.Session.GetString("UserId"));
+			if (userId.HasValue == false) {
+				model.ErrorMsg = "ERROR: no user ID";
+				return Content(model.ErrorMsg);
 			}
-			else
-				return RedirectToAction("Index", "Home");
+
+			User currentUser = null;
+			if (userId != null)
+				currentUser = _userService.GetById(Convert.ToInt32(userId));
+			else {
+				model.ErrorMsg = $"ERROR: couldn't find user {userId}";
+				return Content(model.ErrorMsg);
+			}
+
+			if(currentUser.Role != Role.Admin) {
+				model.ErrorMsg = $"ERROR: user is not admin {userId}";
+				return Content(model.ErrorMsg);
+			}
+
+			model.CurrentUser = currentUser;
+
+			IEnumerable<User> users = _userRepository.Get().Result;
+
+			var GigRowsToDisplay = HttpContext.Session.GetString("GigRowsToDisplay");
+			if (String.IsNullOrEmpty(GigRowsToDisplay) == true)
+				GigRowsToDisplay = "5";  // at the moment this is the only way to set number of rows to show
+
+			PagedResult<User> result = users.GetPaged<User>(page, Convert.ToInt32(GigRowsToDisplay));  // page number, page size
+			model.Users = result;
+
+			return View(model);
+
+
+			//User user = null;
+			//var userId = HttpContext.Session.GetString("UserId");
+			//if(userId != null)
+			//	user = _userService.GetById(Convert.ToInt32(userId));
+
+			//if (user?.Role == Role.Admin) {
+
+			//	UserListViewModel model = new UserListViewModel {
+			//		Users = _userRepository.Get().Result
+			//	};
+
+			//	return View("List", model);
+			//}
+			//else
+			//	return RedirectToAction("Index", "Home");
 		}
 
 		[HttpGet]

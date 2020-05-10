@@ -1,11 +1,94 @@
-﻿@using Microsoft.AspNetCore.Authentication
-@using GigTracker.Entities
+﻿@using GigTracker.Entities
+@using GigTracker.LinqExtensions;
+@*@model PagedResult<User>*@
 @model UserListViewModel
 
-@foreach (var user in Model.Users) {
-    <div>
-        <a asp-controller="User" asp-action="Details" asp-route-id="@user.Id">Details</a>
-        User Name: @user.UserName
-        Email: @user.Email
-    </div>
+@{
+    var urlTemplate = Url.Action() + "?page={0}";  // used to create the link to get prev/next page
+    var request = ViewContext.HttpContext.Request;
+    foreach (var key in request.Query.Keys) {
+        if (key == "page") {
+            continue;
+        }
+
+        urlTemplate += "&" + key + "=" + request.Query[key];
+    }
+
+    var startIndex = Math.Max(Model.Users.CurrentPage - 5, 1);
+    var finishIndex = Math.Min(Model.Users.CurrentPage + 5, Model.Users.PageCount);
+
 }
+
+
+@*@foreach (var user in Model.Users) {
+        <div>
+            <a asp-controller="User" asp-action="Details" asp-route-id="@user.Id">Details</a>
+            User Name: @user.UserName
+            Email: @user.Email
+        </div>
+    }*@
+
+@*<div class="gt-style">
+        (click gig for gig details)
+    </div>*@
+<div class="row">
+    <div class="col-md-5">
+        <table class="table table-condensed" id="gigListTable">
+            <thead>
+                <tr>
+                    <th>User Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{ var i = 1; }
+                @foreach (var contact in Model.Users.Results) {
+                    var rowNo = (Model.Users.CurrentPage - 1) * Model.Users.PageSize + i;
+                    i++;
+                <tr onclick="location.href = '@(Url.Action("Details", "User", new { id = contact.Id }))'">
+                    <td>@contact.UserName</td>
+                    <td>@contact.Email</td>
+                    <td>@contact.Role</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8 col-sm-8 items-info gt-style">
+        Items @Model.Users.FirstRowOnPage to @Model.Users.LastRowOnPage of @Model.Users.RowCount total
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-8 col-sm-8">
+        <nav aria-label="Page navigation">
+            @if (Model.Users.PageCount > 1) {   // if there's more than one page
+                <ul class="pagination pagination-sm pull-right">
+                    <li class="page-item gt-style">
+                        <a class="page-link gt-style" href="@urlTemplate.Replace("{0}", "1")">&laquo;</a>
+                    </li>
+                    @for (var index = startIndex; index <= finishIndex; index++) {
+                        @if (index == Model.Users.CurrentPage) {
+
+                            <li class="page-item">
+                                <span class="page-link gt-style-hilite">@index</span>
+                            </li>
+                        }
+                        else {
+
+                            <li class="page-item gt-style">
+                                <a class="page-link gt-style" href="@urlTemplate.Replace("{0}", index.ToString())">@index</a>
+                            </li>
+                        }
+                    }
+                    <li class="page-item">
+                        <a class="page-link gt-style" href="@urlTemplate.Replace("{0}", Model.Users.PageCount.ToString())">&raquo;</a>
+                    </li>
+                </ul>
+            }
+        </nav>
+    </div>
+</div>
