@@ -63,23 +63,6 @@ namespace GigTracker.Controllers {
 			model.Users = result;
 
 			return View(model);
-
-
-			//User user = null;
-			//var userId = HttpContext.Session.GetString("UserId");
-			//if(userId != null)
-			//	user = _userService.GetById(Convert.ToInt32(userId));
-
-			//if (user?.Role == Role.Admin) {
-
-			//	UserListViewModel model = new UserListViewModel {
-			//		Users = _userRepository.Get().Result
-			//	};
-
-			//	return View("List", model);
-			//}
-			//else
-			//	return RedirectToAction("Index", "Home");
 		}
 
 		[HttpGet]
@@ -131,7 +114,6 @@ namespace GigTracker.Controllers {
 
 			string currentUserId = this.HttpContext.Session.GetString("UserId");
 			User currentUser = _userRepository.Get(Convert.ToInt32(currentUserId)).Result;
-
 
 			if (currentUserId != model.User.Id.ToString() && currentUser.Role != Role.Admin) {
 				return Content("ERROR - user cannot update this Profile.");
