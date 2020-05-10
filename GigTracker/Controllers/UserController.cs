@@ -129,9 +129,11 @@ namespace GigTracker.Controllers {
 		[ValidateAntiForgeryToken]
 		public ActionResult UpdateUser([FromForm] UserDetailsViewModel model) {
 
-			string userId = this.HttpContext.Session.GetString("UserId");
+			string currentUserId = this.HttpContext.Session.GetString("UserId");
+			User currentUser = _userRepository.Get(Convert.ToInt32(currentUserId)).Result;
 
-			if (userId != model.User.Id.ToString()) {
+
+			if (currentUserId != model.User.Id.ToString() && currentUser.Role != Role.Admin) {
 				return Content("ERROR - user cannot update this Profile.");
 			}
 
