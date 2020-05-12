@@ -62,6 +62,14 @@ namespace GigTracker.Controllers
             return RedirectToAction("List", "Gig");
         }
 
+        [HttpGet("Account/Logout")]
+        public IActionResult Logout() {
+
+            this.HttpContext.Session.Remove("UserId");
+
+            return RedirectToAction("Index", "Home");
+        }
+
         private IActionResult RedirectToLocal(string returnUrl) {
             if (Url.IsLocalUrl(returnUrl))
                 return Redirect(returnUrl);

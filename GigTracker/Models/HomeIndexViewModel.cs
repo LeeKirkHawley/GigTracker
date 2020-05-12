@@ -11,10 +11,10 @@ using GigTracker.LinqExtensions;
 namespace GigTracker.Models {
 	public class HomeIndexViewModel {
 		[HiddenInput]
-		public int? userId { get; set; }
+		public int? UserId { get; set; }
 
 		[HiddenInput]
-		public string userRole { get; set; }
+		public string UserRole { get; set; }
 
 		public PagedResult<Gig> Gigs { get; set; }
 

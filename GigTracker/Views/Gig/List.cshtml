@@ -5,13 +5,8 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-
-
 <a asp-controller="Gig" asp-action="Create" class="btn btn-default menu-button">New gig</a>
 
-
 <h1>@(Model.CurrentUser.FirstName + " " + Model.CurrentUser.LastName + "\'s Gigs")</h1>
-
-
 
 <partial name="_UserGigList" for="Gigs" />

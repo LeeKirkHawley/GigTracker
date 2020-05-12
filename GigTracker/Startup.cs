@@ -67,9 +67,6 @@ namespace GigTracker {
 			var appSettings = appSettingsSection.Get<AppSettings>();
 			var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
-			//services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-			//	.AddCookie(o => o.LoginPath = new PathString("/Account/Login"));
-
 			IServiceCollection s = services.AddDbContext<ApplicationDbContext>(options =>
 				options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
@@ -91,20 +88,11 @@ namespace GigTracker {
 			}
 
 			app.UseStatusCodePages();
-			//app.UseStaticFiles();
 			app.UseFileServer();
 			app.UseSession();
-			//app.UseAuthentication();
 			app.UseRouting();
-			//app.UseAuthorization(); // must go between UseRouting() and UseEndoints()
 			app.UseEndpoints(endpoints => {
-				//endpoints.MapControllerRoute(
-				//	name: "default",
-				//	pattern: "{controller=Home}/{action=Index}/{id?}");
-
 				endpoints.MapControllers();
-
-				//endpoints.MapRazorPages();
 			});
 
 			try {

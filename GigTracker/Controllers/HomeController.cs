@@ -54,8 +54,8 @@ namespace GigTracker.Controllers {
 
 
 			if (currentUser != null) {
-				model.userId = currentUser.Id;
-				model.userRole = currentUser.Role;
+				model.UserId = currentUser.Id;
+				model.UserRole = currentUser.Role;
 				model.ArtistSearch = artistQuery;
 			}
 
