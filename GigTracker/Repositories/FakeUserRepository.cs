@@ -45,6 +45,10 @@ namespace GigTracker.Repositories {
 			return Task.FromResult(Users.FirstOrDefault());
 		}
 
+		public User GetNoTracking(int id) {
+			return Users.FirstOrDefault();
+		}
+
 		public async Task<User> Add(User gig) {
 			await Task.Run(() => Users.Add(gig));
 			return gig;

@@ -13,6 +13,8 @@ namespace GigTracker.Models {
 		[HiddenInput]
 		public int? UserId { get; set; }
 
+		public virtual User User { get; set; }
+
 		[HiddenInput]
 		public string UserRole { get; set; }
 

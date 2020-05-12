@@ -112,8 +112,10 @@ namespace GigTracker.Controllers {
 		[ValidateAntiForgeryToken]
 		public ActionResult UpdateUser([FromForm] UserDetailsViewModel model) {
 
-			string currentUserId = this.HttpContext.Session.GetString("UserId");
-			User currentUser = _userRepository.Get(Convert.ToInt32(currentUserId)).Result;
+			string currentUserId = HttpContext.Session.GetString("UserId");
+
+			// gotta use NoTracking because we're already tracking the same user object, coming in in model
+			User currentUser = _userRepository.GetNoTracking(Convert.ToInt32(currentUserId));
 
 			if (currentUserId != model.User.Id.ToString() && currentUser.Role != Role.Admin) {
 				return Content("ERROR - user cannot update this Profile.");

@@ -52,6 +52,7 @@
                     }
                     else {
                         <a asp-controller="Account" asp-action="Logout" class="btn btn-default menu-button mr-auto">Logout</a>
+                        <span>User: @Model.User.FullName</span>
                     }
                 </li>
             </ul>

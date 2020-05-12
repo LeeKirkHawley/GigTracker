@@ -13,6 +13,8 @@ namespace GigTracker.Repositories {
 
         Task<User> Get(int id);
 
+        User GetNoTracking(int id);
+
         Task<User> Add(User gig);
 
         Task<User> Delete(int id);

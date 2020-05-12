@@ -38,8 +38,10 @@ namespace GigTracker.Controllers {
 			var userId = HttpContext.Session.GetString("UserId");
 
 			User currentUser = null;
-			if(userId != null)
+			if (userId != null) {
 				currentUser = _userService.GetById(Convert.ToInt32(userId));
+				model.User = currentUser;
+			}
 
 			IEnumerable<Gig> gigs = _gigRepository.Get().Result;
 			if (!String.IsNullOrEmpty(artistQuery))

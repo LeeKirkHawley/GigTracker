@@ -27,6 +27,10 @@ namespace GigTracker.Entities {
 		[Display(Name = "Last Name")]
 		public string LastName { get; set; }
 
+		public string FullName {
+			get { return FirstName + " " + LastName; }
+		}
+
 		[Required]
 		[Display(Name = "Email")]
 		public string Email { get; set; }

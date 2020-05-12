@@ -24,6 +24,14 @@ namespace GigTracker.Repositories {
             return await _context.Set<User>().FindAsync(id);
         }
 
+        public User GetNoTracking(int id) {
+
+            return _context.User
+                .AsNoTracking()
+                .Where(u => u.Id == id)
+                .FirstOrDefault();
+        }
+
         public async Task<User> Add(User gig) {
             _context.Set<User>().Add(gig);
             await _context.SaveChangesAsync();
