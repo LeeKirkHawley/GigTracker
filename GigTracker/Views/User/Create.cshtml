@@ -8,29 +8,38 @@
 
 <form asp-controller="User" asp-action="Create" method="post">
 
+    <div asp-validation-summary="ModelOnly">
+        <span>Please correct the following errors</span>
+    </div>
+
     <div class="col-sm-10">
         <label asp-for="User.UserName"></label>
         <input asp-for="User.UserName" />
+        <span asp-validation-for="User.UserName"></span>
     </div>
     <div class="col-sm-10">
         <label asp-for="User.Password"></label>
         <input asp-for="User.Password" />
+        <span asp-validation-for="User.Password"></span>
     </div>
 
     <div class="col-sm-10">
         <label asp-for="User.FirstName"></label>
         <input asp-for="User.FirstName" />
+        <span asp-validation-for="User.FirstName"></span>
     </div>
 
     <div class="col-sm-10">
         <label asp-for="User.LastName"></label>
         <input asp-for="User.LastName" />
+        <span asp-validation-for="User.LastName"></span>
     </div>
 
     <div class="col-sm-10">
         <label asp-for="User.Email"></label>
         <input asp-for="User.Email" />
-        @Html.DisplayFor(model => model.User.Email)
+        <span asp-validation-for="User.Email"></span>
+        @*@Html.DisplayFor(model => model.User.Email)*@
     </div>
 
     <button asp-route="Create">Save</button>
