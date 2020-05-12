@@ -11,53 +11,10 @@
 
 <html>
 <body>
-    <input asp-for="UserId" />
-    <input asp-for="UserRole" />
+    <input asp-for="NavbarModel.UserId" />
+    <input asp-for="NavbarModel.UserRole" />
 
-    <!-- Navbar brand -->
-    <nav class="navbar navbar-expand-md navbar-dark">
-        @*<a class="navbar-brand" href="#">GigTracker</a>*@
-
-        <!-- Collapse button -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <!-- Collapsible content -->
-        <div class="collapse navbar-collapse" id="collapsibleNavbar">
-            @*menu items that will appear on the left of the menu bar*@
-            <ul class="navbar-nav mr-auto">
-                @if (Model.UserRole == "Admin" || Model.UserRole == "User") {
-                    <li class="nav-item active">
-                        <a asp-controller="Gig" asp-action="List" class="btn btn-default menu-button">My Gigs</a>
-                    </li>
-                    <li class="nav-item">
-                        <a asp-controller="User" asp-action="Details" asp-route-id=@Model.UserId class="btn btn-default menu-button">Profile</a>
-                    </li>
-                }
-                @if (Model.UserRole == "Admin") {
-                    <li class="nav-item">
-                        <a asp-controller="User" asp-action="List" class="btn btn-default menu-button">Users</a>
-                    </li>
-                }
-            </ul>
-            @*menu items that will appear on the right of the menu bar*@
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
-                    <input asp-for="ArtistSearch" name="searchArtist" id="searchArtist" class="form-control mr-auto" type="search" placeholder="Search for Artist" aria-label="Search for Artist">
-                </li>
-                <li class="nav-item active">
-                    @if (Model.UserId.HasValue == false) {
-                        <a asp-controller="Account" asp-action="Login" class="btn btn-default menu-button mr-auto">Login</a>
-                    }
-                    else {
-                        <a asp-controller="Account" asp-action="Logout" class="btn btn-default menu-button mr-auto">Logout</a>
-                        <span>User: @Model.User.FullName</span>
-                    }
-                </li>
-            </ul>
-        </div>
-    </nav>
+    <partial name="_Navbar" for="NavbarModel" />
 
     <partial name="_GigList" for="Gigs" />
 

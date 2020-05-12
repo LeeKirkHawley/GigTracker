@@ -33,14 +33,16 @@ namespace GigTracker.Controllers {
 			if (newQuery == true)
 				page = 1;
 
-			HomeIndexViewModel model = new HomeIndexViewModel();
+			HomeIndexViewModel model = new HomeIndexViewModel {
+				NavbarModel = new NavbarModel()
+			};
 
 			var userId = HttpContext.Session.GetString("UserId");
 
 			User currentUser = null;
 			if (userId != null) {
 				currentUser = _userService.GetById(Convert.ToInt32(userId));
-				model.User = currentUser;
+				model.NavbarModel.User = currentUser;
 			}
 
 			IEnumerable<Gig> gigs = _gigRepository.Get().Result;
@@ -56,9 +58,9 @@ namespace GigTracker.Controllers {
 
 
 			if (currentUser != null) {
-				model.UserId = currentUser.Id;
-				model.UserRole = currentUser.Role;
-				model.ArtistSearch = artistQuery;
+				model.NavbarModel.UserId = currentUser.Id;
+				model.NavbarModel.UserRole = currentUser.Role;
+				model.NavbarModel.ArtistSearch = artistQuery;
 			}
 
 			// open error dlg

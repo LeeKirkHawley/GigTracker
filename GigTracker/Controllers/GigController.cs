@@ -71,6 +71,8 @@ namespace GigTracker.Controllers {
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(GigCreateViewModel model) {
 
+			if (ModelState.IsValid) { };
+
 			string UserId = this.HttpContext.Session.GetString("UserId");
 
 			model.Gig.UserId = Convert.ToInt32(UserId);

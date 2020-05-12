@@ -9,14 +9,17 @@ using Microsoft.AspNetCore.Mvc;
 using GigTracker.LinqExtensions;
 
 namespace GigTracker.Models {
-	public class HomeIndexViewModel {
+	public class NavbarModel {
 
-		public NavbarModel NavbarModel { get; set; }
+		[HiddenInput]
+		public int? UserId { get; set; }
 
-		public PagedResult<Gig> Gigs { get; set; }
+		[HiddenInput]
+		public string UserRole { get; set; }
 
-		public PagingInfo PagingInfo { get; set; }
+		public string ArtistSearch { get; set; }
 
-		public string ErrorMsg { get; set; }
+		public virtual User User { get; set; }
+
 	}
 }

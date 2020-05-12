@@ -1,4 +1,5 @@
-﻿Validation
+﻿Menu on all pages
+New User UI
 Optimistic locking
 Tests
 Security
