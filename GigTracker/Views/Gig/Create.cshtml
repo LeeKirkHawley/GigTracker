@@ -8,30 +8,39 @@
 
 <form asp-controller="Gig" asp-action="Create" method="post">
 
-<div class="col-sm-10">
-    <label asp-for="Gig.VenueName"></label>
-    <input asp-for="Gig.VenueName" />
-</div>
-<div class="col-sm-10">
-    <label asp-for="Gig.VenueAddress"></label>
-    <input asp-for="Gig.VenueAddress" />
-</div>
+    <div asp-validation-summary="ModelOnly">
+        <span>Please correct the following errors</span>
+    </div>
 
-<div class="col-sm-10">
-    <label asp-for="Gig.VenuePhone"></label>
-    <input asp-for="Gig.VenuePhone" />
-</div>
+    <div class="col-sm-10">
+        <label asp-for="Gig.VenueName"></label>
+        <input asp-for="Gig.VenueName" />
+        <span asp-validation-for="Gig.VenueName"></span>
+    </div>
+    <div class="col-sm-10">
+        <label asp-for="Gig.VenueAddress"></label>
+        <input asp-for="Gig.VenueAddress" />
+        <span asp-validation-for="Gig.VenueAddress"></span>
+    </div>
 
-<div class="col-sm-10">
-    <label asp-for="Gig.Date"></label>
-    <input type="date" asp-for="Gig.Date" id="gigDate" class="form-control" />
-</div>
+    <div class="col-sm-10">
+        <label asp-for="Gig.VenuePhone"></label>
+        <input asp-for="Gig.VenuePhone" />
+        <span asp-validation-for="Gig.VenuePhone"></span>
+    </div>
 
-<div class="col-sm-10">
-    <label asp-for="Gig.ArtistName"></label>
-    <input asp-for="Gig.ArtistName" />
-</div>
+    <div class="col-sm-10">
+        <label asp-for="Gig.Date"></label>
+        <input type="date" asp-for="Gig.Date" id="gigDate" class="form-control" />
+        <span asp-validation-for="Gig.Date"></span>
+    </div>
 
-<button asp-route="Create">Save</button>
+    <div class="col-sm-10">
+        <label asp-for="Gig.ArtistName"></label>
+        <input asp-for="Gig.ArtistName" />
+        <span asp-validation-for="Gig.ArtistName"></span>
+    </div>
+
+    <button asp-route="Create">Save</button>
 
 </form>

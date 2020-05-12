@@ -21,8 +21,8 @@ namespace GigTracker.Entities {
 		[Display(Name = "Venue")]
 		public string VenueName { get; set; }
 
-		[Required]
-		[Display(Name = "Venue Address")] 
+		[Required(ErrorMessage = "Venue Address is required.")]
+		[Display(Name = "Venue Address")]
 		public string VenueAddress { get; set; }
 
 		[Display(Name = "Venue Phone")]

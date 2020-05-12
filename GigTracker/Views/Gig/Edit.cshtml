@@ -17,25 +17,34 @@
         <input asp-for="Gig.Id" type="hidden" />
         <input asp-for="Gig.UserId" type="hidden" />
 
+        <div asp-validation-summary="ModelOnly">
+            <span>Please correct the following errors</span>
+        </div>
+
         <div class="form-group">
             <label asp-for="Gig.ArtistName"></label>
             <input class="form-control col-sm-6" type="text" asp-for="Gig.ArtistName" />
+            <span asp-validation-for="Gig.ArtistName"></span>
         </div>
         <div class="form-group">
             <label asp-for="Gig.VenueName"></label>
             <input class="form-control col-sm-6" type="text" asp-for="Gig.VenueName" />
+            <span asp-validation-for="Gig.VenueName"></span>
         </div>
         <div class="form-group">
             <label asp-for="Gig.VenueAddress"></label>
             <input class="form-control col-sm-6" type="text" asp-for="Gig.VenueAddress" />
+            <span asp-validation-for="Gig.VenueAddress"></span>
         </div>
         <div class="form-group">
             <label asp-for="Gig.VenuePhone"></label>
             <input class="form-control col-sm-6" type="text" asp-for="Gig.VenuePhone" />
+            <span asp-validation-for="Gig.VenuePhone"></span>
         </div>
         <div class="form-group">
             <label asp-for="Gig.Date"></label>
             <input class="form-control col-sm-6" type="text" asp-for="Gig.Date" />
+            <span asp-validation-for="Gig.Date"></span>
         </div>
 
         <button type="submit">Save</button>
