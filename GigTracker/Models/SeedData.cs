@@ -11,12 +11,6 @@ using GigTracker.Entities;
 namespace GigTracker.Models {
     public static class SeedData {
 
-        //AccountService _accountService;
-
-        //public SeedData(AccountService accountService) {
-        //    _accountService = accountService;
-        //}
-
         public static void EnsurePopulated(IApplicationBuilder app, ApplicationDbContext context, IAccountService accountService) {
 
             //context.Database.Migrate();
