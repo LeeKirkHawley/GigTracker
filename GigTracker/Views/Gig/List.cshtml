@@ -5,8 +5,12 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<a asp-controller="Gig" asp-action="Create" class="btn btn-default menu-button">New gig</a>
+<partial name="_Navbar" for="NavbarModel" />
 
-<h1>@(Model.CurrentUser.FirstName + " " + Model.CurrentUser.LastName + "\'s Gigs")</h1>
+
+
+<h1>@(Model.NavbarModel.CurrentUser?.FirstName + " " + Model.NavbarModel.CurrentUser?.LastName + "\'s Gigs")</h1>
+<a asp-controller="Gig" asp-action="Create" class="btn btn-default menu-button" style="float: right;">New gig</a>
+
 
 <partial name="_UserGigList" for="Gigs" />

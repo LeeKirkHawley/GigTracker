@@ -12,14 +12,11 @@ namespace GigTracker.Models {
 	public class NavbarModel {
 
 		[HiddenInput]
-		public int? UserId { get; set; }
+		public int? CurrentUserId { get; set; }
 
-		[HiddenInput]
-		public string UserRole { get; set; }
+		public virtual User CurrentUser { get; set; }
 
 		public string ArtistSearch { get; set; }
-
-		public virtual User User { get; set; }
 
 	}
 }

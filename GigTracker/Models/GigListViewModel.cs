@@ -17,6 +17,7 @@ namespace GigTracker.Models {
 
 		public string ErrorMsg { get; set; }
 
-		public User CurrentUser { get; set; }
+		public NavbarModel NavbarModel { get; set; }
+
 	}
 }

@@ -8,5 +8,7 @@ namespace GigTracker.Models {
 	public class GigDetailsViewModel {
 		public Gig Gig { get; set; }
 		public string ErrorMsg { get; set; }
+
+		public NavbarModel NavbarModel { get; set; }
 	}
 }

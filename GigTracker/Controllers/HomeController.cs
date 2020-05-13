@@ -42,7 +42,7 @@ namespace GigTracker.Controllers {
 			User currentUser = null;
 			if (userId != null) {
 				currentUser = _userService.GetById(Convert.ToInt32(userId));
-				model.NavbarModel.User = currentUser;
+				model.NavbarModel.CurrentUser = currentUser;
 			}
 
 			IEnumerable<Gig> gigs = _gigRepository.Get().Result;
@@ -58,8 +58,8 @@ namespace GigTracker.Controllers {
 
 
 			if (currentUser != null) {
-				model.NavbarModel.UserId = currentUser.Id;
-				model.NavbarModel.UserRole = currentUser.Role;
+				model.NavbarModel.CurrentUserId = currentUser.Id;
+				model.NavbarModel.CurrentUser = currentUser;
 				model.NavbarModel.ArtistSearch = artistQuery;
 			}
 

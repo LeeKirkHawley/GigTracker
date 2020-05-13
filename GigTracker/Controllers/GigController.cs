@@ -14,17 +14,21 @@ using GigTracker.LinqExtensions;
 namespace GigTracker.Controllers {
 	public class GigController : Controller {
 		private readonly IGigRepository _gigRepository;
+		private readonly UserRepository _userRepository;
 		private readonly UserService _userService;
 
-		public GigController(IGigRepository gigRepository, UserService userService) {
+		public GigController(IGigRepository gigRepository, UserService userService, UserRepository userRepository) {
 			_gigRepository = gigRepository;
 			_userService = userService;
+			_userRepository = userRepository;
 		}
 
 		[HttpGet("Gig/List/{page?}")]
 		public ViewResult List(int page = 1) {
 
-			GigListViewModel model = new GigListViewModel();
+			GigListViewModel model = new GigListViewModel {
+				NavbarModel = new NavbarModel()
+			};
 
 			int? userId = Convert.ToInt32(HttpContext.Session.GetString("UserId"));
 			if (userId.HasValue == false)
@@ -35,7 +39,7 @@ namespace GigTracker.Controllers {
 				currentUser = _userService.GetById(Convert.ToInt32(userId));
 			else
 				model.ErrorMsg = $"ERROR: couldn't find user {userId}";
-			model.CurrentUser = currentUser;
+			model.NavbarModel.CurrentUser = currentUser;
 
 			IEnumerable<Gig> gigs = _gigRepository.Get().Result.Where(g => g.UserId == userId);
 
@@ -85,11 +89,24 @@ namespace GigTracker.Controllers {
 		[HttpGet("Gig/Details/{id}")]
 		public ActionResult Details(int id) {
 
+			string strCurrentUserId = HttpContext.Session.GetString("UserId");
+			int? currentUserId = null;
+			User currentUser = null;
+
+			if (String.IsNullOrEmpty(strCurrentUserId) == false) {
+				currentUserId = Convert.ToInt32(strCurrentUserId);
+				currentUser = _userRepository.Get(Convert.ToInt32(currentUserId)).Result;
+			}
+
 			Gig gig = _gigRepository.Get(id).Result;
-			gig.User = _userService.GetById(Convert.ToInt32(gig.UserId));
 
 			GigDetailsViewModel model = new GigDetailsViewModel {
-				Gig = gig
+				NavbarModel = new NavbarModel {
+					CurrentUserId = currentUserId,
+					CurrentUser = currentUser,
+					ArtistSearch = ""
+				},
+ 				Gig = gig
 			};
 
 			var v = View(model);
