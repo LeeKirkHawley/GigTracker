@@ -65,13 +65,13 @@ namespace GigTracker.Controllers {
 			return View(model);
 		}
 
-		[HttpGet]
+		[HttpGet("User/Create")]
 		public ViewResult Create() {
 			UserCreateViewModel model = new UserCreateViewModel();
 			return View(model);
 		}
 
-		[HttpPost]
+		[HttpPost("User/Create")]
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(UserCreateViewModel model) {
 
@@ -81,7 +81,8 @@ namespace GigTracker.Controllers {
 				User = newUser
 			};
 
-			return View("Details", newModel);
+			//return View("Details", newModel);
+			return RedirectToAction("List", "User");
 		}
 
 		[HttpGet("User/Details")]

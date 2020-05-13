@@ -1,5 +1,4 @@
-﻿Menu on all pages
-New User UI
+﻿New User UI
 Optimistic locking
 Tests
 Security

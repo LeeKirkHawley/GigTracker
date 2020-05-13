@@ -1,6 +1,6 @@
 ﻿@using GigTracker.Entities
 @using GigTracker.LinqExtensions;
-@*@model PagedResult<User>*@
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @model UserListViewModel
 
 @{
@@ -16,21 +16,11 @@
 
     var startIndex = Math.Max(Model.Users.CurrentPage - 5, 1);
     var finishIndex = Math.Min(Model.Users.CurrentPage + 5, Model.Users.PageCount);
-
 }
 
+<a asp-controller="User" asp-action="Create" class="btn btn-default menu-button">New User</a>
+@*<a href="~/User/Create" class="btn btn-default menu-button">New User</a>*@
 
-@*@foreach (var user in Model.Users) {
-        <div>
-            <a asp-controller="User" asp-action="Details" asp-route-id="@user.Id">Details</a>
-            User Name: @user.UserName
-            Email: @user.Email
-        </div>
-    }*@
-
-@*<div class="gt-style">
-        (click gig for gig details)
-    </div>*@
 <div class="row">
     <div class="col-md-10">
         <table class="table table-condensed" id="gigListTable">
@@ -46,11 +36,11 @@
                 @foreach (var contact in Model.Users.Results) {
                     var rowNo = (Model.Users.CurrentPage - 1) * Model.Users.PageSize + i;
                     i++;
-                <tr onclick="location.href = '@(Url.Action("Details", "User", new { id = contact.Id }))'">
-                    <td>@contact.UserName</td>
-                    <td>@contact.Email</td>
-                    <td>@contact.Role</td>
-                </tr>
+                    <tr onclick="location.href = '@(Url.Action("Details", "User", new { id = contact.Id }))'">
+                        <td>@contact.UserName</td>
+                        <td>@contact.Email</td>
+                        <td>@contact.Role</td>
+                    </tr>
                 }
             </tbody>
         </table>
