@@ -1,4 +1,4 @@
-﻿Create User
+﻿Register User
 Optimistic locking
 Tests
 Security

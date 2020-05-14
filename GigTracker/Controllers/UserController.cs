@@ -32,22 +32,15 @@ namespace GigTracker.Controllers {
 
 			UserListViewModel model = new UserListViewModel();
 
-			int? userId = Convert.ToInt32(HttpContext.Session.GetString("UserId"));
-			if (userId.HasValue == false) {
-				model.ErrorMsg = "ERROR: no user ID";
-				return Content(model.ErrorMsg);
-			}
+			User currentUser = _userService.GetCurrentUser(HttpContext);
 
-			User currentUser = null;
-			if (userId != null)
-				currentUser = _userService.GetById(Convert.ToInt32(userId));
-			else {
-				model.ErrorMsg = $"ERROR: couldn't find user {userId}";
+			if (currentUser == null) {
+				model.ErrorMsg = $"ERROR: couldn't get current user";
 				return Content(model.ErrorMsg);
 			}
 
 			if(currentUser.Role != Role.Admin) {
-				model.ErrorMsg = $"ERROR: user is not admin {userId}";
+				model.ErrorMsg = $"ERROR: user is not admin";
 				return Content(model.ErrorMsg);
 			}
 
@@ -81,8 +74,12 @@ namespace GigTracker.Controllers {
 				User = newUser
 			};
 
-			//return View("Details", newModel);
-			return RedirectToAction("List", "User");
+			User currentUser = _userService.GetCurrentUser(HttpContext);
+
+			if(currentUser?.Role == Role.Admin)
+				return RedirectToAction("List", "User");
+	
+			return RedirectToAction("Index", "Home");
 		}
 
 		[HttpGet("User/Details")]

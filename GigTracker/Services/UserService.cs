@@ -10,6 +10,7 @@ using Microsoft.IdentityModel.Tokens;
 using GigTracker.Entities;
 using GigTracker.Helpers;
 using GigTracker.Repositories;
+using Microsoft.AspNetCore.Http;
 
 namespace GigTracker.Services {
     public interface IUserService {
@@ -76,6 +77,18 @@ namespace GigTracker.Services {
         public User GetById(int id) {
             var user = this.GetAll().FirstOrDefault(x => x.Id == id);
             return user.WithoutPassword();
+        }
+
+        public User GetCurrentUser(HttpContext context) {
+            int? userId = Convert.ToInt32(context.Session.GetString("UserId"));
+            if (userId.HasValue == false)
+                return null;
+
+            User currentUser = null;
+            if (userId != null)
+                currentUser = GetById(Convert.ToInt32(userId));
+
+            return currentUser;
         }
     }
 }
