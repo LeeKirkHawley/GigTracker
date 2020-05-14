@@ -1,5 +1,4 @@
-﻿Register User
-Optimistic locking
+﻿Handel locking errors in User and Gig
 Tests
 Security
 Retain search string in search box

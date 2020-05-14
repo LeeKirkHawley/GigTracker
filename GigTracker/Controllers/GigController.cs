@@ -144,7 +144,12 @@ namespace GigTracker.Controllers {
 				return Content("ERROR - user cannot edit this Gig.");
 			}
 
-			Gig newGig = _gigRepository.Update(model.Gig).Result;
+			try {
+				Gig newGig = _gigRepository.Update(model.Gig).Result;
+			}
+			catch(Exception ex) {
+
+			}
 
 			return RedirectToAction("List", "Gig");
 		}

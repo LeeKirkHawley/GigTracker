@@ -19,6 +19,7 @@ BEGIN
 		LastName varchar(64) null,
 		Email varchar(256) not null,
 		Role varchar(64) null,
+		RowVersion timestamp not null,
 		Token varchar(200) null
     )
 END;
@@ -33,6 +34,7 @@ BEGIN
 		VenuePhone varchar(64) null,
 		Date datetime2 null,
 		ArtistName varchar(256) not null,
+		RowVersion timestamp not null,
 		constraint fk_gig_user foreign key (UserId) references [User](Id)
     )
 END;

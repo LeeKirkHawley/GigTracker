@@ -16,6 +16,7 @@
     <form asp-controller="Gig" asp-action="UpdateGig" method="post">
         <input asp-for="Gig.Id" type="hidden" />
         <input asp-for="Gig.UserId" type="hidden" />
+        <input asp-for="Gig.RowVersion" type="hidden" />
 
         <div asp-validation-summary="ModelOnly">
             <span>Please correct the following errors</span>

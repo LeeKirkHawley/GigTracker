@@ -36,5 +36,9 @@ namespace GigTracker.Entities {
 		[Required]
 		public string ArtistName { get; set; }
 
+		[Timestamp]
+		[HiddenInput]
+		public byte[] RowVersion { get; set; }
+
 	}
 }

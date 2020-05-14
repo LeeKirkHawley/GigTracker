@@ -119,7 +119,12 @@ namespace GigTracker.Controllers {
 				return Content("ERROR - user cannot update this Profile.");
 			}
 
-			User newUser = _userRepository.Update(model.User).Result;
+			try {
+				User newUser = _userRepository.Update(model.User).Result;
+			}
+			catch(Exception ex) {
+
+			}
 
 			return RedirectToAction("Index", "Home");
 		}

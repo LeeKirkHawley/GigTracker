@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GigTracker.Entities {
 	public class User {
@@ -38,6 +39,10 @@ namespace GigTracker.Entities {
 		public string Role { get; set; }
 
 		public string Token { get; set; }
+
+		[Timestamp]
+		[HiddenInput]
+		public byte[] RowVersion { get; set; }
 
 	}
 }
