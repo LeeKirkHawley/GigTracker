@@ -90,8 +90,6 @@ namespace GigTracker.Controllers {
 		[HttpGet("Gig/Details/{id}")]
 		public ActionResult Details(int id) {
 
-			throw new Exception("Debug Error");
-
 			string strCurrentUserId = HttpContext.Session.GetString("UserId");
 			int? currentUserId = null;
 			User currentUser = null;
@@ -110,7 +108,6 @@ namespace GigTracker.Controllers {
 					ArtistSearch = ""
 				},
  				Gig = gig
-				//ErrorMsg = "ERR!"
 			};
 
 			var v = View(model);

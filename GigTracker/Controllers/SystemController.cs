@@ -20,7 +20,6 @@ namespace GigTracker.Controllers
     {
 		[Route("Error")]
 		public IActionResult Error() {
-			//			return View();
 			// Retrieve error information in case of internal errors
 			ErrorViewModel model = new ErrorViewModel();
 
@@ -33,7 +32,6 @@ namespace GigTracker.Controllers
 				model.DisplayMsg = exception.Message;
 			}
 
-			//return View(model);
 			return RedirectToAction("Index", "Error");
 		}
 
