@@ -10,6 +10,7 @@ using GigTracker.Entities;
 using GigTracker.Services;
 using Newtonsoft.Json;
 using GigTracker.LinqExtensions;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace GigTracker.Controllers {
 	public class GigController : Controller {
@@ -89,6 +90,8 @@ namespace GigTracker.Controllers {
 		[HttpGet("Gig/Details/{id}")]
 		public ActionResult Details(int id) {
 
+			throw new Exception("Debug Error");
+
 			string strCurrentUserId = HttpContext.Session.GetString("UserId");
 			int? currentUserId = null;
 			User currentUser = null;
@@ -107,6 +110,7 @@ namespace GigTracker.Controllers {
 					ArtistSearch = ""
 				},
  				Gig = gig
+				//ErrorMsg = "ERR!"
 			};
 
 			var v = View(model);

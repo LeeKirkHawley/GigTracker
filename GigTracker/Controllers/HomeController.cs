@@ -10,6 +10,8 @@ using GigTracker.Entities;
 using GigTracker.Models;
 using GigTracker.Repositories;
 using GigTracker.LinqExtensions;
+using Microsoft.AspNetCore.Diagnostics;
+using System.Net;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -74,6 +76,23 @@ namespace GigTracker.Controllers {
 
 		public ActionResult ModalPopUp() {
 			return View();
+		}
+
+		[HttpGet("Home/Error")]
+		public IActionResult Error() {
+			//Retrieve error information in case of internal errors
+		   ErrorViewModel model = new ErrorViewModel();
+
+			var error = HttpContext
+					  .Features
+					  .Get<IExceptionHandlerFeature>();
+
+			if (error != null) {
+				var exception = error.Error;
+				model.DisplayMsg = exception.Message;
+			}
+
+			return View(model);
 		}
 	}
 }

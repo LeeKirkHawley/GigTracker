@@ -74,15 +74,16 @@ namespace GigTracker {
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
 		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider services) {
 			if (env.IsDevelopment()) {
-				app.UseDeveloperExceptionPage();
+				app.UseExceptionHandler("/home/error");
+//				app.UseDeveloperExceptionPage();
 				//app.UseDatabaseErrorPage();
 			}
 			else {
-				app.UseExceptionHandler("/Error");
+				app.UseExceptionHandler("/Home/Error");
 
 			}
 
-			app.UseStatusCodePages();
+			//app.UseStatusCodePages();
 			app.UseFileServer();
 			app.UseSession();
 			app.UseRouting();
