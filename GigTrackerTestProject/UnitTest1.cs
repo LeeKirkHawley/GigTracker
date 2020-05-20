@@ -13,22 +13,87 @@ using System.Collections.Generic;
 
 namespace GigTrackerTestProject {
 	public class Tests {
+		ApplicationDbContext _context = null;
+
 		[SetUp]
 		public void Setup() {
+			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
+				.UseInMemoryDatabase(databaseName: "Gigtracker")
+				.Options;
+
+			_context = new ApplicationDbContext(options);
 		}
 
 		[Test]
-		public void Test1() {
-			TestSetup setup = new TestSetup();
+		public void AddGigTest() {
 
-			ApplicationDbContext context = setup.Setup();
+			_context.Gig.Add(new Gig { Id = 1, VenueName = "Big Venue", Date = DateTime.Now.AddDays(3), ArtistName = "Lou and the Losers"});
+			_context.SaveChanges();
 
-			context.Gig.Add(new Gig { Id = 1, VenueName = "Big Venue", Date = DateTime.Now.AddDays(3), ArtistName = "Lou and the Losers"});
-			context.SaveChanges();
-
-			GigRepository gigRepo = new GigRepository(context);
+			GigRepository gigRepo = new GigRepository(_context);
 			List<Gig> gigs = gigRepo.Get().Result.ToList();
+
+			Assert.AreEqual(gigs.FirstOrDefault().Id, 1);
 		}
+
+		[Test]
+		public void DeleteGigTest() {
+
+			_context.Gig.Add(new Gig { Id = 1, 
+										VenueName = "Big Venue", 
+										Date = DateTime.Now.AddDays(3), 
+										ArtistName = "Lou and the Losers" });
+			_context.SaveChanges();
+
+			GigRepository gigRepo = new GigRepository(_context);
+			List<Gig> gigs = gigRepo.Get().Result.ToList();
+			Gig gig = gigs.FirstOrDefault();
+
+			gigRepo.Delete(gig.Id);
+			_context.SaveChanges();
+
+			gigs = gigRepo.Get().Result.ToList();
+
+			Assert.AreEqual(gigs.Count, 0);
+		}
+
+		[Test]
+		public void UpdateGigTest() {
+
+			_context.Gig.Add(new Gig {
+				Id = 1,
+				VenueName = "Big Venue",
+				Date = DateTime.Now.AddDays(3),
+				ArtistName = "Lou and the Losers"
+			});
+			_context.SaveChanges();
+
+			GigRepository gigRepo = new GigRepository(_context);
+			List<Gig> gigs = gigRepo.Get().Result.ToList();
+			Gig gig = gigs.FirstOrDefault();
+
+			gig.ArtistName = "Louis and the Losers";
+
+			gigRepo.Update(gig);
+			_context.SaveChanges();
+
+			gig = gigRepo.Get().Result.ToList().FirstOrDefault();
+
+			Assert.AreEqual(gig.ArtistName, "Louis and the Losers");
+		}
+
+
+		[Test]
+		public void AddUserTest() {
+
+			_context.User.Add(new User { Id = 1, UserName = "lou", FirstName = "Lou" });
+			_context.SaveChanges();
+
+			UserRepository userRepo = new UserRepository(_context);
+			List<User> users = userRepo.Get().Result.ToList();
+		}
+
+
 
 		//		[Test]
 		//		public void Test1() {
