@@ -11,6 +11,8 @@ namespace GigTracker.Repositories {
 
         ApplicationDbContext _context;
 
+        public UserRepository() { }
+
         public UserRepository(ApplicationDbContext context) {
             _context = context;
         }

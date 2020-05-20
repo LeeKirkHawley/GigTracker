@@ -30,13 +30,15 @@ namespace GigTracker.Services {
         private readonly AppSettings _appSettings;
         private readonly AccountService _accountService;
         private readonly UserRepository _userRepository;
-        UserManager<IdentityUser> _userManager;
+        //UserManager<IdentityUser> _userManager;
 
-        public UserService(IOptions<AppSettings> appSettings, AccountService accountService, UserRepository userRepository, UserManager<IdentityUser> userManager) {
+        public UserService() { }
+
+        public UserService(IOptions<AppSettings> appSettings, AccountService accountService, UserRepository userRepository/*, UserManager<IdentityUser> userManager*/) {
             _appSettings = appSettings.Value;
             _accountService = accountService;
             _userRepository = userRepository;
-            _userManager = userManager;
+            //_userManager = userManager;
         }
 
         public User Authenticate(string username, string password) {

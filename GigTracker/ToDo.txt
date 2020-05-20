@@ -1,7 +1,7 @@
-﻿Handel locking errors in User and Gig
-Tests
+﻿Tests
 Security
 Retain search string in search box
 Case-insensitive searches
 Configurable gig paging
 Sort gigs by date
+Did all entities get optomistic locking?

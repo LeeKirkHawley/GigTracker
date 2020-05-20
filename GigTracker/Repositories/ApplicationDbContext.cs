@@ -13,14 +13,15 @@ using GigTracker.Entities;
 namespace GigTracker.Repositories {
 	public class ApplicationDbContext : IdentityDbContext<IdentityUser>{
 
+		public ApplicationDbContext() { }
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 
 		protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
 			optionsBuilder.EnableSensitiveDataLogging();
 		}
 
-		public DbSet<User> User { get; set; }
+		public virtual DbSet<User> User { get; set; }
 
-		public DbSet<Gig> Gig { get; set; }
+		public virtual DbSet<Gig> Gig { get; set; }
 	}
 }
