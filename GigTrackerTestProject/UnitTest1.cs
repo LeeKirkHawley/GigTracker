@@ -90,13 +90,53 @@ namespace GigTrackerTestProject {
 
 		[Test]
 		[Parallelizable(ParallelScope.None)]
-		public void AddUserTest() {
-
-			_context.User.Add(new User { /*Id = 4,*/ UserName = "lou", FirstName = "Lou" });
-			_context.SaveChanges();
+		public async Task AddUserTest() {
 
 			UserRepository userRepo = new UserRepository(_context);
-			List<User> users = userRepo.Get().Result.ToList();
+
+			await userRepo.Add(new User { /*Id = 4,*/ UserName = "lou", FirstName = "Lou" });
+			_context.SaveChanges();
+
+			User user = userRepo.Get().Result.Where(u => u.UserName == "lou").FirstOrDefault();
+
+			Assert.IsNotNull(user);
+		}
+
+		[Test]
+		[Parallelizable(ParallelScope.None)]
+		public async Task DeleteUserTest() {
+
+			UserRepository userRepo = new UserRepository(_context);
+
+			await userRepo.Add(new User { /*Id = 4,*/ UserName = "lou", FirstName = "Lou" });
+			_context.SaveChanges();
+
+			User user = userRepo.Get().Result.Where(u => u.UserName == "lou").FirstOrDefault();
+
+			Assert.IsNotNull(user);
+
+			await userRepo.Delete(user.Id);
+
+			user = userRepo.Get().Result.Where(u => u.UserName == "lou").FirstOrDefault();
+			Assert.IsNull(user);
+		}
+
+		[Test]
+		[Parallelizable(ParallelScope.None)]
+		public async Task UpdateUserTest() {
+
+			UserRepository userRepo = new UserRepository(_context);
+
+			await userRepo.Add(new User { /*Id = 4,*/ UserName = "lou", FirstName = "Lou" });
+			_context.SaveChanges();
+
+			User user = userRepo.Get().Result.Where(u => u.UserName == "lou").FirstOrDefault();
+
+			user.UserName = "louis";
+			await userRepo.Update(user);
+
+			user = userRepo.Get().Result.Where(u => u.UserName == "louis").FirstOrDefault();
+			Assert.IsNotNull(user);
 		}
 
 
