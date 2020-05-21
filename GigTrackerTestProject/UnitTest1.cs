@@ -10,83 +10,89 @@ using Microsoft.AspNetCore.Identity;
 using System;
 using System.Linq;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace GigTrackerTestProject {
 	public class Tests {
+
 		ApplicationDbContext _context = null;
 
 		[SetUp]
 		public void Setup() {
-			var options = new DbContextOptionsBuilder<ApplicationDbContext>()
-				.UseInMemoryDatabase(databaseName: "Gigtracker")
-				.Options;
-
-			_context = new ApplicationDbContext(options);
+			TestSetup setup = new TestSetup();
+			_context = setup.Setup();
 		}
 
 		[Test]
+		[Parallelizable(ParallelScope.None)]
 		public void AddGigTest() {
 
-			_context.Gig.Add(new Gig { Id = 1, VenueName = "Big Venue", Date = DateTime.Now.AddDays(3), ArtistName = "Lou and the Losers"});
-			_context.SaveChanges();
-
 			GigRepository gigRepo = new GigRepository(_context);
+
+			var newGig = gigRepo.Add(new Gig { /*Id = 1,*/ VenueName = "Big Venue", Date = DateTime.Now.AddDays(3), ArtistName = "Lou and the Losers" }).Result;
+
 			List<Gig> gigs = gigRepo.Get().Result.ToList();
 
-			Assert.AreEqual(gigs.FirstOrDefault().Id, 1);
+			Gig gig = gigs.FirstOrDefault();
+			Assert.AreEqual(gig.Id, newGig.Id);
 		}
 
 		[Test]
-		public void DeleteGigTest() {
+		[Parallelizable(ParallelScope.None)]
+		public async Task DeleteGigTest() {
 
-			_context.Gig.Add(new Gig { Id = 1, 
-										VenueName = "Big Venue", 
+			GigRepository gigRepo = new GigRepository(_context);
+
+			await gigRepo.Add(new Gig { /*Id = 2,*/ 
+										VenueName = "Biggest Venue", 
 										Date = DateTime.Now.AddDays(3), 
 										ArtistName = "Lou and the Losers" });
 			_context.SaveChanges();
 
-			GigRepository gigRepo = new GigRepository(_context);
 			List<Gig> gigs = gigRepo.Get().Result.ToList();
-			Gig gig = gigs.FirstOrDefault();
+			Gig gig = gigs.Where(g => g.VenueName == "Biggest Venue").FirstOrDefault();
 
-			gigRepo.Delete(gig.Id);
+			await gigRepo.Delete(gig.Id);
 			_context.SaveChanges();
 
 			gigs = gigRepo.Get().Result.ToList();
+			gig = gigRepo.Get().Result.Where(g => g.VenueName == "Biggest Venue").FirstOrDefault();
 
-			Assert.AreEqual(gigs.Count, 0);
+			Assert.IsNull(gig);
 		}
 
 		[Test]
-		public void UpdateGigTest() {
+		[Parallelizable(ParallelScope.None)]
+		public async Task UpdateGigTest() {
 
-			_context.Gig.Add(new Gig {
-				Id = 1,
-				VenueName = "Big Venue",
+			GigRepository gigRepo = new GigRepository(_context);
+
+			await gigRepo.Add(new Gig {
+				//Id = 3,
+				VenueName = "Large Venue",
 				Date = DateTime.Now.AddDays(3),
 				ArtistName = "Lou and the Losers"
 			});
 			_context.SaveChanges();
 
-			GigRepository gigRepo = new GigRepository(_context);
-			List<Gig> gigs = gigRepo.Get().Result.ToList();
-			Gig gig = gigs.FirstOrDefault();
+			Gig gig = gigRepo.Get().Result.Where(g => g.VenueName == "Large Venue").FirstOrDefault();
 
 			gig.ArtistName = "Louis and the Losers";
 
-			gigRepo.Update(gig);
+			await gigRepo.Update(gig);
 			_context.SaveChanges();
 
-			gig = gigRepo.Get().Result.ToList().FirstOrDefault();
+			gig = gigRepo.Get().Result.Where(g => g.VenueName == "Large Venue").FirstOrDefault();
 
 			Assert.AreEqual(gig.ArtistName, "Louis and the Losers");
 		}
 
 
 		[Test]
+		[Parallelizable(ParallelScope.None)]
 		public void AddUserTest() {
 
-			_context.User.Add(new User { Id = 1, UserName = "lou", FirstName = "Lou" });
+			_context.User.Add(new User { /*Id = 4,*/ UserName = "lou", FirstName = "Lou" });
 			_context.SaveChanges();
 
 			UserRepository userRepo = new UserRepository(_context);
