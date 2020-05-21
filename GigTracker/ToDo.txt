@@ -1,5 +1,4 @@
-﻿Tests
-Security
+﻿Security
 Retain search string in search box
 Case-insensitive searches
 Configurable gig paging

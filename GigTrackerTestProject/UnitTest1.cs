@@ -24,12 +24,11 @@ namespace GigTrackerTestProject {
 		}
 
 		[Test]
-		[Parallelizable(ParallelScope.None)]
 		public void AddGigTest() {
 
 			GigRepository gigRepo = new GigRepository(_context);
 
-			var newGig = gigRepo.Add(new Gig { /*Id = 1,*/ VenueName = "Big Venue", Date = DateTime.Now.AddDays(3), ArtistName = "Lou and the Losers" }).Result;
+			var newGig = gigRepo.Add(new Gig { VenueName = "Big Venue", Date = DateTime.Now.AddDays(3), ArtistName = "Lou and the Losers" }).Result;
 
 			List<Gig> gigs = gigRepo.Get().Result.ToList();
 
@@ -38,13 +37,11 @@ namespace GigTrackerTestProject {
 		}
 
 		[Test]
-		[Parallelizable(ParallelScope.None)]
 		public async Task DeleteGigTest() {
 
 			GigRepository gigRepo = new GigRepository(_context);
 
-			await gigRepo.Add(new Gig { /*Id = 2,*/ 
-										VenueName = "Biggest Venue", 
+			await gigRepo.Add(new Gig { VenueName = "Biggest Venue", 
 										Date = DateTime.Now.AddDays(3), 
 										ArtistName = "Lou and the Losers" });
 			_context.SaveChanges();
@@ -62,13 +59,11 @@ namespace GigTrackerTestProject {
 		}
 
 		[Test]
-		[Parallelizable(ParallelScope.None)]
 		public async Task UpdateGigTest() {
 
 			GigRepository gigRepo = new GigRepository(_context);
 
 			await gigRepo.Add(new Gig {
-				//Id = 3,
 				VenueName = "Large Venue",
 				Date = DateTime.Now.AddDays(3),
 				ArtistName = "Lou and the Losers"
@@ -89,12 +84,11 @@ namespace GigTrackerTestProject {
 
 
 		[Test]
-		[Parallelizable(ParallelScope.None)]
 		public async Task AddUserTest() {
 
 			UserRepository userRepo = new UserRepository(_context);
 
-			await userRepo.Add(new User { /*Id = 4,*/ UserName = "lou", FirstName = "Lou" });
+			await userRepo.Add(new User { UserName = "lou", FirstName = "Lou" });
 			_context.SaveChanges();
 
 			User user = userRepo.Get().Result.Where(u => u.UserName == "lou").FirstOrDefault();
@@ -103,12 +97,11 @@ namespace GigTrackerTestProject {
 		}
 
 		[Test]
-		[Parallelizable(ParallelScope.None)]
 		public async Task DeleteUserTest() {
 
 			UserRepository userRepo = new UserRepository(_context);
 
-			await userRepo.Add(new User { /*Id = 4,*/ UserName = "bing", FirstName = "Bing" });
+			await userRepo.Add(new User { UserName = "bing", FirstName = "Bing" });
 			_context.SaveChanges();
 
 			User user = userRepo.Get().Result.Where(u => u.UserName == "bing").FirstOrDefault();
@@ -123,12 +116,11 @@ namespace GigTrackerTestProject {
 		}
 
 		[Test]
-		[Parallelizable(ParallelScope.None)]
 		public async Task UpdateUserTest() {
 
 			UserRepository userRepo = new UserRepository(_context);
 
-			await userRepo.Add(new User { /*Id = 4,*/ UserName = "lou", FirstName = "Lou" });
+			await userRepo.Add(new User { UserName = "lou", FirstName = "Lou" });
 			_context.SaveChanges();
 
 			User user = userRepo.Get().Result.Where(u => u.UserName == "lou").FirstOrDefault();
