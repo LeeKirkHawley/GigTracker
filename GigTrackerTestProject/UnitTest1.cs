@@ -108,16 +108,17 @@ namespace GigTrackerTestProject {
 
 			UserRepository userRepo = new UserRepository(_context);
 
-			await userRepo.Add(new User { /*Id = 4,*/ UserName = "lou", FirstName = "Lou" });
+			await userRepo.Add(new User { /*Id = 4,*/ UserName = "bing", FirstName = "Bing" });
 			_context.SaveChanges();
 
-			User user = userRepo.Get().Result.Where(u => u.UserName == "lou").FirstOrDefault();
+			User user = userRepo.Get().Result.Where(u => u.UserName == "bing").FirstOrDefault();
 
 			Assert.IsNotNull(user);
 
 			await userRepo.Delete(user.Id);
+			_context.SaveChanges();
 
-			user = userRepo.Get().Result.Where(u => u.UserName == "lou").FirstOrDefault();
+			user = userRepo.Get().Result.Where(u => u.UserName == "bing").FirstOrDefault();
 			Assert.IsNull(user);
 		}
 
@@ -134,6 +135,7 @@ namespace GigTrackerTestProject {
 
 			user.UserName = "louis";
 			await userRepo.Update(user);
+			_context.SaveChanges();
 
 			user = userRepo.Get().Result.Where(u => u.UserName == "louis").FirstOrDefault();
 			Assert.IsNotNull(user);
