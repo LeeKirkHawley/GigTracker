@@ -1,6 +1,13 @@
 ﻿Security
+	Cert
+	Https
+	Cross-site scripting
+	Cross-site forgery
+	CORS
+	SQL Injection
 Retain search string in search box
 Case-insensitive searches
 Configurable gig paging
 Sort gigs by date
 Did all entities get optomistic locking?
+Deploy somewhere

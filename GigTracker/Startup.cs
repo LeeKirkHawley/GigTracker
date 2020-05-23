@@ -31,6 +31,11 @@ namespace GigTracker {
 
 		public void ConfigureServices(IServiceCollection services) {
 
+			services.AddHttpsRedirection(options => {
+				options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+				options.HttpsPort = 5002;
+			});
+			
 			services.AddMemoryCache();
 
 			services.AddSession(options =>
@@ -81,6 +86,7 @@ namespace GigTracker {
 			}
 
 			//app.UseStatusCodePages();
+			app.UseHttpsRedirection();  // force redirect to https
 			app.UseFileServer();
 			app.UseSession();
 			app.UseRouting();

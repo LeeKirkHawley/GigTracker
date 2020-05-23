@@ -7,6 +7,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.DependencyInjection;
+using System.Net;
+using System.IO;
 
 namespace GigTracker {
 	public class Program {
@@ -20,10 +22,26 @@ namespace GigTracker {
             host.Run();
 		}
 
-		public static IHostBuilder CreateHostBuilder(string[] args) =>
-					Host.CreateDefaultBuilder(args)
-						.ConfigureWebHostDefaults(webBuilder => {
-							webBuilder.UseStartup<Startup>();
-						});
-	}
+        //public static IHostBuilder CreateHostBuilder(string[] args) =>
+        //			Host.CreateDefaultBuilder(args)
+        //				.ConfigureWebHostDefaults(webBuilder => {
+        //					webBuilder.UseStartup<Startup>();
+        //				});
+
+        public static IHostBuilder CreateHostBuilder(string[] args) =>
+             Host.CreateDefaultBuilder(args)
+                 .ConfigureWebHostDefaults(webBuilder => 
+                 {
+                    webBuilder.UseStartup<Startup>();
+                     webBuilder.UseKestrel(options => 
+                     {
+                         options.Listen(IPAddress.Loopback, 5001);
+                         options.Listen(IPAddress.Loopback, 5002, listenOptions => 
+                         {
+                             listenOptions.UseHttps(".\\test-certificate.pfx", "testpassword");
+                         }
+                     );}
+                );
+          });
+    }
 }
