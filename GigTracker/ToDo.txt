@@ -1,6 +1,4 @@
 ﻿Security
-	Cert
-	Https
 	Cross-site scripting
 	Cross-site forgery
 	CORS
