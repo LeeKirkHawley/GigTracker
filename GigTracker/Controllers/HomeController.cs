@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using GigTracker.Services;
 using GigTracker.Entities;
 using GigTracker.Models;
@@ -12,6 +13,8 @@ using GigTracker.Repositories;
 using GigTracker.LinqExtensions;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Net;
+using NLog;
+using NLog.Web;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -19,15 +22,19 @@ namespace GigTracker.Controllers {
 	public class HomeController : Controller {
 		UserService _userService;
 		IGigRepository _gigRepository;
+		ILogger<HomeController> _logger;
 
-		public HomeController(UserService userSevice, IGigRepository gigRepository) {
+		public HomeController(UserService userSevice, IGigRepository gigRepository, ILogger<HomeController> logger) {
 			_userService = userSevice;
 			_gigRepository = gigRepository;
+			_logger = logger;
 		}
 
 		//[HttpGet("")]
 		[HttpGet("{suggest, page?}")]
 		public IActionResult Index(string artistQuery, int page = 1, bool newQuery = false) {
+
+			_logger.LogInformation("entering HomeController.Index");
 
 			// for some reason I don't understand, page is being set to its most recent value
 			// when called from the javascript search

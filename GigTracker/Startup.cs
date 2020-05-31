@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -77,7 +78,9 @@ namespace GigTracker {
 		}
 
 		// This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-		public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IServiceProvider services) {
+		public void Configure(IApplicationBuilder app, 
+								IWebHostEnvironment env, 
+								IServiceProvider services) {
 			if (env.IsDevelopment()) {
 				app.UseDeveloperExceptionPage();
 			}
@@ -86,6 +89,8 @@ namespace GigTracker {
 			}
 
 			//app.UseStatusCodePages();
+			app.UseDefaultFiles();
+			app.UseStaticFiles(); // For the wwwroot folder
 			app.UseHttpsRedirection();  // force redirect to https
 			app.UseFileServer();
 			app.UseSession();
@@ -103,7 +108,7 @@ namespace GigTracker {
 
 			}
 			catch (Exception ex) {
-				//var logger = services.GetRequiredService<ILogger<Program>>();
+				var logger = services.GetRequiredService<ILogger<Program>>();
 				//logger.LogError(ex, "An error occurred seeding the DB.");
 			}
 		}

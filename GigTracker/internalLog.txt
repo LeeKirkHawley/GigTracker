@@ -1,0 +1,35 @@
+2020-05-31 12:11:11.3824 Info Message Template Auto Format enabled
+2020-05-31 12:11:12.0228 Info Loading assembly: NLog.Web.AspNetCore
+2020-05-31 12:11:12.4634 Info Adding target FileTarget(Name=alldata)
+2020-05-31 12:11:12.4634 Info Adding target FileTarget(Name=otherFile-web)
+2020-05-31 12:11:12.7747 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
+2020-05-31 12:16:54.0383 Info Message Template Auto Format enabled
+2020-05-31 12:16:54.0538 Info Loading assembly: NLog.Web.AspNetCore
+2020-05-31 12:16:54.3041 Info Adding target FileTarget(Name=alldata)
+2020-05-31 12:16:54.4206 Info Adding target FileTarget(Name=otherFile-web)
+2020-05-31 12:16:54.5033 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
+2020-05-31 12:25:51.9530 Info Message Template Auto Format enabled
+2020-05-31 12:25:51.9793 Info Loading assembly: NLog.Web.AspNetCore
+2020-05-31 12:25:52.1762 Info Adding target FileTarget(Name=alldata)
+2020-05-31 12:25:52.3383 Info Adding target FileTarget(Name=otherFile-web)
+2020-05-31 12:25:52.3864 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
+2020-05-31 12:27:26.2956 Info Message Template Auto Format enabled
+2020-05-31 12:27:26.4373 Info Loading assembly: NLog.Web.AspNetCore
+2020-05-31 12:27:26.8679 Info Adding target FileTarget(Name=alldata)
+2020-05-31 12:27:26.9138 Info Adding target FileTarget(Name=otherFile-web)
+2020-05-31 12:27:26.9977 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
+2020-05-31 12:27:59.1354 Info Message Template Auto Format enabled
+2020-05-31 12:27:59.1656 Info Loading assembly: NLog.Web.AspNetCore
+2020-05-31 12:27:59.5553 Info Adding target FileTarget(Name=alldata)
+2020-05-31 12:27:59.6407 Info Adding target FileTarget(Name=otherFile-web)
+2020-05-31 12:27:59.6915 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
+2020-05-31 12:29:56.4236 Info Message Template Auto Format enabled
+2020-05-31 12:29:56.4497 Info Loading assembly: NLog.Web.AspNetCore
+2020-05-31 12:29:56.8291 Info Adding target FileTarget(Name=alldata)
+2020-05-31 12:29:56.8386 Info Adding target FileTarget(Name=otherFile-web)
+2020-05-31 12:29:56.8810 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
+2020-05-31 12:32:37.4970 Info Message Template Auto Format enabled
+2020-05-31 12:32:37.5476 Info Loading assembly: NLog.Web.AspNetCore
+2020-05-31 12:32:37.6066 Info Adding target FileTarget(Name=alldata)
+2020-05-31 12:32:37.8662 Warn Error has been raised. Exception: NLog.NLogConfigurationException: Target 'otherFile-web' not found for logging rule: *.
+2020-05-31 12:32:37.9292 Info Validating config: TargetNames=alldata, ConfigItems=22, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
