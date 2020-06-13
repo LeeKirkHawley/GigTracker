@@ -15,11 +15,11 @@ using GigTracker.LinqExtensions;
 namespace GigTracker.Controllers {
 	public class UserController : Controller{
 
-		private readonly IUserRepository _userRepository;
+		private readonly UserRepository _userRepository;
 		private readonly UserService _userService;
 		private readonly AccountService _accountService;
 
-		public UserController(IUserRepository repo, 
+		public UserController(UserRepository repo, 
 								UserService userService, 
 								AccountService accountService) {
 			_userRepository = repo;

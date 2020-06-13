@@ -18,6 +18,9 @@ using GigTracker.Repositories;
 using GigTracker.Services;
 using GigTracker.Helpers;
 using GigTracker.Entities;
+using NLog.Web;
+using NLog;
+
 
 namespace GigTracker {
 	public class Startup {
@@ -32,11 +35,15 @@ namespace GigTracker {
 
 		public void ConfigureServices(IServiceCollection services) {
 
-			services.AddHttpsRedirection(options => {
-				options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
-				options.HttpsPort = 5002;
-			});
-			
+			var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+			logger.Debug("Entering ConfigureServices()");
+
+
+			//services.AddHttpsRedirection(options => {
+			//	options.RedirectStatusCode = StatusCodes.Status307TemporaryRedirect;
+			//	options.HttpsPort = 5002;
+			//});
+
 			services.AddMemoryCache();
 
 			services.AddSession(options =>
@@ -54,13 +61,21 @@ namespace GigTracker {
 			});
 			services.AddMvc();
 
-			services.AddTransient<AccountService>();			
-			services.AddTransient<UserService>();
-			services.AddTransient<IUserRepository, UserRepository>();
-			services.AddTransient<IGigRepository, GigRepository>();
-			services.AddScoped<ApplicationDbContext>();
+			try {
+				IServiceCollection s = services.AddDbContext<ApplicationDbContext>(options =>
+					options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
+			}
+			catch(Exception ex) {
+				logger.Debug(ex, "AddDbContext exception"); ;
+			}
+
 			services.AddTransient<UserRepository>();
+			//services.AddTransient<IUserRepository, UserRepository>();
+			services.AddTransient<IGigRepository, GigRepository>();
 			services.AddTransient<AccountService>();
+			services.AddTransient<UserService>();
+
+			services.AddScoped<ApplicationDbContext>();
 			services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 			var appSettingsSection = Configuration.GetSection("AppSettings");
@@ -68,11 +83,8 @@ namespace GigTracker {
 			var appSettings = appSettingsSection.Get<AppSettings>();
 			var key = Encoding.ASCII.GetBytes(appSettings.Secret);
 
-			IServiceCollection s = services.AddDbContext<ApplicationDbContext>(options =>
-				options.UseSqlServer(Configuration["ConnectionStrings:DefaultConnection"]));
 
 			services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
 			services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
 
 		}
@@ -81,6 +93,10 @@ namespace GigTracker {
 		public void Configure(IApplicationBuilder app, 
 								IWebHostEnvironment env, 
 								IServiceProvider services) {
+
+			var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+			logger.Debug("Entering Configure()");
+
 			if (env.IsDevelopment()) {
 				app.UseDeveloperExceptionPage();
 			}
@@ -91,7 +107,7 @@ namespace GigTracker {
 			//app.UseStatusCodePages();
 			app.UseDefaultFiles();
 			app.UseStaticFiles(); // For the wwwroot folder
-			app.UseHttpsRedirection();  // force redirect to https
+			//app.UseHttpsRedirection();  // force redirect to https
 			app.UseFileServer();
 			app.UseSession();
 			app.UseRouting();
@@ -102,16 +118,16 @@ namespace GigTracker {
 			try {
 				using (var serviceScope = app.ApplicationServices.CreateScope()) {
 					var context = serviceScope.ServiceProvider.GetService<ApplicationDbContext>();
-					IAccountService accountService = serviceScope.ServiceProvider.GetService<IAccountService>();
+					IAccountService accountService = serviceScope.ServiceProvider.GetService<AccountService>();
+
+					logger.Debug("Calling EnsurePopulated()");
 					SeedData.EnsurePopulated(app, context, accountService);
 				}
-
 			}
 			catch (Exception ex) {
-				var logger = services.GetRequiredService<ILogger<Program>>();
-				//logger.LogError(ex, "An error occurred seeding the DB.");
+				logger.Debug(ex, "An error occurred seeding the DB.");
 			}
-		}
+        }
 
 		private async Task CreateRoles(IServiceProvider serviceProvider) {
 			//initializing custom roles 

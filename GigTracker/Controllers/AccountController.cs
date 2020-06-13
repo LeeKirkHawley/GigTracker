@@ -18,12 +18,12 @@ namespace GigTracker.Controllers
 
     public class AccountController : Controller
     {
-        IUserRepository _userRepository;
+        UserRepository _userRepository;
         AccountService _accountService;
         UserService _userService;
         private readonly SignInManager<IdentityUser> _signInManager;
 
-        public AccountController(IUserRepository userRepository, 
+        public AccountController(UserRepository userRepository, 
                                 AccountService accountService, 
                                 UserService userService,
                                 SignInManager<IdentityUser> signInManager) {

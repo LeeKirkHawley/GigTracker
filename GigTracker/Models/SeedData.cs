@@ -19,7 +19,7 @@ namespace GigTracker.Models {
             if (context.User.Any() == false) {
                 context.User.AddRange(
                     new User {
-                        UserName = "kirkhawley",
+                        UserName = "kirkhawley", 
                         Password = accountService.HashPwd("password"),
                         FirstName = "Kirk",
                         LastName = "Hawley",

@@ -9,7 +9,7 @@ using GigTracker.Services;
 using GigTracker.Entities;
 
 namespace GigTracker.Repositories {
-	public class FakeUserRepository : IUserRepository {
+	public class FakeUserRepository : UserRepository {
 
 		//IAccountService _accountService;
 		//UserService _userService;

@@ -13,45 +13,69 @@ using System.Reflection;
 using NLog.Web;
 using NLog;
 
+
 namespace GigTracker {
 	public class Program {
 
+        static Logger logger = null;
 
         public static void Main(string[] args) {
-            var logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
+            logger = NLogBuilder.ConfigureNLog("nlog.config").GetCurrentClassLogger();
             logger.Debug("Entering Main()");
 
-            var host = CreateHostBuilder(args).Build();
 
-            using (var scope = host.Services.CreateScope()) {
-                var services = scope.ServiceProvider;
+            string argsString = "";
+            foreach(string str in args) {
+                argsString += str;
+                argsString += " ";
             }
 
+            IHostBuilder hostBuilder = null;
+            IHost host = null;
+
+            try {
+                logger.Debug($"Calling CreateHostBuilder() - {argsString}");
+                hostBuilder = CreateHostBuilder(args);
+                logger.Debug($"Calling Build() - {argsString}");
+                host = hostBuilder.Build();
+                logger.Debug("host built");
+            }
+            catch(Exception ex) {
+                logger.Debug(ex);
+            }
+
+            //using (var scope = host.Services.CreateScope()) {
+            //    var services = scope.ServiceProvider;
+            //}
+
+            logger.Debug("Calling Host.Run()");
             host.Run();
 
             logger.Debug("Leaving Main()");
         }
 
-        public static IHostBuilder CreateHostBuilder(string[] args) =>
-             Host.CreateDefaultBuilder(args)
-                .ConfigureWebHostDefaults(webBuilder => 
-                {
-                    webBuilder.UseStartup<Startup>();
-                    webBuilder.UseKestrel(options => 
-                    {
-                        options.Listen(IPAddress.Loopback, 5001);
-                        options.Listen(IPAddress.Loopback, 5002, listenOptions => 
-                        {
-                            listenOptions.UseHttps(".\\test-certificate.pfx", "testpassword");
-                        });
-                    });
-                })
-                .ConfigureLogging(logging => {
-                    //logging.ClearProviders();
-                    //logging.SetMinimumLevel(LogLevel.Information);
-                })
-               .UseNLog();
-                
-            
+        public static IHostBuilder CreateHostBuilder(string[] args) {
+            logger.Debug("Entering CreateHostBuilder()");
+
+            IHostBuilder hostBuilder = null;
+
+            try {
+                hostBuilder = Host.CreateDefaultBuilder(args)
+                   .ConfigureWebHostDefaults(webBuilder => {
+                       webBuilder.UseStartup<Startup>();
+                   })
+                   .ConfigureLogging(logging => {
+                   //logging.ClearProviders();
+                   //logging.SetMinimumLevel(LogLevel.Information);
+               })
+                  .UseNLog();
+            }
+            catch(Exception ex) {
+                logger.Debug(ex);
+            }
+
+            logger.Debug("Leaving CreateHostBuilder()");
+            return hostBuilder;
+        }
     }
 }
