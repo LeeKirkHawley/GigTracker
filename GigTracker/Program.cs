@@ -68,7 +68,7 @@ namespace GigTracker {
                    //logging.ClearProviders();
                    //logging.SetMinimumLevel(LogLevel.Information);
                })
-                  .UseNLog();
+               .UseNLog();
             }
             catch(Exception ex) {
                 logger.Debug(ex);
