@@ -413,3 +413,22 @@
 2020-06-13 02:41:41.2007 Info Adding target FileTarget(Name=otherFile-web)
 2020-06-13 02:41:41.2039 Info Closing old configuration.
 2020-06-13 02:41:41.2039 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
+2020-06-13 12:59:49.1516 Info Message Template Auto Format enabled
+2020-06-13 12:59:49.1716 Info Loading assembly: NLog.Web.AspNetCore
+2020-06-13 12:59:49.2380 Info Adding target FileTarget(Name=alldata)
+2020-06-13 12:59:49.2607 Info Adding target FileTarget(Name=otherFile-web)
+2020-06-13 12:59:49.3006 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Release\netcoreapp3.1\nlog.config
+2020-06-13 12:59:50.5968 Info Configuring from an XML element in C:\Work\GigTracker\GigTracker\bin\Release\netcoreapp3.1\nlog.config...
+2020-06-13 12:59:50.5968 Info Message Template Auto Format enabled
+2020-06-13 12:59:50.5968 Info Loading assembly: NLog.Web.AspNetCore
+2020-06-13 12:59:50.5968 Info Adding target FileTarget(Name=alldata)
+2020-06-13 12:59:50.5968 Info Adding target FileTarget(Name=otherFile-web)
+2020-06-13 12:59:50.5968 Info Closing old configuration.
+2020-06-13 12:59:50.6251 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Release\netcoreapp3.1\nlog.config
+2020-06-13 12:59:51.4731 Info Configuring from an XML element in C:\Work\GigTracker\GigTracker\bin\Release\netcoreapp3.1\nlog.config...
+2020-06-13 12:59:51.4731 Info Message Template Auto Format enabled
+2020-06-13 12:59:51.4731 Info Loading assembly: NLog.Web.AspNetCore
+2020-06-13 12:59:51.4731 Info Adding target FileTarget(Name=alldata)
+2020-06-13 12:59:51.4731 Info Adding target FileTarget(Name=otherFile-web)
+2020-06-13 12:59:51.4731 Info Closing old configuration.
+2020-06-13 12:59:51.4731 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Release\netcoreapp3.1\nlog.config

@@ -10,6 +10,7 @@ using GigTracker.Entities;
 using GigTracker.Services;
 using Newtonsoft.Json;
 using GigTracker.LinqExtensions;
+using Microsoft.Extensions.Logging;
 
 
 namespace GigTracker.Controllers {
@@ -18,13 +19,16 @@ namespace GigTracker.Controllers {
 		private readonly UserRepository _userRepository;
 		private readonly UserService _userService;
 		private readonly AccountService _accountService;
+		ILogger<UserController> _logger;
 
 		public UserController(UserRepository repo, 
 								UserService userService, 
-								AccountService accountService) {
+								AccountService accountService,
+								ILogger<UserController> logger) {
 			_userRepository = repo;
 			_userService = userService;
 			_accountService = accountService;
+			_logger = logger;
 		}
 
 		[HttpGet("User/List/{page?}")]
@@ -32,7 +36,13 @@ namespace GigTracker.Controllers {
 
 			UserListViewModel model = new UserListViewModel();
 
-			User currentUser = _userService.GetCurrentUser(HttpContext);
+			User currentUser = null;
+			try {
+				currentUser = _userService.GetCurrentUser(HttpContext);
+			}
+			catch(Exception ex) {
+				_logger.LogDebug(ex, "Couldn't get current user.");
+            }
 
 			if (currentUser == null) {
 				model.ErrorMsg = $"ERROR: couldn't get current user";
@@ -46,7 +56,13 @@ namespace GigTracker.Controllers {
 
 			model.CurrentUser = currentUser;
 
-			IEnumerable<User> users = _userRepository.Get().Result;
+			IEnumerable<User> users = null;
+			try {
+				users = _userRepository.Get().Result;
+			}
+			catch(Exception ex) {
+				_logger.LogDebug(ex, "Couldn't get users.");
+            }
 
 			var GigRowsToDisplay = HttpContext.Session.GetString("GigRowsToDisplay");
 			if (String.IsNullOrEmpty(GigRowsToDisplay) == true)
@@ -68,7 +84,13 @@ namespace GigTracker.Controllers {
 		[ValidateAntiForgeryToken]
 		public async Task<IActionResult> Create(UserCreateViewModel model) {
 
-			User newUser = await _userRepository.Add(model.User);
+			User newUser = null;
+			try {
+				newUser = await _userRepository.Add(model.User);
+			}
+			catch(Exception ex) {
+				_logger.LogDebug(ex, "Couldn't add new user.");
+            }
 
 			UserDetailsViewModel newModel = new UserDetailsViewModel {
 				User = newUser
@@ -85,7 +107,13 @@ namespace GigTracker.Controllers {
 		[HttpGet("User/Details")]
 		public async Task<IActionResult> Details(int Id) {
 
-			User currentUser = await _userRepository.Get(Id);
+			User currentUser = null;
+			try {
+				currentUser = await _userRepository.Get(Id);
+			}
+			catch(Exception ex) {
+				_logger.LogDebug(ex, $"Couldn't get user {Id}");
+            }
 
 			UserDetailsViewModel model = new UserDetailsViewModel {
 				User = currentUser
@@ -97,7 +125,13 @@ namespace GigTracker.Controllers {
 		[HttpGet("User/Profile")]
 		public async Task<IActionResult> Profile(int Id) {
 
-			User currentUser = await _userRepository.Get(Id);
+			User currentUser = null;
+			try {
+				currentUser = await _userRepository.Get(Id);
+			}
+			catch (Exception ex) {
+				_logger.LogDebug(ex, $"Couldn't get user {Id}");
+			}
 
 			UserDetailsViewModel model = new UserDetailsViewModel {
 				User = currentUser
@@ -112,8 +146,14 @@ namespace GigTracker.Controllers {
 
 			string currentUserId = HttpContext.Session.GetString("UserId");
 
-			// gotta use NoTracking because we're already tracking the same user object, coming in in model
-			User currentUser = _userRepository.GetNoTracking(Convert.ToInt32(currentUserId));
+			User currentUser = null;
+			try {
+				// gotta use NoTracking because we're already tracking the same user object, coming in in model
+				currentUser = _userRepository.GetNoTracking(Convert.ToInt32(currentUserId));
+			}
+			catch(Exception ex) {
+				_logger.LogDebug(ex, $"Couldn't get user {currentUserId}");
+            }
 
 			if (currentUserId != model.User.Id.ToString() && currentUser.Role != Role.Admin) {
 				return Content("ERROR - user cannot update this Profile.");
@@ -123,7 +163,7 @@ namespace GigTracker.Controllers {
 				User newUser = _userRepository.Update(model.User).Result;
 			}
 			catch(Exception ex) {
-
+				_logger.LogDebug(ex, $"Couldn't update user {currentUserId}");
 			}
 
 			return RedirectToAction("Index", "Home");

@@ -49,12 +49,25 @@ namespace GigTracker.Controllers {
 			var userId = HttpContext.Session.GetString("UserId");
 
 			User currentUser = null;
-			if (userId != null) {
-				currentUser = _userService.GetById(Convert.ToInt32(userId));
-				model.NavbarModel.CurrentUser = currentUser;
+			try	{
+				if (userId != null)
+				{
+					currentUser = _userService.GetById(Convert.ToInt32(userId));
+					model.NavbarModel.CurrentUser = currentUser;
+				}
 			}
+			catch(Exception ex) {
+				_logger.LogDebug(ex, "Couldn't get user.");
+            }
 
-			IEnumerable<Gig> gigs = _gigRepository.Get().Result;
+			IEnumerable<Gig> gigs = null;
+			try {
+				gigs = _gigRepository.Get().Result;
+			}
+			catch(Exception ex) {
+				_logger.LogDebug(ex, "Couildn't get gigs from database.");
+            }
+
 			if (!String.IsNullOrEmpty(artistQuery))
 				gigs = gigs.Where(g => g.ArtistName.Contains(artistQuery));
 

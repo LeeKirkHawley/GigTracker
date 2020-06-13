@@ -41,7 +41,7 @@ namespace GigTracker.Controllers
 
         [HttpPost("Account/Login")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(UserLoginModel userModel, string returnUrl = null) {
+        public IActionResult Login(UserLoginModel userModel, string returnUrl = null) {
 
             IEnumerable<User> users = _userRepository.Get().Result;
             User user = users.Where(u => u.Email == userModel.Email).FirstOrDefault();
@@ -58,7 +58,6 @@ namespace GigTracker.Controllers
 
             this.HttpContext.Session.SetString("UserId", user.Id.ToString());
 
-            //return RedirectToAction("Index", "Home");
             return RedirectToAction("List", "Gig");
         }
 
