@@ -78,7 +78,7 @@ namespace GigTracker.Controllers {
 			// filter for artist?
 			artistQuery = HttpContext.Session.GetString("ArtistSearch");
 			if (!String.IsNullOrEmpty(artistQuery))
-				gigs = gigs.Where(g => g.ArtistName.Contains(artistQuery));
+				gigs = gigs.Where(g => g.ArtistName.ToLower().Contains(artistQuery.ToLower())); // case insensitive
 
 			var GigRowsToDisplay = HttpContext.Session.GetString("GigRowsToDisplay");
 			if (String.IsNullOrEmpty(GigRowsToDisplay) == true)
