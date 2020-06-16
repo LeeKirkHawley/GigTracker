@@ -8,4 +8,3 @@ Case-insensitive searches
 Configurable gig paging
 Sort gigs by date
 Did all entities get optomistic locking?
-Deploy somewhere

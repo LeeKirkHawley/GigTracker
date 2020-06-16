@@ -36,6 +36,13 @@ namespace GigTracker.Controllers {
 
 			_logger.LogInformation("entering HomeController.Index");
 
+			if(newQuery == true) {
+				if (artistQuery == null || artistQuery == "")
+					this.HttpContext.Session.Remove("ArtistSearch");
+				else
+					this.HttpContext.Session.SetString("ArtistSearch", artistQuery);
+			}
+
 			// for some reason I don't understand, page is being set to its most recent value
 			// when called from the javascript search
 			// so hack up a fix
@@ -65,9 +72,11 @@ namespace GigTracker.Controllers {
 				gigs = _gigRepository.Get().Result;
 			}
 			catch(Exception ex) {
-				_logger.LogDebug(ex, "Couildn't get gigs from database.");
+				_logger.LogDebug(ex, "Couldn't get gigs from database.");
             }
 
+			// filter for artist?
+			artistQuery = HttpContext.Session.GetString("ArtistSearch");
 			if (!String.IsNullOrEmpty(artistQuery))
 				gigs = gigs.Where(g => g.ArtistName.Contains(artistQuery));
 
@@ -82,11 +91,12 @@ namespace GigTracker.Controllers {
 			if (currentUser != null) {
 				model.NavbarModel.CurrentUserId = currentUser.Id;
 				model.NavbarModel.CurrentUser = currentUser;
-				model.NavbarModel.ArtistSearch = artistQuery;
 			}
+			model.NavbarModel.ArtistSearch = artistQuery;
 
 			if (userId != null)
 				this.HttpContext.Session.SetString("UserId", userId.ToString());
+
 
 			return View("Index", model);
 		}
