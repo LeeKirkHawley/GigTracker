@@ -1,9 +1,9 @@
-﻿Finish User Details
+﻿Better color for input fields
+Sort gigs by date
+Configurable gig paging
 Security
 	Cross-site scripting
 	Cross-site forgery
 	CORS
 	SQL Injection
-Configurable gig paging
-Sort gigs by date
 Did all entities get optimistic locking?
