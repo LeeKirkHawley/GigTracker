@@ -1,6 +1,4 @@
-﻿Logout button
-Find the right place to put User Register button
-Finish User Details
+﻿Finish User Details
 Security
 	Cross-site scripting
 	Cross-site forgery
