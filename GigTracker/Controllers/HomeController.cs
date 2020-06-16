@@ -61,6 +61,7 @@ namespace GigTracker.Controllers {
 				{
 					currentUser = _userService.GetById(Convert.ToInt32(userId));
 					model.NavbarModel.CurrentUser = currentUser;
+					model.NavbarModel.CurrentUserId = currentUser.Id;
 				}
 			}
 			catch(Exception ex) {

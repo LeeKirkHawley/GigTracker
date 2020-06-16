@@ -41,6 +41,7 @@ namespace GigTracker.Controllers {
 			else
 				model.ErrorMsg = $"ERROR: couldn't find user {userId}";
 			model.NavbarModel.CurrentUser = currentUser;
+			model.NavbarModel.CurrentUserId = currentUser.Id;
 
 			IEnumerable<Gig> gigs = _gigRepository.Get().Result.Where(g => g.UserId == userId);
 

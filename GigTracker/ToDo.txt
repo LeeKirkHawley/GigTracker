@@ -8,4 +8,4 @@ Security
 	SQL Injection
 Configurable gig paging
 Sort gigs by date
-Did all entities get optomistic locking?
+Did all entities get optimistic locking?

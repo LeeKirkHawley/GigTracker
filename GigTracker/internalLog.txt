@@ -831,3 +831,41 @@
 2020-06-16 08:43:07.9098 Info Adding target FileTarget(Name=otherFile-web)
 2020-06-16 08:43:07.9098 Info Closing old configuration.
 2020-06-16 08:43:07.9098 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
+2020-06-16 08:50:47.4177 Info Message Template Auto Format enabled
+2020-06-16 08:50:47.4315 Info Loading assembly: NLog.Web.AspNetCore
+2020-06-16 08:50:47.6191 Info Adding target FileTarget(Name=alldata)
+2020-06-16 08:50:47.7431 Info Adding target FileTarget(Name=otherFile-web)
+2020-06-16 08:50:47.8074 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
+2020-06-16 08:50:49.3981 Info Configuring from an XML element in C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config...
+2020-06-16 08:50:49.3981 Info Message Template Auto Format enabled
+2020-06-16 08:50:49.3981 Info Loading assembly: NLog.Web.AspNetCore
+2020-06-16 08:50:49.3981 Info Adding target FileTarget(Name=alldata)
+2020-06-16 08:50:49.3981 Info Adding target FileTarget(Name=otherFile-web)
+2020-06-16 08:50:49.3981 Info Closing old configuration.
+2020-06-16 08:50:49.4312 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
+2020-06-16 08:50:49.9053 Info Configuring from an XML element in C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config...
+2020-06-16 08:50:49.9053 Info Message Template Auto Format enabled
+2020-06-16 08:50:49.9053 Info Loading assembly: NLog.Web.AspNetCore
+2020-06-16 08:50:49.9092 Info Adding target FileTarget(Name=alldata)
+2020-06-16 08:50:49.9092 Info Adding target FileTarget(Name=otherFile-web)
+2020-06-16 08:50:49.9092 Info Closing old configuration.
+2020-06-16 08:50:49.9092 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
+2020-06-16 08:54:02.6831 Info Message Template Auto Format enabled
+2020-06-16 08:54:02.6986 Info Loading assembly: NLog.Web.AspNetCore
+2020-06-16 08:54:02.8783 Info Adding target FileTarget(Name=alldata)
+2020-06-16 08:54:03.0215 Info Adding target FileTarget(Name=otherFile-web)
+2020-06-16 08:54:03.0693 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
+2020-06-16 08:54:03.9695 Info Configuring from an XML element in C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config...
+2020-06-16 08:54:03.9695 Info Message Template Auto Format enabled
+2020-06-16 08:54:03.9732 Info Loading assembly: NLog.Web.AspNetCore
+2020-06-16 08:54:03.9732 Info Adding target FileTarget(Name=alldata)
+2020-06-16 08:54:03.9732 Info Adding target FileTarget(Name=otherFile-web)
+2020-06-16 08:54:03.9732 Info Closing old configuration.
+2020-06-16 08:54:04.0188 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
+2020-06-16 08:54:04.7329 Info Configuring from an XML element in C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config...
+2020-06-16 08:54:04.7329 Info Message Template Auto Format enabled
+2020-06-16 08:54:04.7329 Info Loading assembly: NLog.Web.AspNetCore
+2020-06-16 08:54:04.7329 Info Adding target FileTarget(Name=alldata)
+2020-06-16 08:54:04.7329 Info Adding target FileTarget(Name=otherFile-web)
+2020-06-16 08:54:04.7381 Info Closing old configuration.
+2020-06-16 08:54:04.7381 Info Validating config: TargetNames=alldata, otherFile-web, ConfigItems=45, FilePath=C:\Work\GigTracker\GigTracker\bin\Debug\netcoreapp3.1\nlog.config
