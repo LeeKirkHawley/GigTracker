@@ -40,6 +40,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Update="wwwroot\css\GigTrackerMaster.css">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="test-certificate.pfx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

@@ -66,10 +66,6 @@ input[type=search]:focus {
     color: orange;
 }
 
-/*.table th {
-    color: orange;
-}*/
-
 .table th {
     border-color: blue;
     border-top: blue;
@@ -98,4 +94,8 @@ input[type=search]:focus {
     color: orange;
     background-color: darkgray;
     border-color: black;
+}
+
+.gt-style-text-field {
+    background-color: lightblue;
 }
