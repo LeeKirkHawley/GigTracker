@@ -1,0 +1,50 @@
+﻿@using GigTracker.Entities;
+@using Microsoft.AspNetCore.Http
+@using GigTracker.Views.Home
+
+@model NavbarModel
+<!-- Navbar brand -->
+<nav class="navbar navbar-expand-md navbar-dark">
+    @*<a class="navbar-brand" href="#">GigTracker</a>*@
+
+    <!-- Collapse button -->
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        @*menu items that will appear on the left of the menu bar*@
+        <ul class="navbar-nav mr-auto">
+            @if (Model.CurrentUser?.Role == "Admin" || Model.CurrentUser?.Role == "User") {
+                @*<li class="nav-item active">
+                    <a asp-controller="Gig" asp-action="List" class="btn btn-default menu-button">My Gigs</a>
+                </li>*@
+                <li class="nav-item">
+                    <a asp-controller="User" asp-action="Details" asp-route-id=@Model.CurrentUserId class="btn btn-default menu-button">Profile</a>
+                </li>
+            }
+            @if (Model.CurrentUser?.Role == "Admin") {
+                <li class="nav-item">
+                    <a asp-controller="User" asp-action="List" class="btn btn-default menu-button">Users</a>
+                </li>
+            }
+        </ul>
+        @*menu items that will appear on the right of the menu bar*@
+        <ul class="navbar-nav ml-auto">
+            @*<li class="nav-item">
+                <input asp-for="ArtistSearch" name="searchArtist" id="searchArtist" class="form-control mr-auto" type="search" placeholder="Search for Artist" aria-label="Search for Artist">
+            </li>*@
+            <li class="nav-item active">
+                @if (Model.CurrentUserId.HasValue == false) {
+                    <a asp-controller="Account" asp-action="Login" class="btn btn-default menu-button mr-auto">Login</a>
+                }
+                else {
+                    <a asp-controller="Account" asp-action="Logout" class="btn btn-default menu-button mr-auto">Logout</a>
+                    <span>User: @Model.CurrentUser.FullName</span>
+                }
+            </li>
+        </ul>
+    </div>
+</nav>
+

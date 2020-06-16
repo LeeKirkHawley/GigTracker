@@ -1,9 +1,11 @@
-﻿Security
+﻿Logout button
+Find the right place to put User Register button
+Finish User Details
+Security
 	Cross-site scripting
 	Cross-site forgery
 	CORS
 	SQL Injection
-Case-insensitive searches
 Configurable gig paging
 Sort gigs by date
 Did all entities get optomistic locking?
